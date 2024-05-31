@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<icd10gm_setup>
+    <icd10gm>
+        <year>2024</year>
+        <url>https://multimedia.gsb.bund.de/BfArM/downloads/klassifikationen/icd-10-gm/version2024/icd10gm2024syst-ueberl.zip</url>
+        <file>icd10gm2024syst-ueberl.zip</file>
+        <umsteiger>Klassifikationsdateien/icd10gm2024syst_umsteiger_2023_20221206_2024.txt</umsteiger>
+    </icd10gm>
+    <icd10gm>
+        <year>2023</year>
+        <url>https://multimedia.gsb.bund.de/BfArM/downloads/klassifikationen/icd-10-gm/version2023/icd10gm2023syst-ueberl_20221206.zip</url>
+        <file>icd10gm2023syst-ueberl_20221206.zip</file>
+        <codes>Klassifikationsdateien/icd10gm2023syst_20221206.txt</codes>
+        <umsteiger>Klassifikationsdateien/icd10gm2023syst_umsteiger_2022_2023_20221206.txt</umsteiger>
+    </icd10gm>
+    <icd10gm>
+        <year>2022</year>
+        <url>https://multimedia.gsb.bund.de/BfArM/downloads/klassifikationen/icd-10-gm/vorgaenger/icd10gm2022.zip</url>
+        <zip>icd10gm2022syst-ueberl.zip</zip>
+    </icd10gm>
+    <icd10gm>
+        <year>2021</year>
+        <url>https://multimedia.gsb.bund.de/BfArM/downloads/klassifikationen/icd-10-gm/vorgaenger/icd10gm2021.zip</url>
+        <codes>icd10gm2021syst-ueberl-20201111/Klassifikationsdateien/icd10gm2021syst.txt</codes>
+        <umsteiger>icd10gm2021syst-ueberl-20201111/Klassifikationsdateien/icd10gm2021syst_umsteiger_2020_2021.txt</umsteiger>
+    </icd10gm>
+    <icd10gm>
+        <year>2020</year>
+        <url>https://multimedia.gsb.bund.de/BfArM/downloads/klassifikationen/icd-10-gm/vorgaenger/icd10gm2020.zip</url>
+    </icd10gm>
+    <icd10gm>
+        <year>2019</year>
+        <url>https://multimedia.gsb.bund.de/BfArM/downloads/klassifikationen/icd-10-gm/vorgaenger/icd10gm2019.zip</url>
+        <prev>
+            <year>2018</year>
+        </prev>
+    </icd10gm>
+</icd10gm_setup>

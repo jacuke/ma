@@ -1,0 +1,59 @@
+body {
+    background-color: lightgray;
+}
+
+.row {
+    padding-top: 30px;
+}
+
+.nav {
+    padding-top: 10px;
+}
+
+.umsteiger {
+    table {
+        width: 640px;
+    }
+    th.code {
+        width: 10%;
+    }
+    th.split {
+        width: 2%;
+    }
+    th.name {
+        width: 39%;
+    }
+    .rate {
+        font-weight: bold;
+        padding: 18px 0 10px 4px;
+    }
+}
+
+.auto-umsteiger {
+    table {
+        width: 160px;
+    }
+    th.code {
+        width: 40%;
+    }
+    th.arrow {
+        width: 20%;
+    }
+}
+
+.combo-umsteiger {
+    table {
+        width: 800px;
+    }
+    th.code, td.code {
+        width: 9%;
+    }
+    th.split, td.split {
+        width: 3%;
+    }
+    th.name {
+        width: 27.5%;
+    }
+}
+
+@import "~bootstrap/scss/bootstrap";

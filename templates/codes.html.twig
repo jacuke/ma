@@ -1,0 +1,26 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Codes {{ code_title(type) }} {{ year }}{% endblock %}
+
+{% block body %}
+
+    <h4>{{ code_title(type) }} {{ year }}</h4>
+
+    <table class="table table-sm">
+        <thead>
+        <tr>
+            <th scope="col">Code</th>
+            <th scope="col">Titel</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for element in data %}
+            <tr>
+                <td>{{ element.code }}</td>
+                <td>{{ element.name }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

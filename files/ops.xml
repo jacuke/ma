@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ops_setup>
+    <!--<ops>
+        <year>2022</year>
+        <url>https://multimedia.gsb.bund.de/BfArM/downloads/klassifikationen/ops/vorgaenger/ops2022.zip</url>
+    </ops>-->
+    <ops>
+        <year>2021</year>
+        <url>https://multimedia.gsb.bund.de/BfArM/downloads/klassifikationen/ops/vorgaenger/ops2021.zip</url>
+    </ops>
+    <ops>
+        <year>2020</year>
+        <url>https://multimedia.gsb.bund.de/BfArM/downloads/klassifikationen/ops/vorgaenger/ops2020.zip</url>
+    </ops>
+    <ops>
+        <year>2019</year>
+        <url>https://multimedia.gsb.bund.de/BfArM/downloads/klassifikationen/ops/vorgaenger/ops2019.zip</url>
+        <prev>
+            <year>2018</year>
+        </prev>
+    </ops>
+</ops_setup>
