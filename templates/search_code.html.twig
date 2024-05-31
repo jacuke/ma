@@ -1,0 +1,9 @@
+<div class="search-code {{ searchCodeAddClass }}">
+    <div class="code-and-name {% if codeHasUmsteiger %}has-umsteiger{% endif %}">
+        <div class="code-container">{{ code_external_link(type, searchYear, code)|raw }}</div>
+        <div class="name-container" {% if name|length > 90 %}style="hyphens: auto"{% endif %}>{{ name }}</div>
+        {% if codeHasUmsteiger %}
+            <div class="search-year"> {{ searchYear}} </div>
+        {% endif %}
+    </div>
+</div>

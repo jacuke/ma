@@ -1,0 +1,61 @@
+{% if chronological %}
+    {% set thisYear = data.prev %}
+    {% set prevYear = data.year %}
+{% else %}
+    {% set thisYear = data.year %}
+    {% set prevYear = data.prev %}
+{% endif %}
+{% if chronological %}
+    <div class="year chrono">
+        {{ thisYear }}<i class="bi bi-arrow-left-short"></i>{{ prevYear }}
+    </div>
+{% else %}
+    <div class="year">
+        {{ thisYear }}<i class="bi bi-arrow-right-short"></i>{{ prevYear }}
+    </div>
+{% endif %}
+{% for entry in data.umsteiger %}
+    {% if chronological %}
+        {% set codeName = entry.new_name %}
+    {% else %}
+        {% set codeName = entry.old_name %}
+    {% endif %}
+    <div class="history-results-container {% if chronological %}chrono{% endif %}">
+        <div class="result">
+            {% if entry.old == constant('App\\Util\\Constants::UNDEF') %}
+                <div>{{ code_external_link(type, thisYear, entry.new)|raw }} hinzugefügt</div>
+            {% elseif entry.new == constant('App\\Util\\Constants::UNDEF') %}
+                <div>{{ code_external_link(type, prevYear, entry.old)|raw }} entfernt</div>
+            {% else %}
+                <div class="umsteiger-codes">
+                    {{ code_external_link(type, thisYear, entry.new)|raw }}
+                    {% if entry.auto == '' and entry.auto_r == '' %}
+                        <i class="bi bi-x-square-fill"
+                           data-bs-toggle="tooltip" data-bs-title="Nicht automatisch überleitbar"
+                        ></i>
+                    {% elseif entry.auto == '' %}
+                        <i class="bi bi-arrow-right-square-fill"
+                           data-bs-toggle="tooltip" data-bs-title="Automatisch überleitbar von {{ thisYear }} nach {{ prevYear }}"
+                        ></i>
+                    {% elseif entry.auto_r == '' %}
+                        <i class="bi bi-arrow-left-square-fill"
+                           data-bs-toggle="tooltip" data-bs-title="Automatisch überleitbar von {{ prevYear }} nach {{ thisYear }}"
+                        ></i>
+                    {% else %}
+                        <i class="bi bi-dash-square-fill"
+                           data-bs-toggle="tooltip" data-bs-title="Automatisch überleitbar in beide Richtungen"
+                        ></i>
+                    {% endif %}
+                    {{ code_external_link(type, prevYear, entry.old)|raw }}
+                </div>
+                <div class="umsteiger-name" {% if codeName|length > 90 %}style="hyphens: auto"{% endif %}>{{ codeName }}</div>
+            {% endif %}
+        </div>
+
+        {% if entry.subsection is defined %}
+            <div class="subsection {% if chronological %}chrono{% endif %}">
+                {{ entry.subsection|raw }}
+            </div>
+        {% endif %}
+    </div>
+{% endfor %}

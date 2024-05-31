@@ -1,0 +1,100 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Test-Patienten ICD-10-GM{% endblock %}
+
+{% block body %}
+
+    <div class="modal fade" id="edit-modal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content"></div>
+        </div>
+    </div>
+
+    <div class="patients-page">
+
+        <h4>Test-Datenbank ICD-10-GM</h4>
+
+        <div class="patients-total">Patienten insgesamt: {{ total_count }}</div>
+
+        <nav class="navbar sticky-top form-navbar" >
+                <form method="get">
+                    <div class="input-group main-input-group">
+                        <div class="input-group search-input-group">
+                            <span class="input-group-text">Code:</span>
+                            <input name="c" id="codeSearch" type="text" class="form-control code-input" value="{{ search_code }}" aria-label="Code Suche">
+                            <span class="input-group-text">Titel:</span>
+                            <input name="t" id="nameSearch" type="text" class="form-control name-input" value="{{ search_name }}" aria-label="Titel Suche">
+                            <button type="submit" class="btn btn-primary">Suchen</button>
+                        </div>
+                        {% if not init %}
+                            <div class="input-group">
+                                <div>
+                                    <span class="input-group-text hits-text">{{ search_count }} Treffer</span>
+                                </div>
+                                {% if search_count > constant('App\\Repository\\PatientsRepository::PAGE_SIZE')%}
+                                    <div class="btn-group">
+                                        <a href="/icd10gm-patients?c={{ search_code }}&t={{ search_name }}&p=1"
+                                           class="btn btn-primary btn-first-page {% if page==1 %} disabled {% endif %}"
+                                           title="Seite 1"><i class="bi bi-chevron-bar-left"></i></a>
+                                        <a href="/icd10gm-patients?c={{ search_code }}&t={{ search_name }}&p={{ page-1 }}"
+                                           class="btn btn-primary {% if page == 1 %} disabled {% endif %}"
+                                           title="Seite {{ page-1 }}"><i class="bi bi-chevron-left"></i></a>
+                                    </div>
+                                    <div>
+                                        <span class="input-group-text pages-text"> Seite {{ page }} / {{ max_page }}</span>
+                                    </div>
+                                    <div class="btn-group">
+                                        <a href="/icd10gm-patients?c={{ search_code }}&t={{ search_name }}&p={{ page+1 }}"
+                                            class="btn btn-primary btn-next-page {% if page==max_page %} disabled {% endif %}"
+                                            title="Seite {{ page+1 }}"><i class="bi bi-chevron-right"></i></a>
+                                        <a href="/icd10gm-patients?c={{ search_code }}&t={{ search_name }}&p={{ max_page }}"
+                                           class="btn btn-primary {% if page==max_page %} disabled {% endif %}"
+                                           title="Seite {{ max_page }}"><i class="bi bi-chevron-bar-right"></i></a>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </form>
+            <div class="blur-box"></div>
+        </nav>
+
+        {% if not init and search_count != 0 %}
+        <table class="table table-sm table-striped">
+            <thead>
+            <tr>
+                <th class="patient-id" scope="col">Patient</th>
+                <th class="patient-year" scope="col">Jahr</th>
+                <th scope="col">Code</th>
+                <th scope="col">Titel</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for element in data %}
+                {% for entry in element.list %}
+                    <tr>
+                        {% if loop.index == 1 %}
+                        <td class="patient-id" rowspan="{{ element.count }}">{{ element.id }}</td>
+                        <td class="patient-year" rowspan="{{ element.count }}">{{ element.year }}</td>
+                        {% endif %}
+                        <td class="patient-code"><div class="code-cell">
+                            <div>{{ code_external_link('icd10gm', element.year, entry.code)|raw }}</div>
+                            <div>
+                                {% if entry.umsteiger %}
+                                <a class="umsteiger-search-link" href="" data-bs-toggle="modal" data-bs-target="#edit-modal"
+                                   onclick="ajaxUmsteigerSearchHistory('icd10gm','{{ element.year }}','{{ entry.code }}')">
+                                    <i class="bi bi-search"></i>
+                                </a>
+                                {% endif %}
+                            </div>
+                        </div></td>
+                        <td>{{ entry.name }}</td>
+                    </tr>
+                {% endfor %}
+            {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+    </div>
+
+{% endblock %}

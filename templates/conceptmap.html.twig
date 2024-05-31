@@ -1,0 +1,43 @@
+{% extends "base.html.twig" %}
+
+{% block title %}ConceptMap {{ code_title(type) }}{% endblock %}
+
+{% block body %}
+
+    <div class="conceptmap-page">
+        <h4>ConceptMap</h4>
+
+        <form method="post">
+            <div class="input-group">
+                <span class="input-group-text">{{ code_title(type) }} Ziel-Version:</span>
+                <select name="year" class="form-select" aria-label="{{ code_title(type) }} Ziel-Version Auswahl">
+                    <option value="{{ constant('App\\Util\\Constants::ALL') }}">Alle</option>
+                    {% for year in years %}
+                        <option value="{{ year }}" {% if year == newestYear %}selected{% endif %}>
+                            {{ year }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <span class="input-group-text">FHIR Release:</span>
+                <select name="fhir" class="form-select fhir-release" aria-label="FHIR Release Auswahl">
+                    {% for vnum, version in fhir_versions %}
+                        <option value="{{ version }}">{{ vnum }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="input-group">
+                <span class="input-group-text">Datei-Typ:</span>
+                <select name="file" class="form-select" aria-label="Dateityp Auswahl">
+                    <option value="json">JSON</option>
+                    <option value="xml">XML</option>
+                </select>
+                <span class="input-group-text">nur Umsteiger:</span>
+                <div class="input-group-text checkbox">
+                    <input class="form-check-input mt-0" type="checkbox" checked name="umst-only" value="1" aria-label="Checkbox um nur Umsteiger aufzunehmen">
+                </div>
+                <button type="submit" class="btn btn-primary">Generieren</button>
+            </div>
+        </form>
+    </div>
+
+{% endblock %}

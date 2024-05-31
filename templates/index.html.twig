@@ -1,0 +1,50 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+    <div class="container text-center">
+        <div class="row">
+            <div class="col">
+                <h3>BfArM Electronic Repository</h3>
+            </div>
+        </div>
+        <div class="row">
+            {% for key, value in data %}
+                <div class="col">
+                    <h4>{{ code_title(key) }} Umsteiger</h4>
+                    <div class="umsteiger-submenu">
+                        <h6>Übersicht</h6>
+                        <a href="/{{ key }}-umsteiger">Link</a>
+                    </div>
+                    <div class="umsteiger-submenu">
+                        <h6>Suche/Historie</h6>
+                        <a href="/{{ key }}-umsteiger-suche">Link</a>
+                    </div>
+                    <div class="umsteiger-submenu">
+                        <h6>Transistive ConceptMap</h6>
+                        <a href="/{{ key }}-conceptmap">Link</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="row">
+            {% for key, value in data %}
+                <div class="col">
+                    <h4>{{ code_title(key) }} Codes</h4>
+                    <div class="codes-3-col">
+                    {% for year in value.years %}
+                        <div><a href="/{{ key }}-codes-{{ year }}">{{ year }}</a></div>
+                    {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="row">
+                <div class="col">
+                    <h4>Test-Patienten ICD-10-GM</h4>
+                    <a href="/icd10gm-patients">Link</a>
+                </div>
+        </div>
+    </div>
+
+{% endblock %}

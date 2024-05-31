@@ -1,0 +1,41 @@
+{% set searchCodeAddClass = '' %}
+<div class="umsteiger-search-result">
+    {% if data.fwd is defined or data.rev is defined %}
+        {% set codeHasUmsteiger = true %}
+    {% else %}
+        {% set codeHasUmsteiger = false %}
+        {% include 'search_code.html.twig' %}
+    {% endif %}
+    <div class="recursion-results">
+        {% if data.fwd is defined %}
+            <div>
+                {% if data.rev is defined %}
+                    {% set searchCodeAddClass = 'chrono-plus' %}
+                {% else %}
+                    {% set searchCodeAddClass = 'chrono' %}
+                {% endif %}
+                {% include 'search_code.html.twig' %}
+                <div class="history-container {% if data.rev is not defined %}only-newer{% endif %}">
+                    <div class="time-arrow chrono">
+                        <div class="time-text chrono">neuer</div>
+                    </div>
+                    {{ data.fwd|raw }}
+                </div>
+            </div>
+        {% endif %}
+        {% if data.rev is defined %}
+            <div>
+                {% if data.fwd is defined %}
+                    {% set searchCodeAddClass = 'hide' %}
+                {% endif %}
+                {% include 'search_code.html.twig' %}
+                <div class="history-container {% if data.fwd is not defined %}only-older{% endif %}">
+                    <div class="time-arrow">
+                        <div class="time-text">älter</div>
+                    </div>
+                    {{ data.rev|raw }}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
