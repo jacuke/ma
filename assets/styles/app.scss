@@ -1,6 +1,4 @@
-body {
-    background-color: lightgray;
-}
+@import "~bootstrap/scss/bootstrap";
 
 .row {
     padding-top: 30px;
@@ -56,4 +54,30 @@ body {
     }
 }
 
-@import "~bootstrap/scss/bootstrap";
+.navbar {
+
+    padding: 1px 0 3px 0 !important;
+    margin-bottom: 18px;
+    background-color: rgba(0, 0, 0, 0.05);
+
+    .container-fluid {
+        padding-left: 6px !important;
+    }
+
+    .navbar-image {
+        width: 24px;
+        height: 20px;
+        background-image: url('../img/bfarmer1.png');
+        background-repeat:no-repeat;
+        &:hover {
+            background-image: url('../img/bfarmer2.png');
+        }
+        float:left;
+        margin-right: 10px;
+    }
+
+    .navbar-image-text {
+        height: 20px;
+        font-size: 15px;
+    }
+}

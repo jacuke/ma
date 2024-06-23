@@ -3,7 +3,8 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}jacuke/ma{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+{#        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">#}
+{#        <link rel='icon' href='{{ asset('favicon.ico') }}' type='image/x-icon' sizes="16x16" />#}
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
@@ -13,6 +14,15 @@
         {% endblock %}
     </head>
     <body>
+    <nav class="navbar">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+                <div class="navbar-image"></div>
+                <div class="navbar-image-text">bfarmer</div>
+            </a>
+        </div>
+    </nav>
+
         {% block body %}{% endblock %}
     </body>
 </html>
