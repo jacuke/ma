@@ -4,6 +4,7 @@ namespace App\Service;
 
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Serializer;
+use Throwable;
 
 class ConceptMapService {
 
@@ -20,7 +21,8 @@ class ConceptMapService {
     public function test():string {
 
         // todo
-        $umsteiger = $this->umsteigerService->test1();
+        //$umsteiger = $this->umsteigerService->test1();
+        $umsteiger = $this->umsteigerService->mergeAllAutoUmsteiger();
         $group = $this->convert_umsteiger_to_conceptmap_elements($umsteiger);
 
         $xml_context = [
@@ -32,8 +34,7 @@ class ConceptMapService {
         /** @noinspection HttpUrlsUsage */
         $data['@xmlns'] = 'http://hl7.org/fhir';
         $data['id'] = ['@value' => 'icdtest1']; // todo
-        $data['url'] = ['@value' => 'urn:uuid:193bb9e9-f402-4ea6-95d0-47f8bdd51f67']; // todo
-        //   <url value="urn:uuid:193bb9e9-f402-4ea6-95d0-47f8bdd51f68"/>
+        $data['url'] = ['@value' => 'urn:uuid:' . $this->generate_uuid()];
         $data['group'] = $group;
 
         return $this->serializer->serialize($data, 'xml', $xml_context);
@@ -51,5 +52,15 @@ class ConceptMapService {
         }
         $ret['element'] = $elements;
         return $ret;
+    }
+
+    private function generate_uuid():string {
+
+        try {
+            return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex(random_bytes(16)), 4));
+        } catch (Throwable) {
+            // todo
+            return '';
+        }
     }
 }

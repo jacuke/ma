@@ -83,7 +83,7 @@ class UmsteigerService {
             foreach ($current_umsteiger as $old_curr => $new_curr) {
                 if(strcmp($new_prev, $old_curr) == 0) {
                     $match = $new_curr;
-                    var_dump("match"); // todo: debugging
+                    var_dump("match (current old: $old_curr, previous new: $new_prev))"); // todo: debugging
                     break;
                 }
             }
@@ -144,7 +144,7 @@ class UmsteigerService {
             ksort($sorted, SORT_NUMERIC);
             $best_group = end($sorted);
             // pick the first code by alphabetic sorting
-            sort($best_group, SORT_STRING);
+            rsort($best_group, SORT_STRING);
             $result[$old] = $best_group[0];
         }
 

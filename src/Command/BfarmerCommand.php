@@ -40,7 +40,18 @@ class BfarmerCommand extends Command {
             foreach (Constants::CODE_SYSTEMS as $type) {
                 $xml = $this->dataService->readXmlData($type);
                 foreach($xml as $entry) {
-                    $this->setupService->setupEntry($type, $entry);
+                    $status = $this->setupService->setupEntry($type, $entry);
+                    $out = match($status) {
+                        Constants::STATUS_INVALID =>
+                            'Invalid entry: ' . Constants::XML_YEAR . ' missing in ' . Constants::file_name($type),
+                        Constants::STATUS_EXISTS_OK =>
+                            'Already exists: ' . $type . ' ' . $entry[Constants::XML_YEAR],
+                        default =>
+                            '',
+                    };
+                    if($out != '') {
+                        $output->writeln($out);
+                    }
                 }
             }
 

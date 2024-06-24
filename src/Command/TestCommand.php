@@ -47,17 +47,25 @@ class TestCommand extends Command {
 
     protected function execute(InputInterface $input, OutputInterface $output): int {
 
-        $umst = $this->dbRepo->getIcdUmsteiger('2020', '2019');
-        $auto = $this->umsteigerService->generateAutoUmsteiger($umst);
 
-        $data = $umst;
-        foreach($data as &$entry) {
-            $has_auto = $auto[$entry['old']] ?? '';
-            if($has_auto!=='') {
-                $entry['auto'] = $has_auto;
-            }
-        }
-        var_dump($data);
+
+//        $umst = $this->dbRepo->getIcdUmsteiger('2020', '2019');
+//        $auto = $this->umsteigerService->generateAutoUmsteiger($umst);
+//
+//        $data = $umst;
+//        foreach($data as &$entry) {
+//            $has_auto = $auto[$entry['old']] ?? '';
+//            if($has_auto!=='') {
+//                $entry['auto'] = $has_auto;
+//            }
+//        }
+//        var_dump($data);
+
+
+
+
+
+
 
 //        var_dump($umst);
 //        var_dump($auto);
@@ -65,12 +73,13 @@ class TestCommand extends Command {
 
         //$output->writeln(Constants::file_name(Constants::ICD10GM));
 
+        $xml = $this->conceptMapService->test();
+        //$output->writeln($xml);
+        file_put_contents($this->projectDir . '/files/test.xml', $xml);
+
         return Command::SUCCESS;
 
         //var_dump($this->umsteigerService->test1());
-        $xml = $this->conceptMapService->test();
-        $output->writeln($xml);
-        file_put_contents($this->projectDir . '/files/test.xml', $xml);
 
 //            var_dump($this->dataService->getIcdYears());
 //            var_dump($this->umsteigerService->mergeAllAutoUmsteiger());

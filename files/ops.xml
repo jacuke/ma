@@ -7,14 +7,17 @@
     <ops>
         <year>2021</year>
         <url>https://multimedia.gsb.bund.de/BfArM/downloads/klassifikationen/ops/vorgaenger/ops2021.zip</url>
+        <dir>ops2021syst-ueberl</dir>
     </ops>
     <ops>
         <year>2020</year>
         <url>https://multimedia.gsb.bund.de/BfArM/downloads/klassifikationen/ops/vorgaenger/ops2020.zip</url>
+        <dir>ops2020syst-ueberl</dir>
     </ops>
     <ops>
         <year>2019</year>
         <url>https://multimedia.gsb.bund.de/BfArM/downloads/klassifikationen/ops/vorgaenger/ops2019.zip</url>
+        <dir>ops2019syst-ueberl</dir>
         <prev>
             <year>2018</year>
         </prev>

@@ -34,26 +34,25 @@ class SetupService {
         $this->dbRepo->addConfigTable();
     }
 
-    public function setupEntry (string $type, array $entry) : void {
+    public function setupEntry (string $type, array $entry) : int {
 
         $year = $entry[Constants::XML_YEAR] ?? '';
         if($year==='') {
-            // todo: error
-            return;
+            return Constants::STATUS_INVALID;
         }
         $prev = $entry[Constants::XML_PREV] ?? [];
         $nested_zip = $entry[Constants::XML_ZIP] ?? '';
         $codes = $entry[Constants::XML_CODES] ?? '';
         $umsteiger = $entry[Constants::XML_UMSTEIGER] ?? '';
-        $file = $entry[Constants::XML_FILE] ?? '';
+        $dir = $entry[Constants::XML_DIR] ?? '';
+        if($dir!=='') {
+            $dir .= '/';
+        }
 
         $prev_year = $this->dataService->getPreviousYear($type, $year);
 
-        if($file!=='') {
-            $path = sprintf($this->projectDir . Constants::DIRECTORY_FILES . '%s', $file);
-        } else {
-            $path = sprintf($this->projectDir . Constants::DIRECTORY_FILES . '%s%s.zip', $type, $year);
-        }
+        // todo
+        $path = sprintf($this->projectDir . Constants::DIRECTORY_FILES . '%s%s.zip', $type, $year);
 
         $tmp_dir = '';
         $tmp_file = '';
@@ -61,24 +60,26 @@ class SetupService {
             $tmp_dir = $this->create_tmp_zip($path, $nested_zip);
             $tmp_file = $tmp_dir . '/' . $nested_zip;
             $path = $tmp_file;
-            $klassdat_pre = '';
-        } elseif($file!=='') {
-            $klassdat_pre = '';
-        } else {
-            $klassdat_pre = sprintf('%s%ssyst-ueberl/', $type, $year);
         }
 
         if($codes==='') {
-            $codes = $klassdat_pre . sprintf('Klassifikationsdateien/%s%ssyst.txt', $type, $year);
+            $codes = sprintf('%sKlassifikationsdateien/%s%ssyst.txt', $dir, $type, $year);
         }
         if($umsteiger==='') {
-            $umsteiger = $klassdat_pre . sprintf('Klassifikationsdateien/%s%ssyst_umsteiger_%s_%s.txt', $type, $year, $prev_year, $year);
+            $umsteiger = sprintf('%sKlassifikationsdateien/%s%ssyst_umsteiger_%s_%s.txt', $dir, $type, $year, $prev_year, $year);
         }
 
-        $this->setup_tables($type, $year, $path, $codes, $umsteiger);
+        if($year===$this->dataService->getLastYear($type)) {
+            $umsteiger = '';
+        }
 
-        if(!empty($prev)) {  // todo
-            $prev_codes = sprintf('%s%ssyst-ueberl/Klassifikationsdateien/%s%ssyst.txt', $type, $year, $type, $prev_year);
+        $ret = $this->setup_tables($type, $year, $path, $codes, $umsteiger);
+
+        if(!empty($prev)) {
+            $prev_codes = $prev[Constants::XML_CODES] ?? '';
+            if($prev_codes==='') {
+                $prev_codes = sprintf('%sKlassifikationsdateien/%s%ssyst.txt', $dir, $type, $prev_year);
+            }
             $this->setup_tables($type, $prev_year, $path, $prev_codes);
         }
 
@@ -88,17 +89,18 @@ class SetupService {
         if($tmp_dir!=='') {
             rmdir($tmp_dir);
         }
+
+        return $ret;
     }
 
-    private function setup_tables (string $type, string $year, string $path, string $codes, string $umsteiger = '') : void {
+    private function setup_tables (string $type, string $year, string $path, string $codes, string $umsteiger = '') : int {
 
         $table = Constants::table_name($type, $year);
 
         // read/write config entry
         $status = $this->dbRepo->readConfigStatus($table);
-        if($status===Constants::STATUS_OK) {
-            var_dump($year . ' already exists');
-            return;
+        if($status===Constants::CONFIG_STATUS_OK) {
+            return Constants::STATUS_EXISTS_OK;
         } else {
             // todo: dump if exists without OK
         }
@@ -112,7 +114,9 @@ class SetupService {
 
         // set status OK if no errors
         // todo: check errors
-        $this->dbRepo->updateConfigStatus($table, Constants::STATUS_OK);
+        $this->dbRepo->updateConfigStatus($table, Constants::CONFIG_STATUS_OK);
+
+        return Constants::STATUS_OK;
     }
 
     // todo: return type

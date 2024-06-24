@@ -3,13 +3,11 @@
     <icd10gm>
         <year>2024</year>
         <url>https://multimedia.gsb.bund.de/BfArM/downloads/klassifikationen/icd-10-gm/version2024/icd10gm2024syst-ueberl.zip</url>
-        <file>icd10gm2024syst-ueberl.zip</file>
         <umsteiger>Klassifikationsdateien/icd10gm2024syst_umsteiger_2023_20221206_2024.txt</umsteiger>
     </icd10gm>
     <icd10gm>
         <year>2023</year>
         <url>https://multimedia.gsb.bund.de/BfArM/downloads/klassifikationen/icd-10-gm/version2023/icd10gm2023syst-ueberl_20221206.zip</url>
-        <file>icd10gm2023syst-ueberl_20221206.zip</file>
         <codes>Klassifikationsdateien/icd10gm2023syst_20221206.txt</codes>
         <umsteiger>Klassifikationsdateien/icd10gm2023syst_umsteiger_2022_2023_20221206.txt</umsteiger>
     </icd10gm>
@@ -21,18 +19,43 @@
     <icd10gm>
         <year>2021</year>
         <url>https://multimedia.gsb.bund.de/BfArM/downloads/klassifikationen/icd-10-gm/vorgaenger/icd10gm2021.zip</url>
-        <codes>icd10gm2021syst-ueberl-20201111/Klassifikationsdateien/icd10gm2021syst.txt</codes>
+        <dir>icd10gm2021syst-ueberl-20201111</dir>
         <umsteiger>icd10gm2021syst-ueberl-20201111/Klassifikationsdateien/icd10gm2021syst_umsteiger_2020_2021.txt</umsteiger>
     </icd10gm>
     <icd10gm>
         <year>2020</year>
         <url>https://multimedia.gsb.bund.de/BfArM/downloads/klassifikationen/icd-10-gm/vorgaenger/icd10gm2020.zip</url>
+        <dir>icd10gm2020syst-ueberl</dir>
     </icd10gm>
     <icd10gm>
         <year>2019</year>
         <url>https://multimedia.gsb.bund.de/BfArM/downloads/klassifikationen/icd-10-gm/vorgaenger/icd10gm2019.zip</url>
+        <dir>icd10gm2019syst-ueberl</dir>
+    </icd10gm>
+    <icd10gm>
+        <year>2018</year>
+        <url>https://multimedia.gsb.bund.de/BfArM/downloads/klassifikationen/icd-10-gm/vorgaenger/icd10gm2018.zip</url>
+        <dir>x1gut2018</dir>
+    </icd10gm>
+    <icd10gm>
+        <year>2017</year>
+        <url>https://multimedia.gsb.bund.de/BfArM/downloads/klassifikationen/icd-10-gm/vorgaenger/icd10gm2017.zip</url>
+        <dir>x1gut2017</dir>
+    </icd10gm>
+    <icd10gm>
+        <year>2016</year>
+        <url>https://multimedia.gsb.bund.de/BfArM/downloads/klassifikationen/icd-10-gm/vorgaenger/icd10gm2016.zip</url>
+        <dir>x1gut2016</dir>
         <prev>
-            <year>2018</year>
+            <year>2015</year>
         </prev>
     </icd10gm>
+    <!--<icd10gm>
+        <year>2015</year>
+        <url>https://multimedia.gsb.bund.de/BfArM/downloads/klassifikationen/icd-10-gm/vorgaenger/icd10gm2015.zip</url>
+        <dir>x1gut2015</dir>
+        <prev>
+            <year>2014</year>
+        </prev>
+    </icd10gm>-->
 </icd10gm_setup>

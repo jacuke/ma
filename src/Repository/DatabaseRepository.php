@@ -74,7 +74,7 @@ class DatabaseRepository {
     public function writeConfig(string $key, string $status = '') : bool {
 
         $sql = sprintf("
-            INSERT INTO %s (`key`, `status`)
+            INSERT IGNORE INTO %s (`key`, `status`)
             VALUES('%s', '%s');
         ", Constants::TABLE_CONFIG, $key, $status);
 
@@ -168,7 +168,7 @@ class DatabaseRepository {
         }
 
         $sql = $this->table_structure($type, $table_type, $year, $table);
-        if($sql===Constants::STATUS_ERROR) {
+        if($sql===Constants::CONFIG_STATUS_ERROR) {
             return false;
         }
         try {
