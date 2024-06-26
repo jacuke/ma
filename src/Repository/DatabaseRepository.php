@@ -251,14 +251,18 @@ class DatabaseRepository {
             ),
             Constants::TABLE_UMSTEIGER_JOIN => sprintf(
                 "
-                SELECT u.`%s`, u.`%s`, o.`%s` old_name, n.`%s` new_name
+                SELECT  u.`%s`, u.`%s`,
+                        u.`%s`, u.`%s`,                       
+                        o.`%s` old_name, n.`%s` new_name
                 FROM `%s` u
                 JOIN `%s` o ON u.`%s` = o.`%s`
                 JOIN `%s` n ON u.`%s` = n.`%s`
                 WHERE (`%s` != 'A'
                 OR `%s` != 'A')
                 ",
-            Constants::SQL_OLD, Constants::SQL_NEW, Constants::SQL_NAME, Constants::SQL_NAME,
+            Constants::SQL_OLD, Constants::SQL_NEW,
+                Constants::SQL_AUTO, Constants::SQL_AUTO_R,
+                Constants::SQL_NAME, Constants::SQL_NAME,
                 $table,
                 Constants::table_name($type, $prev), Constants::SQL_OLD, Constants::SQL_CODE,
                 Constants::table_name($type, $year), Constants::SQL_NEW, Constants::SQL_CODE,

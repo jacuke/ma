@@ -1,4 +1,5 @@
 @import "~bootstrap/scss/bootstrap";
+@import url('../../node_modules/bootstrap-icons/font/bootstrap-icons.css');
 
 .row {
     padding-top: 30px;
@@ -10,47 +11,33 @@
 
 .umsteiger {
     table {
-        width: 640px;
+        width: 680px;
     }
     th.code {
         width: 10%;
     }
-    th.split {
-        width: 2%;
+    th.arrow {
+        width: 8%;
+    }
+    td.arrow {
+        text-align: center;
+        font-size: 21px;
+        .bi-x-square-fill {
+            color: $danger;
+        }
+        .bi-arrow-left-square-fill {
+            color: $primary;
+        }
+        .bi-arrow-right-square-fill {
+            color: #fd9c0d;
+        }
     }
     th.name {
-        width: 39%;
+        width: 36%;
     }
     .rate {
         font-weight: bold;
         padding: 18px 0 10px 4px;
-    }
-}
-
-.auto-umsteiger {
-    table {
-        width: 160px;
-    }
-    th.code {
-        width: 40%;
-    }
-    th.arrow {
-        width: 20%;
-    }
-}
-
-.combo-umsteiger {
-    table {
-        width: 800px;
-    }
-    th.code, td.code {
-        width: 9%;
-    }
-    th.split, td.split {
-        width: 3%;
-    }
-    th.name {
-        width: 27.5%;
     }
 }
 

@@ -27,7 +27,7 @@
                         <tr>
                             <th scope="col" class="code">{{ year.prev }}</th>
                             <th scope="col" class="name">Titel</th>
-                            <th scope="col" class="split"></th>
+                            <th scope="col" class="arrow">Auto</th>
                             <th scope="col" class="code">{{ key }}</th>
                             <th scope="col" class="name">Titel</th>
                         </tr>
@@ -37,7 +37,13 @@
                             <tr>
                                 <td>{{ line.old }}</td>
                                 <td>{{ line.old_name }}</td>
-                                <td></td>
+                                {% if line.auto == '' and line.auto_r == '' %}
+                                    <td class="arrow"><i class="bi bi-x-square-fill"></i></td>
+                                {% elseif line.auto == '' %}
+                                    <td class="arrow"><i class="bi bi-arrow-left-square-fill"></i></td>
+                                {% else %}
+                                    <td class="arrow"><i class="bi bi-arrow-right-square-fill"></i></td>
+                                {% endif %}
                                 <td>{{ line.new }}</td>
                                 <td>{{ line.new_name }}</td>
                             </tr>
