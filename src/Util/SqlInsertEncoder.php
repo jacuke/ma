@@ -22,7 +22,7 @@ class SqlInsertEncoder implements EncoderInterface {
 
         $table = $context[self::TABLE_NAME] ?? '';
         $clean = $context[self::CLEAN_VALUES_INDEX] ?? [];
-        $insert = "INSERT INTO $table VALUES ";
+        $insert = "INSERT INTO `$table` VALUES ";
 
         if (empty($data)) {
             return '';
@@ -40,8 +40,8 @@ class SqlInsertEncoder implements EncoderInterface {
             $line_str = '(';
             for($i=0; $i<$values; $i++) {
                 $v = $line[$i];
-                if(in_array($i,$clean)) {
-                    $v = $this->clean_sql_input($v);
+                if(in_array($i,array_keys($clean))) {
+                    $v = $clean[$i]($v);
                 }
                 $line_str .= "'" . $v . "',";
             }
@@ -52,10 +52,5 @@ class SqlInsertEncoder implements EncoderInterface {
         $insert[strlen($insert)-1] = ';';
 
         return $insert;
-    }
-
-    private function clean_sql_input (string $input): string {
-
-        return str_replace("'", "''", $input);
     }
 }

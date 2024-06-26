@@ -34,6 +34,15 @@ class DatabaseRepository {
         }
     }
 
+    public function dropTable(string $table) : bool {
+
+        $sql = sprintf("
+            DROP TABLE IF EXISTS `%s`;
+        ", $table);
+
+        return $this->execute_wrapper($sql);
+    }
+
     public function tableExists(string $table): bool {
 
         $sql = sprintf("
@@ -59,7 +68,7 @@ class DatabaseRepository {
     public function addConfigTable(): bool {
 
         $sql = sprintf("
-            CREATE TABLE IF NOT EXISTS %s (
+            CREATE TABLE IF NOT EXISTS `%s` (
                 `id` INT NOT NULL AUTO_INCREMENT,
                 `key` VARCHAR(255),
                 `status` VARCHAR(255),
@@ -74,7 +83,7 @@ class DatabaseRepository {
     public function writeConfig(string $key, string $status = '') : bool {
 
         $sql = sprintf("
-            INSERT IGNORE INTO %s (`key`, `status`)
+            INSERT IGNORE INTO `%s` (`key`, `status`)
             VALUES('%s', '%s');
         ", Constants::TABLE_CONFIG, $key, $status);
 
@@ -84,7 +93,7 @@ class DatabaseRepository {
     public function updateConfigStatus(string $key, $status) : bool {
 
         $sql = sprintf("
-            UPDATE %s
+            UPDATE `%s`
             SET `status` = '%s'
             WHERE `key` = '%s';
         ", Constants::TABLE_CONFIG, $status, $key);
@@ -95,20 +104,20 @@ class DatabaseRepository {
     public function readConfigStatus(string $key) : string {
 
         $sql = sprintf("
-            SELECT `status` FROM %s
+            SELECT `status` FROM `%s`
             WHERE `key` = '%s';
         ", Constants::TABLE_CONFIG, $key);
 
         try {
             $status = $this->connection->executeQuery($sql)->fetchOne();
             if($status===false) {
-                return '';
+                return Constants::CONFIG_STATUS_NOT_FOUND;
             } else {
                 return $status;
             }
         } catch (Exception $e) {
             var_dump($e->getMessage());
-            return '';
+            return Constants::CONFIG_STATUS_QUERY_ERROR;
         }
     }
 
@@ -122,10 +131,10 @@ class DatabaseRepository {
 
         return match ($table_type) {
             Constants::TABLE_CODES => sprintf("
-                CREATE TABLE %s (
+                CREATE TABLE `%s` (
                     `%s` VARCHAR(%d),
                     `%s` VARCHAR(255),
-                    CONSTRAINT key_%s_%s PRIMARY KEY (`code`)
+                    CONSTRAINT `key_%s_%s` PRIMARY KEY (`code`)
                 )",
                 $table,
                 Constants::SQL_CODE, $code_length,
@@ -134,12 +143,12 @@ class DatabaseRepository {
                 $year
             ),
             Constants::TABLE_UMSTEIGER => sprintf("
-                CREATE TABLE %s (
+                CREATE TABLE `%s` (
                     `%s` VARCHAR(%d),
                     `%s` VARCHAR(%d),
                     `%s` VARCHAR(1),
                     `%s` VARCHAR(1),
-                    CONSTRAINT key_%s_%s_%s_umsteiger PRIMARY KEY (`old`, `new`)
+                    CONSTRAINT `key_%s_%s_%s_umsteiger` PRIMARY KEY (`old`, `new`)
                 )",
                 $table,
                 Constants::SQL_OLD, $code_length,
@@ -181,7 +190,9 @@ class DatabaseRepository {
         $insert_serializer = new Serializer([], [new SqlInsertEncoder()]);
 
         $clean_values = match ($table_type) {
-            Constants::TABLE_CODES => [1],
+            Constants::TABLE_CODES => [
+                1 => function($in) {return Constants::sql_clean_name($in);}
+            ],
             Constants::TABLE_UMSTEIGER => []
         };
 
@@ -194,6 +205,7 @@ class DatabaseRepository {
                     SqlInsertEncoder::TABLE_NAME => $table,
                     SqlInsertEncoder::CLEAN_VALUES_INDEX => $clean_values
                 ]);
+                //var_dump($insert);
 
                 try {
                     $this->connection->executeQuery($insert);
@@ -226,7 +238,7 @@ class DatabaseRepository {
             Constants::TABLE_CODES => sprintf(
                 "
                 SELECT `%s`, `%s`
-                FROM %s
+                FROM `%s`
                 ",
                 Constants::SQL_CODE, Constants::SQL_NAME,
                 $table
@@ -234,7 +246,7 @@ class DatabaseRepository {
             Constants::TABLE_UMSTEIGER => sprintf(
                 "
                 SELECT `%s`, `%s` 
-                FROM %s
+                FROM `%s`
                 WHERE `%s` != 'A'
                 OR `%s` != 'A'
                 ",
@@ -246,9 +258,9 @@ class DatabaseRepository {
             Constants::TABLE_UMSTEIGER_JOIN => sprintf(
                 "
                 SELECT u.`%s`, u.`%s`, o.`%s` old_name, n.`%s` new_name
-                FROM %s u
-                JOIN %s o ON u.`%s` = o.`%s`
-                JOIN %s n ON u.`%s` = n.`%s`
+                FROM `%s` u
+                JOIN `%s` o ON u.`%s` = o.`%s`
+                JOIN `%s` n ON u.`%s` = n.`%s`
                 WHERE `%s` != 'A'
                 OR `%s` != 'A'
                 ",
@@ -278,7 +290,7 @@ class DatabaseRepository {
 
         $table = Constants::table_name($type, $year);
 
-        $sql = "SELECT COUNT(*) FROM $table";
+        $sql = "SELECT COUNT(*) FROM `$table`";
 
         try {
             return $this->connection->executeQuery($sql)->fetchOne();

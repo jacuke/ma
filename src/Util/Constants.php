@@ -11,7 +11,9 @@ final class Constants {
     // - - -
 
     public const CONFIG_STATUS_OK = 'OK';
+    public const CONFIG_STATUS_NOT_FOUND = 'N/A';
     public const CONFIG_STATUS_ERROR = 'ERROR';
+    public const CONFIG_STATUS_QUERY_ERROR = 'SQL_ERROR';
     public const TABLE_CONFIG = 'BFARMER';
     public const TABLE_CODES = 1;
     public const TABLE_UMSTEIGER = 2;
@@ -36,6 +38,12 @@ final class Constants {
     public const XML_CODES = 'codes';
     public const XML_UMSTEIGER = 'umsteiger';
     public const XML_DIR = 'dir';
+    public const XML_ENCODING = 'encoding';
+    public const XML_OPTIONS = 'options';
+    public const XML_PUNKT_STRICH = 'punkt-strich';
+    public const XML_KREUZ_STERN = 'kreuz-stern';
+    public const XML_ICD10GM_6COL = 'icd10gm-6col-umsteiger';
+    public const XML_OPTIONS_ARRAY = [self::XML_PUNKT_STRICH, self::XML_KREUZ_STERN, self::XML_ICD10GM_6COL];
 
     public static function file_name (string $type): string {
         return match ($type) {
@@ -61,5 +69,10 @@ final class Constants {
             Constants::OPS => 'OPS',
             default => 'n/a'
         };
+    }
+
+    public static function sql_clean_name (string $input): string {
+
+        return str_replace("'", "''", $input);
     }
 }

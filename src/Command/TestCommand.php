@@ -47,7 +47,19 @@ class TestCommand extends Command {
 
     protected function execute(InputInterface $input, OutputInterface $output): int {
 
+        $txt = <<<TXT
+<codes>x1ueb%d_%d/Klassifikationsdateien/icd10gmsyst%d.txt</codes>
+<umsteiger>x1ueb%d_%d/Klassifikationsdateien/umsteiger_icd10gmsyst%d_icd10gmsyst%d.txt</umsteiger>
+TXT;
 
+        $year = 2007;
+        $prev = $year -1;
+        $out = sprintf($txt, $prev, $year, $year, $prev, $year, $prev, $year);
+        $output->writeln($out);
+
+
+
+        return 0;
 
 //        $umst = $this->dbRepo->getIcdUmsteiger('2020', '2019');
 //        $auto = $this->umsteigerService->generateAutoUmsteiger($umst);

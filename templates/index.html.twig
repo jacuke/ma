@@ -25,9 +25,11 @@
             {% for key, value in data %}
                 <div class="col">
                     <h4>{{ code_title(key) }} Codes</h4>
+                    <div class="codes-3-col">
                     {% for year in value.years %}
-                        <a href="/{{ key }}_codes/{{ year }}">{{ year }}</a><br/>
+                        <div><a href="/{{ key }}_codes/{{ year }}">{{ year }}</a></div>
                     {% endfor %}
+                    </div>
                 </div>
             {% endfor %}
         </div>
