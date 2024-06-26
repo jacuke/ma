@@ -3,8 +3,8 @@
 namespace App\Controller;
 
 use App\Repository\DatabaseRepository;
-use App\Util\Constants;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -20,9 +20,10 @@ class CodesController extends AbstractController  {
 
     /** @noinspection PhpUnused */
     #[Route('/{type}_codes/{year}', name: 'codes')]
-    public function codes(string $type, string $year): Response  {
+    public function codes(string $type, string $year, Request $request): Response  {
 
-        $data = $this->dbRepo->readData($type, Constants::TABLE_CODES, $year);
+        $search = $request->request->get('search') ?? '';
+        $data = $this->dbRepo->readTerminalCodes($type, $year, $search);
 
         return $this->render('codes.html.twig',
             ['type' => $type, 'year' => $year, 'data' => $data]);

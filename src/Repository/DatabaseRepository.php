@@ -219,13 +219,7 @@ class DatabaseRepository {
         return true;
     }
 
-    private function select (string $type, int $table_type, string $year, string $prev = ''):string {
-
-        if($prev==='' &&
-            ($table_type===Constants::TABLE_UMSTEIGER || $table_type===Constants::TABLE_UMSTEIGER_JOIN)
-        ) {
-            $prev = $this->dataService->getPreviousYear($type, $year);
-        }
+    private function select (string $type, int $table_type, string $year, string $prev, string $search=''):string {
 
         $table = match($table_type) {
             Constants::TABLE_CODES =>
@@ -234,7 +228,7 @@ class DatabaseRepository {
                 Constants::table_name_umsteiger($type, $year, $prev),
         };
 
-        return match($table_type) {
+        $select = match($table_type) {
             Constants::TABLE_CODES => sprintf(
                 "
                 SELECT `%s`, `%s`
@@ -247,8 +241,8 @@ class DatabaseRepository {
                 "
                 SELECT `%s`, `%s` 
                 FROM `%s`
-                WHERE `%s` != 'A'
-                OR `%s` != 'A'
+                WHERE (`%s` != 'A'
+                OR `%s` != 'A')
                 ",
                 Constants::SQL_OLD, Constants::SQL_NEW,
                 $table,
@@ -261,8 +255,8 @@ class DatabaseRepository {
                 FROM `%s` u
                 JOIN `%s` o ON u.`%s` = o.`%s`
                 JOIN `%s` n ON u.`%s` = n.`%s`
-                WHERE `%s` != 'A'
-                OR `%s` != 'A'
+                WHERE (`%s` != 'A'
+                OR `%s` != 'A')
                 ",
             Constants::SQL_OLD, Constants::SQL_NEW, Constants::SQL_NAME, Constants::SQL_NAME,
                 $table,
@@ -272,11 +266,37 @@ class DatabaseRepository {
                 Constants::SQL_AUTO_R
             ),
         };
+
+        if($search!==''){
+            $where = match($table_type) {
+                Constants::TABLE_CODES => sprintf(
+                    "
+                WHERE `%s` like '%%%s%%'
+                ",
+                    Constants::SQL_CODE, $search
+                ),
+                Constants::TABLE_UMSTEIGER, Constants::TABLE_UMSTEIGER_JOIN => sprintf(
+                    "
+                AND `%s` like '%%%s%%'
+                ",
+                    Constants::SQL_NEW, $search
+                ),
+            };
+            $select .= ' ' . $where;
+        }
+
+        return $select;
     }
 
-    public function readData(string $type, int $table_type, string $year, string $prev='') :array {
+    public function readData(string $type, int $table_type, string $year, string $prev='', string $search='') :array {
 
-        $sql = $this->select($type, $table_type, $year, $prev);
+        if($prev==='' &&
+            ($table_type===Constants::TABLE_UMSTEIGER || $table_type===Constants::TABLE_UMSTEIGER_JOIN)
+        ) {
+            $prev = $this->dataService->getPreviousYear($type, $year);
+        }
+
+        $sql = $this->select($type, $table_type, $year, $prev, $search);
 
         try {
             return $this->connection->executeQuery($sql)->fetchAllAssociative();
@@ -284,6 +304,20 @@ class DatabaseRepository {
             // todo: log error
             return [];
         }
+    }
+
+    public function readTerminalCodes(string $type, string $year, string $search = '') :array {
+
+        $data = $this->readData($type, Constants::TABLE_CODES, $year, '', $search);
+        foreach($data as $k => $v) {
+            $current = $v['code'];
+            $next = next($data)['code'] ?? '';
+            if(str_contains($next, $current) &&
+                (strlen($next) > strlen($current))) {
+                unset($data[$k]);
+            }
+        }
+        return array_values($data);
     }
 
     public function countCodes (string $type, string $year):int {

@@ -14,10 +14,18 @@
                     <h4>{{ code_title(key) }} Umsteiger</h4>
                     <h6>Original</h6>
                     <a href="/{{ key }}_umsteiger">Link</a><br/><br/>
-                    <h6>Automatisiert</h6>
+                    {#<h6>Automatisiert</h6>
                     <a href="/{{ key }}_auto_umsteiger">Link</a><br/><br/>
                     <h6>Kombiniert</h6>
-                    <a href="/{{ key }}_combo_umsteiger">Link</a>
+                    <a href="/{{ key }}_combo_umsteiger">Link</a>#}
+                </div>
+            {% endfor %}
+        </div>
+        <div class="row">
+            {% for key, value in data %}
+                <div class="col">
+                    <h4>Test</h4>
+                    <a href="/{{ key }}_codes_search/2024/">Link</a><br/><br/>
                 </div>
             {% endfor %}
         </div>
