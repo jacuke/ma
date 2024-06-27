@@ -1,0 +1,31 @@
+<div>
+    <div style="margin-left: -2px; padding: 1px 12px; border: 1px solid #01388a; border-radius: 10px; background-color: #01388a; width:fit-content; color: white;">{{ data.year }}</div>
+{% for entry in data.umsteiger %}
+    <div style="border: 2px #01388a solid; border-radius:10px; margin: -2px; display:flex; width: max-content; padding: 12px">
+        <div style="max-width:400px; flex-shrink:0; ">
+            {% if entry.old != 'UNDEF' %}
+                <div class="umsteiger-codes">
+                    {{ entry.new }}
+                    {% if entry.auto == '' and entry.auto_r == '' %}
+                        <i class="bi bi-x-square-fill"></i>
+                    {% elseif entry.auto == '' %}
+                        <i class="bi bi-arrow-right-square-fill"></i>
+                    {% else %}
+                        <i class="bi bi-arrow-left-square-fill"></i>
+                    {% endif %}
+                    {{ entry.old }}
+                </div>
+                <div class="code-text">{{ entry.old_name }}</div>
+            {% else %}
+                <div>{{ entry.new }} hinzugefügt</div>
+            {% endif %}
+        </div>
+
+        {% if entry.subsection is defined %}
+            <div style="margin-left: 30px;">
+                {{ entry.subsection|raw }}
+            </div>
+        {% endif %}
+    </div>
+{% endfor %}
+</div>

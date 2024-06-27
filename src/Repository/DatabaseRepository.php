@@ -205,7 +205,6 @@ class DatabaseRepository {
                     SqlInsertEncoder::TABLE_NAME => $table,
                     SqlInsertEncoder::CLEAN_VALUES_INDEX => $clean_values
                 ]);
-                //var_dump($insert);
 
                 try {
                     $this->connection->executeQuery($insert);
@@ -239,12 +238,12 @@ class DatabaseRepository {
             ),
             Constants::TABLE_UMSTEIGER => sprintf(
                 "
-                SELECT `%s`, `%s` 
+                SELECT `%s`, `%s`, `%s`, `%s`
                 FROM `%s`
                 WHERE (`%s` != 'A'
                 OR `%s` != 'A')
                 ",
-                Constants::SQL_OLD, Constants::SQL_NEW,
+                Constants::SQL_OLD, Constants::SQL_NEW, Constants::SQL_AUTO, Constants::SQL_AUTO_R,
                 $table,
                 Constants::SQL_AUTO,
                 Constants::SQL_AUTO_R
@@ -324,6 +323,36 @@ class DatabaseRepository {
         return array_values($data);
     }
 
+    public function readUmsteigerHistory(string $type, string $begin_year, string $search = '') :array {
+
+        $ret = array();
+        $year = $begin_year;
+        $prev = $this->dataService->getPreviousYear($type, $year);
+        while($prev!=='') {
+            $umsteiger_in = $this->readData($type, Constants::TABLE_UMSTEIGER_JOIN, $year, $prev, $search);
+            if(count($umsteiger_in) > 0) {
+                $umsteiger_out = array();
+                foreach($umsteiger_in as $find) {
+                    if($find['old']!=='UNDEF') {
+                        $history = $this->readUmsteigerHistory($type, $prev, $find['old']);
+                        if(count($history)>0) {
+                            $find['history'] = $history;
+                        }
+                        $umsteiger_out[] = $find;
+                    } else {
+                        array_unshift($umsteiger_out, $find);
+                    }
+                }
+                $ret['umsteiger'] = $umsteiger_out;
+                $ret['year'] = $year;
+            }
+            $year = $prev;
+            $prev = $this->dataService->getPreviousYear($type, $year);
+        }
+
+        return $ret;
+    }
+
     public function countCodes (string $type, string $year):int {
 
         $table = Constants::table_name($type, $year);
@@ -343,13 +372,13 @@ class DatabaseRepository {
         return $this->readData($type, Constants::TABLE_UMSTEIGER_JOIN, $year, $prev_year);
     }
 
-    public function getIcdUmsteiger(string $year, string $prev_year):array {
-
-        return $this->readData(Constants::ICD10GM, Constants::TABLE_UMSTEIGER, $year, $prev_year);
-    }
-
-    public function getUmsteiger(string $type, string $year, string $prev_year=''):array {
-
-        return $this->readData($type, Constants::TABLE_UMSTEIGER, $year, $prev_year);
-    }
+//    public function getIcdUmsteiger(string $year, string $prev_year):array {
+//
+//        return $this->readData(Constants::ICD10GM, Constants::TABLE_UMSTEIGER, $year, $prev_year);
+//    }
+//
+//    public function getUmsteiger(string $type, string $year, string $prev_year=''):array {
+//
+//        return $this->readData($type, Constants::TABLE_UMSTEIGER, $year, $prev_year);
+//    }
 }

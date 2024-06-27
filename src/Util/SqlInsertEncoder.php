@@ -33,15 +33,13 @@ class SqlInsertEncoder implements EncoderInterface {
         }
 
         foreach($data as $line) {
-            $values = count($line);
-            if($values==0) {
+            if(count($line)==0) {
                 continue;
             }
             $line_str = '(';
-            for($i=0; $i<$values; $i++) {
-                $v = $line[$i];
-                if(in_array($i,array_keys($clean))) {
-                    $v = $clean[$i]($v);
+            foreach($line as $k => &$v) {
+                if(in_array($k,array_keys($clean))) {
+                    $v = $clean[$k]($v);
                 }
                 $line_str .= "'" . $v . "',";
             }

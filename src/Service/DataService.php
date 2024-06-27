@@ -38,12 +38,14 @@ class DataService {
 
             // linked years
             $linked_years = array();
-            $i=0;
-            for(; $i<count($xml_data)-1; $i++) {
-                $linked_years[$xml_data[$i][Constants::XML_YEAR]] =
-                    (string) $xml_data[$i+1][Constants::XML_YEAR];
+            reset($xml_data);
+            foreach($xml_data as $xml) {
+                $next_year = next($xml_data)[Constants::XML_YEAR] ?? '';
+                if($next_year==='') {
+                    $next_year = $last_year;
+                }
+                $linked_years[$xml[Constants::XML_YEAR]] = (string) $next_year;
             }
-            $linked_years[$xml_data[$i][Constants::XML_YEAR]] = $last_year;
             $this->data[$code][self::LINKED_YEARS] = $linked_years;
 
             // umsteiger years
@@ -60,25 +62,10 @@ class DataService {
         }
     }
 
-    public function readIcdData(): array {
-
-        return $this->readXmlData(Constants::ICD10GM);
-    }
-
-    public function readOpsData(): array {
-
-        return $this->readXmlData(Constants::OPS);
-    }
-
     public function readXmlData (string $type): array {
 
         $icd_xml = file_get_contents($this->projectDir . '/files/' . Constants::file_name($type));
         return $this->serializer->decode($icd_xml, 'xml')[$type] ?? [];
-    }
-
-    public function getIcdYears(): array {
-
-        return $this->getYears(Constants::ICD10GM);
     }
 
     public function getYears(string $type): array {
@@ -86,28 +73,18 @@ class DataService {
         return $this->data[$type][self::YEARS];
     }
 
-    public function getIcdUmsteigerYears(): array {
-
-        return $this->getUmsteigerYears(Constants::ICD10GM);
-    }
-
     public function getUmsteigerYears(string $type): array {
 
         return $this->data[$type][self::UMSTEIGER_YEARS];
     }
 
-    public function getIcdPreviousYear(string $year): string {
-
-        return $this->getPreviousYear(Constants::ICD10GM, $year);
-    }
-
     public function getPreviousYear(string $type, string $year): string {
 
-        return $this->data[$type][self::LINKED_YEARS][$year] ?? '0';
+        return $this->data[$type][self::LINKED_YEARS][$year] ?? '';
     }
 
     public function getLastYear(string $type): string {
 
-        return $this->data[$type][self::LAST_YEAR] ?? '0';
+        return $this->data[$type][self::LAST_YEAR] ?? '';
     }
 }

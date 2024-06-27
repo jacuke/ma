@@ -47,7 +47,7 @@ class TestCommand extends Command {
 
     protected function execute(InputInterface $input, OutputInterface $output): int {
 
-        $data = $this->dbRepo->readTerminalCodes('icd10gm', '2024', 'B43X');
+        $data = $this->dbRepo->readUmsteigerHistory('icd10gm', '2024', 'U69.04');
         var_dump($data);
 
         return Command::SUCCESS;

@@ -9,3 +9,5 @@
 import './styles/app.scss';
 
 require('bootstrap');
+
+// console.info("Hallo!");
