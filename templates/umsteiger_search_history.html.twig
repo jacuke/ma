@@ -3,7 +3,7 @@
 {% for entry in data.umsteiger %}
     <div style="border: 2px #01388a solid; border-radius:10px; margin: -2px; display:flex; width: max-content; padding: 12px">
         <div style="max-width:400px; flex-shrink:0; ">
-            {% if entry.old != 'UNDEF' %}
+            {% if entry.old != constant('App\\Util\\Constants::UNDEF') %}
                 <div class="umsteiger-codes">
                     {{ entry.new }}
                     {% if entry.auto == '' and entry.auto_r == '' %}
@@ -22,7 +22,7 @@
         </div>
 
         {% if entry.subsection is defined %}
-            <div style="margin-left: 30px;">
+            <div style="margin-left: 20px;">
                 {{ entry.subsection|raw }}
             </div>
         {% endif %}

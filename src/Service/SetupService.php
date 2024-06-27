@@ -80,7 +80,7 @@ class SetupService {
             $umsteiger = sprintf('%sKlassifikationsdateien/%s%ssyst_umsteiger_%s_%s.txt', $dir, $type, $year, $prev_year, $year);
         }
 
-        if($year===$this->dataService->getLastYear($type)) {
+        if($year===$this->dataService->getOldestYear($type)) {
             $umsteiger = '';
         }
 

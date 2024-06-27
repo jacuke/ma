@@ -333,7 +333,7 @@ class DatabaseRepository {
             if(count($umsteiger_in) > 0) {
                 $umsteiger_out = array();
                 foreach($umsteiger_in as $find) {
-                    if($find['old']!=='UNDEF') {
+                    if($find['old']!==Constants::UNDEF) {
                         $history = $this->readUmsteigerHistory($type, $prev, $find['old']);
                         if(count($history)>0) {
                             $find['history'] = $history;

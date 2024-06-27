@@ -8,6 +8,8 @@ final class Constants {
     public const OPS = 'ops';
     public const CODE_SYSTEMS = [self::ICD10GM, self::OPS];
 
+    public const UNDEF = 'UNDEF';
+
     // - - -
 
     public const CONFIG_STATUS_OK = 'OK';

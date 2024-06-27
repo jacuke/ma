@@ -15,7 +15,8 @@ class DataService {
     private const YEARS = 'y';
     private const LINKED_YEARS = 'l';
     private const UMSTEIGER_YEARS = 'u';
-    private const LAST_YEAR = 'z';
+    private const NEWEST_YEAR = 'n';
+    private const OLDEST_YEAR = 'o';
 
     public function __construct(
         string $projectDir
@@ -28,21 +29,23 @@ class DataService {
 
             $xml_data = $this->readXmlData($code);
 
-            // last year
+            // oldest year
             if(isset(end($xml_data)[Constants::XML_PREV][Constants::XML_YEAR])) {
-                $last_year = end($xml_data)[Constants::XML_PREV][Constants::XML_YEAR];
+                $oldest_year = end($xml_data)[Constants::XML_PREV][Constants::XML_YEAR];
             } else {
-                $last_year = array_pop($xml_data)[Constants::XML_YEAR];
+                $oldest_year = array_pop($xml_data)[Constants::XML_YEAR];
             }
-            $this->data[$code][self::LAST_YEAR] = $last_year;
+            $this->data[$code][self::OLDEST_YEAR] = $oldest_year;
+
+            // newest year
+            $this->data[$code][self::NEWEST_YEAR] = reset($xml_data)[Constants::XML_YEAR];
 
             // linked years
             $linked_years = array();
-            reset($xml_data);
             foreach($xml_data as $xml) {
                 $next_year = next($xml_data)[Constants::XML_YEAR] ?? '';
                 if($next_year==='') {
-                    $next_year = $last_year;
+                    $next_year = $oldest_year;
                 }
                 $linked_years[$xml[Constants::XML_YEAR]] = (string) $next_year;
             }
@@ -70,12 +73,12 @@ class DataService {
 
     public function getYears(string $type): array {
 
-        return $this->data[$type][self::YEARS];
+        return $this->data[$type][self::YEARS] ?? [];
     }
 
     public function getUmsteigerYears(string $type): array {
 
-        return $this->data[$type][self::UMSTEIGER_YEARS];
+        return $this->data[$type][self::UMSTEIGER_YEARS] ?? [];
     }
 
     public function getPreviousYear(string $type, string $year): string {
@@ -83,8 +86,13 @@ class DataService {
         return $this->data[$type][self::LINKED_YEARS][$year] ?? '';
     }
 
-    public function getLastYear(string $type): string {
+    public function getOldestYear(string $type): string {
 
-        return $this->data[$type][self::LAST_YEAR] ?? '';
+        return $this->data[$type][self::OLDEST_YEAR] ?? '';
+    }
+
+    public function getNewestYear(string $type): string {
+
+        return $this->data[$type][self::NEWEST_YEAR] ?? '';
     }
 }

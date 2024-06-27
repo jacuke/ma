@@ -12,20 +12,14 @@
             {% for key, value in data %}
                 <div class="col">
                     <h4>{{ code_title(key) }} Umsteiger</h4>
-                    <h6>Original</h6>
-                    <a href="/{{ key }}_umsteiger">Link</a><br/><br/>
-                    {#<h6>Automatisiert</h6>
-                    <a href="/{{ key }}_auto_umsteiger">Link</a><br/><br/>
-                    <h6>Kombiniert</h6>
-                    <a href="/{{ key }}_combo_umsteiger">Link</a>#}
-                </div>
-            {% endfor %}
-        </div>
-        <div class="row">
-            {% for key, value in data %}
-                <div class="col">
-                    <h4>Test</h4>
-                    <a href="/{{ key }}_umsteiger_suche">Link</a><br/><br/>
+                    <div class="umsteiger-submenu">
+                        <h6>Übersicht</h6>
+                        <a href="/{{ key }}_umsteiger">Link</a>
+                    </div>
+                    <div class="umsteiger-submenu">
+                        <h6>Suche/Historie</h6>
+                        <a href="/{{ key }}_umsteiger_suche">Link</a>
+                    </div>
                 </div>
             {% endfor %}
         </div>

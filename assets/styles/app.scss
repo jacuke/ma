@@ -1,6 +1,15 @@
 @import "~bootstrap/scss/bootstrap";
 @import url('../../node_modules/bootstrap-icons/font/bootstrap-icons.css');
 
+$smaller-text: 15px;
+$primary-complementary: #fd9c0d;
+$primary-dark: #01388a;
+$name-box-width: 360px;
+
+.umsteiger-submenu {
+    padding: 16px 0;
+}
+
 .row {
     padding-top: 30px;
 }
@@ -33,9 +42,9 @@
     }
 }
 
-.bi-arrow-left-square-fill { color: #fd9c0d; }
-.bi-arrow-right-square-fill { color: $primary; }
 .bi-x-square-fill { color: $danger; }
+.bi-arrow-right-square-fill { color: $primary; }
+.bi-arrow-left-square-fill { color: $primary-complementary; }
 
 .navbar {
 
@@ -61,7 +70,7 @@
 
     .navbar-image-text {
         height: 20px;
-        font-size: 15px;
+        font-size: $smaller-text;
     }
 }
 
@@ -80,18 +89,45 @@
 }
 
 .input-group {
+
     width:200px !important;
     padding-bottom: 5px  !important;
 }
 
-.umsteiger-search {
-    .code-text {
-        font-size: 15px !important;
-        max-width: 360px;
+.umsteiger-search-result {
+
+    overflow-y:scroll;
+    padding: 2px;
+
+    .code-container {
+        font-weight: bold;
     }
+
+    .name-container {
+        font-size: $smaller-text !important;
+        max-width: $name-box-width;
+    }
+
+    .history-container {
+        margin-top: 5px;
+    }
+
     .umsteiger-codes {
         .bi {
             font-size: 17px !important;
         }
+    }
+}
+
+.search-results {
+    .result-counter {
+        font-size: $smaller-text !important;
+        color: $primary-dark;
+        padding-bottom: 5px;
+    }
+    .separator {
+        width: $name-box-width;
+        border-bottom: 3px dotted black;
+        margin: 18px 0 10px 0;
     }
 }
