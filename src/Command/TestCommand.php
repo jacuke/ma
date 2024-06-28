@@ -47,6 +47,9 @@ class TestCommand extends Command {
 
     protected function execute(InputInterface $input, OutputInterface $output): int {
 
+        $this->umsteigerService->mergeAllAutoUmsteiger();
+        return Command::SUCCESS;
+
         $type = 'icd10gm';
         $years = $this->dataService->getUmsteigerYears($type);
         foreach ($years as $year) {

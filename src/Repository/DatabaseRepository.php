@@ -258,9 +258,9 @@ class DatabaseRepository {
                 FROM `%s` u
                 JOIN `%s` o ON u.`%s` = o.`%s`
                 JOIN `%s` n ON u.`%s` = n.`%s`
-                WHERE (`%s` != `%s`
-                OR `%s` != 'A'
-                OR `%s` != 'A')
+                WHERE (u.`%s` != u.`%s`
+                OR u.`%s` != 'A'
+                OR u.`%s` != 'A')
                 ",
             Constants::SQL_OLD, Constants::SQL_NEW,
                 Constants::SQL_AUTO, Constants::SQL_AUTO_R,
