@@ -232,7 +232,7 @@ class DatabaseRepository {
                 "
                 SELECT `%s`, `%s`
                 FROM `%s`
-                ",
+                %%s",
                 Constants::SQL_CODE, Constants::SQL_NAME,
                 $table
             ),
@@ -243,12 +243,15 @@ class DatabaseRepository {
                 WHERE (`%s` != `%s`
                 OR `%s` != 'A'
                 OR `%s` != 'A')
+                %%s
+                ORDER BY `%s`
                 ",
                 Constants::SQL_OLD, Constants::SQL_NEW, Constants::SQL_AUTO, Constants::SQL_AUTO_R,
                 $table,
                 Constants::SQL_OLD, Constants::SQL_NEW,
                 Constants::SQL_AUTO,
-                Constants::SQL_AUTO_R
+                Constants::SQL_AUTO_R,
+                Constants::SQL_NEW
             ),
             Constants::TABLE_UMSTEIGER_JOIN => sprintf(
                 "
@@ -261,6 +264,8 @@ class DatabaseRepository {
                 WHERE (u.`%s` != u.`%s`
                 OR u.`%s` != 'A'
                 OR u.`%s` != 'A')
+                %%s
+                ORDER BY u.`%s`
                 ",
             Constants::SQL_OLD, Constants::SQL_NEW,
                 Constants::SQL_AUTO, Constants::SQL_AUTO_R,
@@ -270,7 +275,8 @@ class DatabaseRepository {
                 Constants::table_name($type, $year), Constants::SQL_NEW, Constants::SQL_CODE,
                 Constants::SQL_OLD, Constants::SQL_NEW,
                 Constants::SQL_AUTO,
-                Constants::SQL_AUTO_R
+                Constants::SQL_AUTO_R,
+                Constants::SQL_NEW
             ),
         };
 
@@ -289,7 +295,9 @@ class DatabaseRepository {
                     Constants::SQL_NEW, $search
                 ),
             };
-            $select .= ' ' . $where;
+            $select = sprintf($select, ' ' . $where);
+        } else {
+            $select = sprintf($select, '');
         }
 
         return $select;
