@@ -47,6 +47,14 @@ class TestCommand extends Command {
 
     protected function execute(InputInterface $input, OutputInterface $output): int {
 
+        $type = 'icd10gm';
+        $years = $this->dataService->getUmsteigerYears($type);
+        foreach ($years as $year) {
+            $data = $this->dbRepo->readData($type, Constants::TABLE_UMSTEIGER, $year);
+            var_dump($data);
+        }
+        return Command::SUCCESS;
+
         $data = $this->dbRepo->readUmsteigerHistory('icd10gm', '2024', 'U69.04');
         var_dump($data);
 

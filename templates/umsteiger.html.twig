@@ -41,8 +41,10 @@
                                         <td class="arrow"><i class="bi bi-x-square-fill"></i></td>
                                     {% elseif line.auto == '' %}
                                         <td class="arrow"><i class="bi bi-arrow-right-square-fill"></i></td>
-                                    {% else %}
+                                    {% elseif line.auto_r == '' %}
                                         <td class="arrow"><i class="bi bi-arrow-left-square-fill"></i></td>
+                                    {% else %}
+                                        <td class="arrow"><i class="bi bi-dash-square-fill"></i></td>
                                     {% endif %}
                                     <td>{{ line.old }}</td>
                                     <td>{{ line.old_name }}</td>

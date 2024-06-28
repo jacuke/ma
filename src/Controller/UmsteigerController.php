@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Repository\DatabaseRepository;
 use App\Service\DataService;
+use App\Util\Constants;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -29,9 +30,7 @@ class UmsteigerController extends AbstractController {
         $data = array();
         foreach ($years as $year) {
             $prev = $this->dataService->getPreviousYear($type, $year);
-            $umsteiger = $this->dbRepo->getUmsteigerWithNames(
-                $type, $year, $prev
-            );
+            $umsteiger = $this->dbRepo->readData($type, Constants::TABLE_UMSTEIGER_JOIN, $year, $prev);
             $data[$year] = [
                 'prev' => $prev,
                 'codes' => $umsteiger,

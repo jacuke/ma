@@ -240,11 +240,13 @@ class DatabaseRepository {
                 "
                 SELECT `%s`, `%s`, `%s`, `%s`
                 FROM `%s`
-                WHERE (`%s` != 'A'
+                WHERE (`%s` != `%s`
+                OR `%s` != 'A'
                 OR `%s` != 'A')
                 ",
                 Constants::SQL_OLD, Constants::SQL_NEW, Constants::SQL_AUTO, Constants::SQL_AUTO_R,
                 $table,
+                Constants::SQL_OLD, Constants::SQL_NEW,
                 Constants::SQL_AUTO,
                 Constants::SQL_AUTO_R
             ),
@@ -256,7 +258,8 @@ class DatabaseRepository {
                 FROM `%s` u
                 JOIN `%s` o ON u.`%s` = o.`%s`
                 JOIN `%s` n ON u.`%s` = n.`%s`
-                WHERE (`%s` != 'A'
+                WHERE (`%s` != `%s`
+                OR `%s` != 'A'
                 OR `%s` != 'A')
                 ",
             Constants::SQL_OLD, Constants::SQL_NEW,
@@ -265,6 +268,7 @@ class DatabaseRepository {
                 $table,
                 Constants::table_name($type, $prev), Constants::SQL_OLD, Constants::SQL_CODE,
                 Constants::table_name($type, $year), Constants::SQL_NEW, Constants::SQL_CODE,
+                Constants::SQL_OLD, Constants::SQL_NEW,
                 Constants::SQL_AUTO,
                 Constants::SQL_AUTO_R
             ),
@@ -366,19 +370,4 @@ class DatabaseRepository {
             return 0;
         }
     }
-
-    public function getUmsteigerWithNames(string $type, string $year, string $prev_year):array {
-
-        return $this->readData($type, Constants::TABLE_UMSTEIGER_JOIN, $year, $prev_year);
-    }
-
-//    public function getIcdUmsteiger(string $year, string $prev_year):array {
-//
-//        return $this->readData(Constants::ICD10GM, Constants::TABLE_UMSTEIGER, $year, $prev_year);
-//    }
-//
-//    public function getUmsteiger(string $type, string $year, string $prev_year=''):array {
-//
-//        return $this->readData($type, Constants::TABLE_UMSTEIGER, $year, $prev_year);
-//    }
 }
