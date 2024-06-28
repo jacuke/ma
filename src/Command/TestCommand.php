@@ -47,6 +47,10 @@ class TestCommand extends Command {
 
     protected function execute(InputInterface $input, OutputInterface $output): int {
 
+        $history = $this->dbRepo->readUmsteigerHistory('icd10gm', '2021', 'K57.02');
+        var_dump($history);
+        return Command::SUCCESS;
+
         $this->umsteigerService->mergeAllAutoUmsteiger();
         return Command::SUCCESS;
 

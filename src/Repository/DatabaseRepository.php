@@ -349,11 +349,11 @@ class DatabaseRepository {
                 }
                 $ret['umsteiger'] = $umsteiger_out;
                 $ret['year'] = $year;
+                return $ret;
             }
             $year = $prev;
             $prev = $this->dataService->getPreviousYear($type, $year);
         }
-
         return $ret;
     }
 
