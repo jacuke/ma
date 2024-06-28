@@ -24,7 +24,7 @@ class UmsteigerSearchController extends AbstractController {
     }
 
     /** @noinspection PhpUnused */
-    #[Route('/{type}_umsteiger_suche', name: 'umsteiger_suche')]
+    #[Route('/{type}-umsteiger-suche', name: 'umsteiger_suche')]
     public function umsteiger_suche(string $type, Request $request): Response {
 
         $render_results = array();
@@ -37,41 +37,16 @@ class UmsteigerSearchController extends AbstractController {
                 if($code===Constants::UNDEF) {
                     continue;
                 }
-                $view = $this->render_history_recursive(
+                $history = $this->render_history_recursive(
                     $this->dbRepo->readUmsteigerHistory($type, $first_year, $code)
                 );
                 $render_results[] = $this->render_search_result(
-                    ['code' => $code, 'name' => $result['name'], 'view' => $view]
+                    ['code' => $code, 'name' => $result['name'], 'history' => $history]
                 );
             }
         }
 
         return $this->render('umsteiger_search.html.twig', ['type' => $type, 'results' => $render_results, 'search' => $search]);
-
-        $data = $this->dbRepo->readUmsteigerHistory($type, '2024', 'U69.04');
-        $view = $this->render_history_recursive($data);
-
-        return $this->render('umsteiger_search_result.html.twig', ['view' => $view, 'data' => $data]);
-
-//        $years = $this->dataService->getUmsteigerYears($type);
-//        $data = array();
-//        foreach ($years as $year) {
-//            $prev = $this->dataService->getPreviousYear($type, $year);
-//            $umsteiger = $this->dbRepo->getUmsteigerWithNames(
-//                $type, $year, $prev
-//            );
-//            $data[$year] = [
-//                'prev' => $prev,
-//                'codes' => $umsteiger,
-//                'rate' => number_format(
-//                    round(count($umsteiger) / $this->dbRepo->countCodes($type, $year) * 100, 2),
-//                    2, ',', ''
-//                )
-//            ];
-//        }
-//
-//        return $this->render('umsteiger.html.twig',
-//            ['type' => $type, 'data' => $data]);
     }
 
     private function render_search_result (array $data) :string {
@@ -90,7 +65,30 @@ class UmsteigerSearchController extends AbstractController {
                 $v['subsection'] = $this->render_history_recursive ($v['history']);
             }
         }
-        return $this->renderView('umsteiger_search_history.html.twig',
-            ['data'=> $data]);
+        return $this->renderView('umsteiger_search_history.html.twig', ['data'=> $data]);
+    }
+
+    #[Route('/umsteiger-suche-api', name: 'umsteiger_search_api')]
+    public function umsteiger_search_api(Request $request): Response {
+
+        $type = $request->query->get('t') ?? '';
+        $year = $request->query->get('y') ?? '';
+        $code = $request->query->get('s') ?? '';
+        if($type==='' || $year==='' || $code==='') {
+            $content = '<div></div>';
+        } else {
+            $results = $this->dbRepo->readUmsteigerHistory($type, $year, $code);
+            if(empty($results)) {
+                $content = '<div>Keine Ergebnisse</div>';
+            } else {
+                $history = $this->render_history_recursive($results);
+                $name = $results['umsteiger'][0]['new_name'];
+                $content = $this->render_search_result(
+                    ['code' => $code, 'name' => $name, 'history' => $history]
+                );
+            }
+        }
+
+        return $this->render('modal.html.twig', ['content'=> $content]);
     }
 }

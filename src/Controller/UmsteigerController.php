@@ -22,7 +22,7 @@ class UmsteigerController extends AbstractController {
     }
 
     /** @noinspection PhpUnused */
-    #[Route('/{type}_umsteiger', name: 'umsteiger')]
+    #[Route('/{type}-umsteiger', name: 'umsteiger')]
     public function umsteiger(string $type): Response {
 
         $years = $this->dataService->getUmsteigerYears($type);

@@ -8,10 +8,6 @@ $name-box-width: 400px;
 $table-width: 800px;
 $page-border: 12px;
 
-.umsteiger-submenu {
-    padding: 16px 0;
-}
-
 .row {
     padding-top: 30px;
 }
@@ -20,7 +16,30 @@ $page-border: 12px;
     padding-top: 10px;
 }
 
-.umsteiger {
+.modal-dialog {
+
+    min-width: 250px;
+    width: fit-content;
+    max-width: 85% !important;
+
+    .modal-header {
+        border-bottom: 0 !important;
+
+        .modal-title {
+            padding-right: 10px;
+        }
+    }
+
+    .modal-body {
+        padding-top: 0 !important;
+    }
+}
+
+.umsteiger-submenu {
+    padding: 16px 0;
+}
+
+.umsteiger-page {
 
     margin-left: $page-border;
 
@@ -102,64 +121,82 @@ $page-border: 12px;
     padding-bottom: 5px  !important;
 }
 
-.umsteiger-search {
+.codes-page, .umsteiger-search-page {
 
     margin: 0 0 $page-border $page-border;
 
     form {
         padding-bottom: 12px;
     }
+}
 
-    .umsteiger-search-result {
+.codes-page td {
 
-        overflow-y:scroll;
-        padding: 2px;
+    vertical-align: middle;
+}
 
-        .code-container {
-            font-weight: bold;
+.umsteiger-icon {
+    font-size: 19px;
+    text-align: center;
+}
+
+.umsteiger-search-link {
+    color: black;
+    :link, :visited, :hover, :active {
+        color: black;
+    }
+}
+
+.umsteiger-search-result {
+
+    overflow-y:scroll;
+    scrollbar-color: $primary-complementary transparent;
+    padding: 2px 2px 10px;
+
+    .code-container {
+        font-weight: bold;
+    }
+
+    .name-container {
+        max-width: $name-box-width;
+    }
+
+    .history-container {
+
+        margin-top: 5px;
+
+        .year {
+            margin-left: -2px;
+            padding: 1px 12px;
+            border: 1px solid $primary-dark;
+            border-radius: 10px;
+            color: white;
+            background-color: $primary-dark;
+            width:fit-content;
         }
 
-        .name-container {
-            max-width: $name-box-width;
-        }
+        .history-results-container {
+            border: 2px solid $primary-dark;
+            border-radius:10px;
+            margin: -2px;
+            display:flex;
+            width: max-content;
+            padding: 12px;
 
-        .history-container {
-
-            margin-top: 5px;
-
-            .year {
-                margin-left: -2px;
-                padding: 1px 12px;
-                border: 1px solid $primary-dark;
-                border-radius: 10px;
-                color: white;
-                background-color: $primary-dark;
-                width:fit-content;
+            .result {
+                max-width: calc($name-box-width + 40px);
+                flex-shrink:0;
             }
 
-            .history-results-container {
-                border: 2px solid $primary-dark;
-                border-radius:10px;
-                margin: -2px;
-                display:flex;
-                width: max-content;
-                padding: 12px;
-
-                .result {
-                    max-width: calc($name-box-width + 40px);
-                    flex-shrink:0;
-                }
-
-                .subsection {
-                    margin-left: 20px;
-                }
+            .subsection {
+                margin-left: 20px;
             }
         }
+    }
 
-        .umsteiger-codes {
-            .bi {
-                font-size: 17px !important;
-            }
+    .umsteiger-codes {
+        .bi {
+            font-size: 17px !important;
         }
     }
 }
@@ -174,6 +211,6 @@ $page-border: 12px;
     .separator {
         width: calc($name-box-width - 200px);
         border-bottom: 3px dotted black;
-        margin: 24px 100px 20px;
+        margin: 16px 100px 20px;
     }
 }

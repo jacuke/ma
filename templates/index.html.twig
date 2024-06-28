@@ -14,11 +14,11 @@
                     <h4>{{ code_title(key) }} Umsteiger</h4>
                     <div class="umsteiger-submenu">
                         <h6>Übersicht</h6>
-                        <a href="/{{ key }}_umsteiger">Link</a>
+                        <a href="/{{ key }}-umsteiger">Link</a>
                     </div>
                     <div class="umsteiger-submenu">
                         <h6>Suche/Historie</h6>
-                        <a href="/{{ key }}_umsteiger_suche">Link</a>
+                        <a href="/{{ key }}-umsteiger-suche">Link</a>
                     </div>
                 </div>
             {% endfor %}
@@ -29,7 +29,7 @@
                     <h4>{{ code_title(key) }} Codes</h4>
                     <div class="codes-3-col">
                     {% for year in value.years %}
-                        <div><a href="/{{ key }}_codes/{{ year }}">{{ year }}</a></div>
+                        <div><a href="/{{ key }}-codes-{{ year }}">{{ year }}</a></div>
                     {% endfor %}
                     </div>
                 </div>

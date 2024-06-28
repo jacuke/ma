@@ -19,10 +19,10 @@ class CodesController extends AbstractController  {
     }
 
     /** @noinspection PhpUnused */
-    #[Route('/{type}_codes/{year}', name: 'codes')]
+    #[Route('/{type}-codes-{year}', name: 'codes')]
     public function codes(string $type, string $year, Request $request): Response  {
 
-        $search = $request->request->get('search') ?? '';
+        $search = $request->query->get('s') ?? '';
         $data = $this->dbRepo->readTerminalCodes($type, $year, $search);
 
         return $this->render('codes.html.twig',

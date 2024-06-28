@@ -4,30 +4,45 @@
 
 {% block body %}
 
-    <h4>{{ code_title(type) }} {{ year }}</h4>
-
-    <form method="post">
-        <div class="input-group">
-            <input name="search" id="codeSearch" type="text" class="form-control" placeholder="Code" aria-label="Code Suche">
-            <button type="submit" class="btn btn-primary">Suchen</button>
+    <div class="modal fade" id="edit-modal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content"></div>
         </div>
-    </form>
+    </div>
 
-    <table class="table table-sm">
-        <thead>
-        <tr>
-            <th scope="col">Code</th>
-            <th scope="col">Titel</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for element in data %}
+    <div class="codes-page">
+        <h4>{{ code_title(type) }} {{ year }}</h4>
+
+        <form method="get">
+            <div class="input-group">
+                <input name="s" id="codeSearch" type="text" class="form-control" placeholder="Code" aria-label="Code Suche">
+                <button type="submit" class="btn btn-primary">Suchen</button>
+            </div>
+        </form>
+
+        <table class="table table-sm">
+            <thead>
             <tr>
-                <td>{{ element.code }}</td>
-                <td>{{ element.name }}</td>
+                <th scope="col">Code</th>
+                <th scope="col">Umsteiger</th>
+                <th scope="col">Titel</th>
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            {% for element in data %}
+                <tr>
+                    <td>{{ element.code }}</td>
+                    <td class="umsteiger-icon">
+                        <a class="umsteiger-search-link" href="" data-bs-toggle="modal" data-bs-target="#edit-modal"
+                           onclick="ajaxUmsteigerSearchHistory('{{ type }}','{{ year }}','{{ element.code }}')">
+                            <i class="bi bi-patch-question"></i>
+                        </a>
+                    </td>
+                    <td>{{ element.name }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
 {% endblock %}
