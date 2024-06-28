@@ -284,7 +284,7 @@ class DatabaseRepository {
                 ),
                 Constants::TABLE_UMSTEIGER, Constants::TABLE_UMSTEIGER_JOIN => sprintf(
                     "
-                AND `%s` like '%%%s%%'
+                AND `%s` = '%s'
                 ",
                     Constants::SQL_NEW, $search
                 ),
