@@ -4,7 +4,9 @@
 $smaller-text: 15px;
 $primary-complementary: #fd9c0d;
 $primary-dark: #01388a;
-$name-box-width: 360px;
+$name-box-width: 400px;
+$table-width: 800px;
+$page-border: 12px;
 
 .umsteiger-submenu {
     padding: 16px 0;
@@ -19,8 +21,14 @@ $name-box-width: 360px;
 }
 
 .umsteiger {
+
+    margin-left: $page-border;
+
+    .nav {
+        max-width: $table-width;
+    }
     table {
-        width: 800px;
+        width: $table-width;
     }
     th.code {
         width: 10%;
@@ -94,27 +102,64 @@ $name-box-width: 360px;
     padding-bottom: 5px  !important;
 }
 
-.umsteiger-search-result {
+.umsteiger-search {
 
-    overflow-y:scroll;
-    padding: 2px;
+    margin: 0 0 $page-border $page-border;
 
-    .code-container {
-        font-weight: bold;
+    form {
+        padding-bottom: 12px;
     }
 
-    .name-container {
-        font-size: $smaller-text !important;
-        max-width: $name-box-width;
-    }
+    .umsteiger-search-result {
 
-    .history-container {
-        margin-top: 5px;
-    }
+        overflow-y:scroll;
+        padding: 2px;
 
-    .umsteiger-codes {
-        .bi {
-            font-size: 17px !important;
+        .code-container {
+            font-weight: bold;
+        }
+
+        .name-container {
+            max-width: $name-box-width;
+        }
+
+        .history-container {
+
+            margin-top: 5px;
+
+            .year {
+                margin-left: -2px;
+                padding: 1px 12px;
+                border: 1px solid $primary-dark;
+                border-radius: 10px;
+                color: white;
+                background-color: $primary-dark;
+                width:fit-content;
+            }
+
+            .history-results-container {
+                border: 2px solid $primary-dark;
+                border-radius:10px;
+                margin: -2px;
+                display:flex;
+                width: max-content;
+                padding: 12px;
+
+                .result {
+                    max-width: calc($name-box-width + 40px);
+                    flex-shrink:0;
+                }
+
+                .subsection {
+                    margin-left: 20px;
+                }
+            }
+        }
+
+        .umsteiger-codes {
+            .bi {
+                font-size: 17px !important;
+            }
         }
     }
 }
@@ -123,11 +168,12 @@ $name-box-width: 360px;
     .result-counter {
         font-size: $smaller-text !important;
         color: $primary-dark;
-        padding-bottom: 5px;
+        width: $name-box-width;
+        text-align: center;
     }
     .separator {
-        width: $name-box-width;
+        width: calc($name-box-width - 200px);
         border-bottom: 3px dotted black;
-        margin: 18px 0 10px 0;
+        margin: 24px 100px 20px;
     }
 }
