@@ -140,10 +140,11 @@ $page-border: 12px;
 .blur-box::before {
     content: "";
     position: absolute;
-    inset: 0 0 -20px 0;
     z-index: -1;
-    background: white;
+    inset: 0 0 -20px 0;
+    transform: translate(0, -10px);
     filter: blur(10px);
+    background: white;
 }
 
 .patients-page {

@@ -53,7 +53,7 @@ class PatientsService {
 
         $patients = array();
         $year_int = Constants::year_str_to_int($year);
-        $data = $this->dbRepo->readData(Constants::ICD10GM, Constants::TABLE_CODES, $year);
+        $data = $this->dbRepo->readTerminalCodes(Constants::ICD10GM, $year);
         for($i = 0; $i < $num; $i++) {
 
             $num_codes = $this->draw_random_num_codes();
