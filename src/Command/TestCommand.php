@@ -2,6 +2,7 @@
 
 namespace App\Command;
 
+use App\Repository\PatientsRepository;
 use App\Service\ConceptMapService;
 use App\Service\DataService;
 use App\Service\UmsteigerService;
@@ -22,6 +23,7 @@ use App\Repository\DatabaseRepository;
 class TestCommand extends Command {
 
     private DatabaseRepository $dbRepo;
+    private PatientsRepository $patientsRepo;
     private DataService $dataService;
     private UmsteigerService $umsteigerService;
     private ConceptMapService $conceptMapService;
@@ -29,6 +31,7 @@ class TestCommand extends Command {
     
     public function __construct(
         DatabaseRepository $generalRepo,
+        PatientsRepository $patientsRepo,
         DataService        $dataService,
         UmsteigerService   $umsteigerService,
         ConceptMapService  $conceptMapService,
@@ -37,6 +40,7 @@ class TestCommand extends Command {
         parent::__construct();
 
         $this->dbRepo = $generalRepo;
+        $this->patientsRepo = $patientsRepo;
         $this->dataService = $dataService;
         $this->umsteigerService = $umsteigerService;
         $this->conceptMapService = $conceptMapService;
@@ -46,6 +50,34 @@ class TestCommand extends Command {
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int {
+
+        $bla = array();
+        $bla[] = "O'Nyong-nyong-Fieber";
+        $bla[] = "blupp";
+        $json = json_encode($bla, JSON_UNESCAPED_UNICODE);
+        //$json = Constants::sql_clean_name($json);
+
+        $data = [[
+            'id' => '0',
+            'year' => Constants::year_str_to_int('2.0'),
+            'codes' => '["A92.1","X12.3"]',
+            'names' => $json
+        ]];
+
+        $this->patientsRepo->addPatients($data);
+
+//        $bla = array();
+//        $bla[] = "O'Nyong-nyong-Fieber";
+//        $bla[] = "blupp";
+//        $json = json_encode($bla);
+//        $json = Constants::sql_clean_name($json);
+//        var_dump($json);
+        return Command::SUCCESS;
+
+
+
+        var_dump($this->patientsRepo->readPatients());
+        return Command::SUCCESS;
 
         $history = $this->dbRepo->readUmsteigerHistory('icd10gm', '2021', 'K57.02');
         var_dump($history);

@@ -74,7 +74,7 @@ $page-border: 12px;
 .bi-arrow-right-square-fill { color: $primary; }
 .bi-arrow-left-square-fill { color: $primary-complementary; }
 
-.navbar {
+.navbar.bfarmer-navbar {
 
     padding: 1px 0 3px 0 !important;
     margin-bottom: 18px;
@@ -116,10 +116,12 @@ $page-border: 12px;
     }
 }
 
-.input-group {
+.codes-page, .umsteiger-search-page {
+    .input-group {
 
-    width:200px !important;
-    padding-bottom: 5px  !important;
+        width:200px !important;
+        padding-bottom: 5px  !important;
+    }
 }
 
 .codes-page, .umsteiger-search-page {
@@ -128,6 +130,111 @@ $page-border: 12px;
 
     form {
         padding-bottom: 12px;
+    }
+}
+
+.blur-box {
+    position: relative;
+    width: 100%;
+}
+.blur-box::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 -20px 0;
+    z-index: -1;
+    background: white;
+    filter: blur(10px);
+}
+
+.patients-page {
+
+    margin: 0 $page-border $page-border $page-border;
+
+    .form-navbar {
+        margin-left: -$page-border !important;
+        background-color: white;
+    }
+
+    .patients-total {
+        padding-bottom: 4px;
+    }
+
+    form {
+        .btn-group {
+            max-height: 38px;
+        }
+        .main-input-group {
+            margin-left: $page-border;
+        }
+        .search-input-group {
+            padding-bottom: 5px;
+        }
+        .input-group {
+            width: fit-content;
+        }
+        .code-input, .name-input {
+            flex-grow: 0;
+        }
+        .code-input {
+            width: 120px;
+        }
+        .name-input {
+            width: 200px;
+        }
+        .hits-text, .pages-text {
+            background-color: white;
+            border: none;
+        }
+        .hits-text {
+            margin: 1px 8px 1px 16px;
+        }
+        .pages-text {
+            margin: 1px;
+        }
+        .btn-first-page, .btn-next-page {
+            margin-right: 1px;
+        }
+    }
+
+    table {
+        margin-top: 5px;
+    }
+
+    td {
+        border-width: var(--bs-border-width);
+        padding-left: 10px;
+        padding-right: 10px;
+
+        .code-cell {
+            display: flex;
+            justify-content: space-between;
+            min-width: 78px;
+        }
+    }
+
+    th.patient-id, th.patient-year {
+        text-align: center;
+    }
+
+    td.patient-id, td.patient-year {
+
+        box-shadow: none !important;
+        text-align: center;
+    }
+
+    td.patient-id {
+
+        background-color: var(--bs-table-striped-bg) !important;
+        width: 80px;
+    }
+
+    td.patient-year {
+        background-color: white !important;
+        width: 60px;
+    }
+
+    td.patient-code {
+        width: 99px;
     }
 }
 

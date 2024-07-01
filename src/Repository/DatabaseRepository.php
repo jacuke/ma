@@ -11,7 +11,7 @@ use Symfony\Component\Serializer\Serializer;
 
 class DatabaseRepository {
 
-    private Connection $connection;
+    protected Connection $connection;
     private DataService $dataService;
 
     public function __construct(
@@ -23,7 +23,7 @@ class DatabaseRepository {
     }
 
     // todo: return type
-    private function execute_wrapper(string $sql) : bool {
+    protected function execute_wrapper(string $sql) : bool {
 
         try {
             $this->connection->executeQuery($sql);

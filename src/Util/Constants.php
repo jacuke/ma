@@ -75,6 +75,21 @@ final class Constants {
 
     public static function sql_clean_name (string $input): string {
 
-        return str_replace("'", "''", $input);
+        return mb_ereg_replace("'", "''", $input);
+    }
+
+    public static function year_str_to_int (string $year): int {
+
+        $ret = mb_ereg_replace("[^0-9]", "", $year);
+        return intval($ret);
+    }
+
+    public static function year_int_to_str (int $year): string {
+
+        return match ($year) {
+            13 => '1.3',
+            20 => '2.0',
+            default => strval($year),
+        };
     }
 }
