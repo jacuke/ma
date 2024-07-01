@@ -78,7 +78,7 @@ class PatientsRepository extends DatabaseRepository {
             $query .= " WHERE `names` LIKE '%$search_name%'";
         }
         // order by
-        $query .= ' ORDER BY `year` DESC';
+        $query .= ' ORDER BY `year` DESC, `id` DESC';
         // limit/offset
         if($type===self::SEARCH) {
             $query .= sprintf(' LIMIT %d OFFSET %d',
