@@ -17,7 +17,9 @@ window.ajaxUmsteigerSearchHistory = function(type, year, code) {
     $.get('umsteiger-suche-api?t=' + type + '&y=' + year + '&s=' + code, function(data) {
         $('#edit-modal .modal-content').html(data);
         $('#edit-modal .modal-title').html('Umsteiger-Historie');
-    });
+    }).done(
+        function(){initTooltips()}
+    );
 }
 
 window.ajaxUmsteigerIcons = function(year, prev) {
@@ -35,6 +37,7 @@ function loadModalDefaultContent(){
 
 $(document).ready(function() {
     loadModalDefaultContent();
+    initTooltips();
 });
 
 const modalElement = document.getElementById('edit-modal');
@@ -44,6 +47,9 @@ if (modalElement) {
     })
 }
 
-document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(tooltipTriggerEl => {
-    new bootstrap.Tooltip(tooltipTriggerEl)
-})
+function initTooltips() {
+    document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(tooltipTriggerEl => {
+        new bootstrap.Tooltip(tooltipTriggerEl)
+    });
+    console.log("tooltips init");
+}
