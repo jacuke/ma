@@ -52,12 +52,14 @@ class PatientsController extends AbstractController  {
                 $entry['year'] = Constants::year_int_to_str($patient['year']);
                 $codes = json_decode($patient['codes'], true);
                 $names = json_decode($patient['names'], true);
+                $umsteiger = json_decode($patient['umsteiger'], true);
                 $entry['count'] = count($codes);
                 $list = array();
                 foreach ($codes as $i => $code) {
                     $list[] = [
                         'code' => $code,
                         'name' => $names[$i],
+                        'umsteiger' => $umsteiger[$i],
                     ];
                 }
                 $entry['list'] = $list;

@@ -22,6 +22,7 @@ class PatientsRepository extends DatabaseRepository {
                 `year` INT NOT NULL,
                 `codes` VARCHAR(64),
                 `names` VARCHAR(1295),
+                `umsteiger` VARCHAR(64),
                 CONSTRAINT patients_index PRIMARY KEY (`id`)
             );
         ", self::TABLE);
@@ -64,7 +65,7 @@ class PatientsRepository extends DatabaseRepository {
         $query = '';
         // select
         $query .= match($type) {
-            self::SEARCH => 'SELECT  `id`, `year`, `codes`, `names`',
+            self::SEARCH => 'SELECT  `id`, `year`, `codes`, `names`, `umsteiger`',
             self::COUNT => 'SELECT COUNT(*)'
         };
         // from

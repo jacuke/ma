@@ -65,14 +65,18 @@ class PatientsService {
             $patient = array();
             $codes = array();
             $names = array();
+            $umsteiger = array();
             foreach($rand_keys as $key) {
-                $codes[] = $data[$key]['code'];
+                $code = $data[$key]['code'];
+                $codes[] = $code;
                 $names[] = $data[$key]['name'];
+                $umsteiger[] = (bool) count($this->dbRepo->readUmsteigerHistory(Constants::ICD10GM, $year, $code));
             }
             $patient['id'] = '0';
             $patient['year'] = $year_int;
             $patient['codes'] = json_encode($codes);
             $patient['names'] = json_encode($names, JSON_UNESCAPED_UNICODE );
+            $patient['umsteiger'] = json_encode($umsteiger);
             $patients[] = $patient;
         }
 
