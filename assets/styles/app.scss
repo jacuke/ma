@@ -62,6 +62,7 @@ $page-border: 12px;
         th.arrow {
             width: 8%;
             text-align: center;
+            padding-left: 3px;
         }
         th.name {
             width: 36%;
@@ -76,7 +77,7 @@ $page-border: 12px;
 
         sup .bi-question-circle {
             margin-left: -3px;
-            font-size: 12px;
+            font-size: 14px;
         }
     }
 }
