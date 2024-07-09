@@ -1,4 +1,4 @@
-<div class="year">{{ data.year }}</div>
+<div class="year">{{ data.year }}<i class="bi bi-arrow-right-short"></i>{{ data.prev }}</div>
 {% for entry in data.umsteiger %}
     <div class="history-results-container">
         <div class="result">
@@ -6,13 +6,21 @@
                 <div class="umsteiger-codes">
                     {{ entry.new }}
                     {% if entry.auto == '' and entry.auto_r == '' %}
-                        <i class="bi bi-x-square-fill"></i>
+                        <i class="bi bi-x-square-fill"
+                           data-bs-toggle="tooltip" data-bs-title="Nicht automatisch überleitbar"
+                        ></i>
                     {% elseif entry.auto == '' %}
-                        <i class="bi bi-arrow-right-square-fill"></i>
+                        <i class="bi bi-arrow-right-square-fill"
+                           data-bs-toggle="tooltip" data-bs-title="Automatisch überleitbar von {{ data.year }} nach {{ data.prev }}"
+                        ></i>
                     {% elseif entry.auto_r == '' %}
-                        <i class="bi bi-arrow-left-square-fill"></i>
+                        <i class="bi bi-arrow-left-square-fill"
+                           data-bs-toggle="tooltip" data-bs-title="Automatisch überleitbar von {{ data.prev }} nach {{ data.year }}"
+                        ></i>
                     {% else %}
-                        <i class="bi bi-dash-square-fill"></i>
+                        <i class="bi bi-dash-square-fill"
+                           data-bs-toggle="tooltip" data-bs-title="Automatisch überleitbar in beide Richtungen"
+                        ></i>
                     {% endif %}
                     {{ entry.old }}
                 </div>

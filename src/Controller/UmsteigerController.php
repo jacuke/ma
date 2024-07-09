@@ -6,6 +6,7 @@ use App\Repository\DatabaseRepository;
 use App\Service\DataService;
 use App\Util\Constants;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -43,5 +44,15 @@ class UmsteigerController extends AbstractController {
 
         return $this->render('umsteiger.html.twig',
             ['type' => $type, 'data' => $data]);
+    }
+
+    #[Route('/umsteiger-icons', name: 'umsteiger_icons')]
+    public function umsteiger_icons (Request $request): Response {
+
+        $year = $request->query->get('y') ?? '';
+        $prev = $request->query->get('p') ?? '';
+
+        return $this->render('umsteiger_icons.html.twig',
+            ['year' => $year, 'prev' => $prev]);
     }
 }

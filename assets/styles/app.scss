@@ -46,26 +46,55 @@ $page-border: 12px;
     .nav {
         max-width: $table-width;
     }
-    table {
-        width: $table-width;
-    }
-    th.code {
-        width: 10%;
-    }
-    th.arrow {
-        width: 8%;
-        text-align: center;
-    }
-    th.name {
-        width: 36%;
-    }
-    td.arrow {
-        text-align: center;
-        font-size: 21px;
-    }
+
     .rate {
         font-weight: bold;
         padding: 18px 0 10px 4px;
+    }
+
+    table.umsteiger-table {
+
+        width: $table-width;
+
+        th.code {
+            width: 10%;
+        }
+        th.arrow {
+            width: 8%;
+            text-align: center;
+        }
+        th.name {
+            width: 36%;
+        }
+        td {
+            line-height: 26px;
+        }
+        td.arrow {
+            text-align: center;
+            font-size: 21px;
+        }
+
+        sup .bi-question-circle {
+            margin-left: -3px;
+            font-size: 12px;
+        }
+    }
+}
+
+.icons-table-holder {
+
+    margin: -10px 10px;
+
+    table.icons-table {
+        width: 100% !important;
+        td {
+            border: 0 !important;
+            vertical-align: middle;
+        }
+        td.icon {
+            text-align: center;
+            font-size: 21px;
+        }
     }
 }
 
@@ -282,6 +311,10 @@ $page-border: 12px;
             color: white;
             background-color: $primary-dark;
             width:fit-content;
+
+            .bi {
+                margin: -2px;
+            }
         }
 
         .history-results-container {

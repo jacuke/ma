@@ -357,6 +357,7 @@ class DatabaseRepository {
                 }
                 $ret['umsteiger'] = $umsteiger_out;
                 $ret['year'] = $year;
+                $ret['prev'] = $prev;
                 return $ret;
             }
             $year = $prev;
