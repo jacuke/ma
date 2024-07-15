@@ -51,27 +51,9 @@ class TestCommand extends Command {
 
     protected function execute(InputInterface $input, OutputInterface $output): int {
 
-        $bla = array();
-        $bla[] = "O'Nyong-nyong-Fieber";
-        $bla[] = "blupp";
-        $json = json_encode($bla, JSON_UNESCAPED_UNICODE);
-        //$json = Constants::sql_clean_name($json);
+        $s = $this->dbRepo->searchUmsteiger('icd10gm', '2014', 'G83.88');
+        var_dump($s);
 
-        $data = [[
-            'id' => '0',
-            'year' => Constants::year_str_to_int('2.0'),
-            'codes' => '["A92.1","X12.3"]',
-            'names' => $json
-        ]];
-
-        $this->patientsRepo->addPatients($data);
-
-//        $bla = array();
-//        $bla[] = "O'Nyong-nyong-Fieber";
-//        $bla[] = "blupp";
-//        $json = json_encode($bla);
-//        $json = Constants::sql_clean_name($json);
-//        var_dump($json);
         return Command::SUCCESS;
 
 

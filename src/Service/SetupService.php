@@ -60,7 +60,7 @@ class SetupService {
             }
         }
 
-        $prev_year = $this->dataService->getPreviousYear($type, $year);
+        $prev_year = $this->dataService->getNextOlderYear($type, $year);
 
         // todo: download
         $path = sprintf($this->projectDir . Constants::DIRECTORY_FILES . '%s%s.zip', $type, $year);
@@ -114,7 +114,7 @@ class SetupService {
             return Constants::STATUS_EXISTS_OK;
         } elseif($status!==Constants::CONFIG_STATUS_NOT_FOUND) {
             $table_umsteiger =
-                Constants::table_name_umsteiger($type, $year, $this->dataService->getPreviousYear($type, $year));
+                Constants::table_name_umsteiger($type, $year, $this->dataService->getNextOlderYear($type, $year));
             $this->dbRepo->dropTable($table);
             $this->dbRepo->dropTable($table_umsteiger);
         }
@@ -185,13 +185,14 @@ class SetupService {
             // for codes table simply remove the .-
             if($table_type===Constants::TABLE_CODES) {
                 foreach($data as $k => $v) {
-                    $data[$k][0] = str_replace('.-', '', $v[0]);
+                    $tmp = str_replace('.-', '', $v[0]);
+                    $data[$k][0] = str_replace('-', '', $tmp);
                 }
             }
             // for umsteiger remove the entry completely
             if($table_type===Constants::TABLE_UMSTEIGER) {
                 foreach($data as $key => $entry) {
-                    if(strrpos($entry[0], '.-')!==false) {
+                    if(strrpos($entry[0], '-')!==false) {
                         unset($data[$key]);
                     }
                 }

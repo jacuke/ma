@@ -1,0 +1,6 @@
+<div class="search-code {{ searchCodeAddClass }}">
+    <div class="code-and-name">
+        <div class="code-container">{{ code }}</div>
+        <div class="name-container" {% if name|length > 90 %}style="hyphens: auto"{% endif %}>{{ name }}</div>
+    </div>
+</div>

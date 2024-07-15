@@ -14,6 +14,7 @@ class DataService {
 
     private const YEARS = 'y';
     private const LINKED_YEARS = 'l';
+    private const REV_LINKED_YEARS = 'r';
     private const UMSTEIGER_YEARS = 'u';
     private const NEWEST_YEAR = 'n';
     private const OLDEST_YEAR = 'o';
@@ -40,16 +41,19 @@ class DataService {
             // newest year
             $this->data[$code][self::NEWEST_YEAR] = reset($xml_data)[Constants::XML_YEAR];
 
-            // linked years
+            // linked years & reverse linked years
             $linked_years = array();
+            $rev_linked_years = array();
             foreach($xml_data as $xml) {
                 $next_year = next($xml_data)[Constants::XML_YEAR] ?? '';
                 if($next_year==='') {
                     $next_year = $oldest_year;
                 }
                 $linked_years[$xml[Constants::XML_YEAR]] = (string) $next_year;
+                $rev_linked_years[$next_year] = (string) $xml[Constants::XML_YEAR];
             }
             $this->data[$code][self::LINKED_YEARS] = $linked_years;
+            $this->data[$code][self::REV_LINKED_YEARS] = $rev_linked_years;
 
             // umsteiger years
             $umsteiger_years = array();
@@ -81,9 +85,14 @@ class DataService {
         return $this->data[$type][self::UMSTEIGER_YEARS] ?? [];
     }
 
-    public function getPreviousYear(string $type, string $year): string {
+    public function getNextOlderYear(string $type, string $year): string {
 
         return $this->data[$type][self::LINKED_YEARS][$year] ?? '';
+    }
+
+    public function getNextNewerYear(string $type, string $year): string {
+
+        return $this->data[$type][self::REV_LINKED_YEARS][$year] ?? '';
     }
 
     public function getOldestYear(string $type): string {

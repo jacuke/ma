@@ -157,7 +157,7 @@ class DatabaseRepository {
                 Constants::SQL_AUTO_R,
                 $type,
                 $year,
-                $this->dataService->getPreviousYear($type, $year)
+                $this->dataService->getNextOlderYear($type, $year)
             ),
         };
     }
@@ -169,7 +169,7 @@ class DatabaseRepository {
             Constants::TABLE_CODES =>
                 Constants::table_name($type, $year),
             Constants::TABLE_UMSTEIGER =>
-                Constants::table_name_umsteiger($type, $year, $this->dataService->getPreviousYear($type, $year)),
+                Constants::table_name_umsteiger($type, $year, $this->dataService->getNextOlderYear($type, $year)),
         };
 
         if($this->tableExists($table)) {
@@ -223,7 +223,7 @@ class DatabaseRepository {
         $table = match($table_type) {
             Constants::TABLE_CODES =>
                 Constants::table_name($type, $year),
-            Constants::TABLE_UMSTEIGER, Constants::TABLE_UMSTEIGER_JOIN =>
+            Constants::TABLE_UMSTEIGER, Constants::TABLE_UMSTEIGER_JOIN, Constants::TABLE_UMSTEIGER_JOIN_REV =>
                 Constants::table_name_umsteiger($type, $year, $prev),
         };
 
@@ -253,7 +253,7 @@ class DatabaseRepository {
                 Constants::SQL_AUTO_R,
                 Constants::SQL_NEW
             ),
-            Constants::TABLE_UMSTEIGER_JOIN => sprintf(
+            Constants::TABLE_UMSTEIGER_JOIN, Constants::TABLE_UMSTEIGER_JOIN_REV => sprintf(
                 "
                 SELECT  u.`%s`, u.`%s`,
                         u.`%s`, u.`%s`,                       
@@ -294,6 +294,12 @@ class DatabaseRepository {
                 ",
                     Constants::SQL_NEW, $search
                 ),
+                Constants::TABLE_UMSTEIGER_JOIN_REV => sprintf(
+                    "
+                AND `%s` = '%s'
+                ",
+                    Constants::SQL_OLD, $search
+                ),
             };
             $select = sprintf($select, ' ' . $where);
         } else {
@@ -305,10 +311,14 @@ class DatabaseRepository {
 
     public function readData(string $type, int $table_type, string $year, string $prev='', string $search='') :array {
 
-        if($prev==='' &&
-            ($table_type===Constants::TABLE_UMSTEIGER || $table_type===Constants::TABLE_UMSTEIGER_JOIN)
-        ) {
-            $prev = $this->dataService->getPreviousYear($type, $year);
+        if($prev==='' && $table_type!==Constants::TABLE_CODES) {
+            $prev = $this->dataService->getNextOlderYear($type, $year);
+        }
+
+        if($table_type==Constants::TABLE_UMSTEIGER_JOIN_REV) {
+            $tmp = $prev;
+            $prev = $year;
+            $year = $tmp;
         }
 
         $sql = $this->select($type, $table_type, $year, $prev, $search);
@@ -335,20 +345,39 @@ class DatabaseRepository {
         return array_values($data);
     }
 
-    public function readUmsteigerHistory(string $type, string $begin_year, string $search = '') :array {
+    public function searchUmsteiger(string $type, string $year, string $search) :array {
+
+        return [
+            'fwd' => $this->searchUmsteigerRecursive($type, $year, $search, true),
+            'rev' => $this->searchUmsteigerRecursive($type, $year, $search, false)
+        ];
+    }
+
+    public function searchUmsteigerRecursive(string $type, string $year, string $search, bool $chronological) :array {
 
         $ret = array();
-        $year = $begin_year;
-        $prev = $this->dataService->getPreviousYear($type, $year);
-        while($prev!=='') {
-            $umsteiger_in = $this->readData($type, Constants::TABLE_UMSTEIGER_JOIN, $year, $prev, $search);
+        if($year==='') {
+            return $ret;
+        }
+        if($chronological) {
+            $prev = $this->dataService->getNextNewerYear($type, $year);
+            $table_type = Constants::TABLE_UMSTEIGER_JOIN_REV;
+            $which = 'new';
+        } else {
+            $prev = $this->dataService->getNextOlderYear($type, $year);
+            $table_type = Constants::TABLE_UMSTEIGER_JOIN;
+            $which = 'old';
+        }
+        if($prev!=='') {
+            $umsteiger_in = $this->readData($type, $table_type, $year, $prev, $search);
             if(count($umsteiger_in) > 0) {
                 $umsteiger_out = array();
                 foreach($umsteiger_in as $find) {
-                    if($find['old']!==Constants::UNDEF) {
-                        $history = $this->readUmsteigerHistory($type, $prev, $find['old']);
+                    $search_code = $find[$which];
+                    if($search_code!==Constants::UNDEF) {
+                        $history = $this->searchUmsteigerRecursive($type, $prev, $search_code, $chronological);
                         if(count($history)>0) {
-                            $find['history'] = $history;
+                            $find['recursion'] = $history;
                         }
                         $umsteiger_out[] = $find;
                     } else {
@@ -359,11 +388,21 @@ class DatabaseRepository {
                 $ret['year'] = $year;
                 $ret['prev'] = $prev;
                 return $ret;
+            } else {
+                return $this->searchUmsteigerRecursive($type, $prev, $search, $chronological);
             }
-            $year = $prev;
-            $prev = $this->dataService->getPreviousYear($type, $year);
         }
         return $ret;
+    }
+
+    public function readUmsteigerHistory(string $type, string $begin_year, string $search = '') :array {
+
+        return $this->searchUmsteigerRecursive($type, $begin_year, $search, false);
+    }
+
+    public function readUmsteigerHistoryRev(string $type, string $begin_year, string $search = '') :array {
+
+        return $this->searchUmsteigerRecursive($type, $begin_year, $search, true);
     }
 
     public function countCodes (string $type, string $year):int {

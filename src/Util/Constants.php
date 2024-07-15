@@ -20,6 +20,7 @@ final class Constants {
     public const TABLE_CODES = 1;
     public const TABLE_UMSTEIGER = 2;
     public const TABLE_UMSTEIGER_JOIN = 3;
+    public const TABLE_UMSTEIGER_JOIN_REV = 4;
 
     public const DIRECTORY_FILES = '/files/';
 

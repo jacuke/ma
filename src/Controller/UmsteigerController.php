@@ -30,7 +30,7 @@ class UmsteigerController extends AbstractController {
         $years = $this->dataService->getUmsteigerYears($type);
         $data = array();
         foreach ($years as $year) {
-            $prev = $this->dataService->getPreviousYear($type, $year);
+            $prev = $this->dataService->getNextOlderYear($type, $year);
             $umsteiger = $this->dbRepo->readData($type, Constants::TABLE_UMSTEIGER_JOIN, $year, $prev);
             $data[$year] = [
                 'prev' => $prev,

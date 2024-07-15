@@ -1,26 +1,35 @@
 {% extends "base.html.twig" %}
 
-{% block title %}Umsteiger Suche/Historie {{ code_title(type) }}{% endblock %}
+{% block title %}Umsteiger Suche {{ code_title(type) }}{% endblock %}
 
 {% block body %}
 
     <div class="umsteiger-search-page">
-        <h4>{{ code_title(type) }} Code-Suche mit Umsteiger-Historie</h4>
+        <h4>{{ code_title(type) }} Code-Suche mit Umsteigern</h4>
 
         <form method="get">
             <div class="input-group">
-                <input name="s" id="codeSearch" type="text" class="form-control" placeholder="Code" aria-label="Code Suche">
+                <span class="input-group-text">Code:</span>
+                <input name="s" value="{{ searchCode }}" id="codeSearch" type="text" class="form-control" aria-label="Code Suche">
+                <span class="input-group-text">Version:</span>
+                <select name="y" class="form-select" aria-label="Version Auswahl">
+                    {% for year in years %}
+                        <option value="{{ year }}" {% if year == searchYear %}selected{% endif %}>
+                            {{ year }}
+                        </option>
+                    {% endfor %}
+                </select>
                 <button type="submit" class="btn btn-primary">Suchen</button>
             </div>
         </form>
 
-        {% if search != '' %}
+        {% if searchCode != '' %}
             <div class="search-results">
-            {% if search|length == 1 %}
+            {% if searchCode|length == 1 %}
                 Bitte mehr als ein Zeichen eingeben, sonst dauert die Suche viel zu lange.
             {% else %}
                 {% if results|length == 0 %}
-                    Kein Ergebnis für: {{ search }}
+                    Kein Ergebnis für: {{ searchCode }}
                 {% elseif results|length == 1 %}
                     {{ results[0]|raw }}
                 {% else %}

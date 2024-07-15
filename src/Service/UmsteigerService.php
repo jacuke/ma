@@ -24,7 +24,7 @@ class UmsteigerService {
         $years = $this->dataService->getUmsteigerYears(Constants::ICD10GM);
         $data = array();
         foreach ($years as $year) {
-            $umsteiger = $this->dbRepo->readData(Constants::ICD10GM, Constants::TABLE_UMSTEIGER, $year, $this->dataService->getPreviousYear(Constants::ICD10GM, $year));
+            $umsteiger = $this->dbRepo->readData(Constants::ICD10GM, Constants::TABLE_UMSTEIGER, $year, $this->dataService->getNextOlderYear(Constants::ICD10GM, $year));
             $data[$year] = $this->generateAutoUmsteiger($umsteiger);
         }
         foreach ($years as $year1) {
@@ -47,7 +47,7 @@ class UmsteigerService {
         $years = $this->dataService->getUmsteigerYears(Constants::ICD10GM);
         $umsteiger_years = array();
         foreach ($years as $year) {
-            $umsteiger = $this->dbRepo->readData(Constants::ICD10GM, Constants::TABLE_UMSTEIGER, $year, $this->dataService->getPreviousYear(Constants::ICD10GM, $year));
+            $umsteiger = $this->dbRepo->readData(Constants::ICD10GM, Constants::TABLE_UMSTEIGER, $year, $this->dataService->getNextOlderYear(Constants::ICD10GM, $year));
             $umsteiger_years[$year] = $this->generateAutoUmsteiger($umsteiger);
         }
 

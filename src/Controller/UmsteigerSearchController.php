@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection PhpUnused */
 
 namespace App\Controller;
 
@@ -28,44 +28,51 @@ class UmsteigerSearchController extends AbstractController {
     public function umsteiger_suche(string $type, Request $request): Response {
 
         $render_results = array();
-        $search = $request->query->get('s') ?? '';
-        if(strlen($search)>1) {
-            $first_year = $this->dataService->getNewestYear($type);
-            $results = $this->dbRepo->readTerminalCodes($type, $first_year, $search);
+        $searchCode = $request->query->get('s') ?? '';
+        $searchYear = $request->query->get('y') ?? '';
+        $years = $this->dataService->getYears($type);
+        if($searchYear==='') {
+            $searchYear = $this->dataService->getNewestYear($type);
+        }
+        if(strlen($searchCode)>1) {
+            $results = $this->dbRepo->readTerminalCodes($type, $searchYear, $searchCode);
             foreach ($results as $result) {
+
+                $data = array();
                 $code = $result['code'];
                 if($code===Constants::UNDEF) {
                     continue;
                 }
-                $history = $this->render_history_recursive(
-                    $this->dbRepo->readUmsteigerHistory($type, $first_year, $code)
-                );
-                $render_results[] = $this->render_search_result(
-                    ['code' => $code, 'name' => $result['name'], 'history' => $history]
+                $searchUmsteiger = $this->dbRepo->searchUmsteiger($type, $searchYear, $code);
+                foreach ($searchUmsteiger as $key => $direction) {
+                    if(!empty($direction)) {
+                        $data[$key] = $this->render_recursive($direction, $key==='fwd');
+                    }
+                }
+
+                $render_results[] = $this->renderView('umsteiger_search_result.html.twig',
+                    ['code' => $code, 'name' => $result['name'], 'data' => $data]
                 );
             }
         }
 
-        return $this->render('umsteiger_search.html.twig', ['type' => $type, 'results' => $render_results, 'search' => $search]);
+        return $this->render('umsteiger_search.html.twig',
+            ['type' => $type, 'results' => $render_results, 'searchCode' => $searchCode,
+                'years' => $years, 'searchYear' => $searchYear]);
     }
 
-    private function render_search_result (array $data) :string {
-
-        return $this->renderView('umsteiger_search_result.html.twig', $data);
-    }
-
-    private function render_history_recursive (array $data) :string {
+    private function render_recursive (array $data, bool $chronological) :string {
 
         if(empty($data)) {
             return '';
         }
 
         foreach ($data['umsteiger'] as &$v) {
-            if(isset($v['history'])) {
-                $v['subsection'] = $this->render_history_recursive ($v['history']);
+            if(isset($v['recursion'])) {
+                $v['subsection'] = $this->render_recursive ($v['recursion'], $chronological);
             }
         }
-        return $this->renderView('umsteiger_search_history.html.twig', ['data'=> $data]);
+        return $this->renderView('umsteiger_search_recursion.html.twig', ['data'=> $data, 'chronological' => $chronological]);
     }
 
     #[Route('/umsteiger-suche-api', name: 'umsteiger_search_api')]
@@ -77,14 +84,20 @@ class UmsteigerSearchController extends AbstractController {
         if($type==='' || $year==='' || $code==='') {
             $content = '<div></div>';
         } else {
-            $results = $this->dbRepo->readUmsteigerHistory($type, $year, $code);
-            if(empty($results)) {
+            $name = '';
+            $data = array();
+            $searchUmsteiger = $this->dbRepo->searchUmsteiger($type, $year, $code);
+            foreach ($searchUmsteiger as $key => $direction) {
+                if(!empty($direction)) {
+                    $name = $direction['umsteiger'][0][$key==='fwd' ? 'old_name' : 'new_name'] ?? '';
+                    $data[$key] = $this->render_recursive($direction, $key==='fwd');
+                }
+            }
+            if(empty($data)) {
                 $content = '<div>Keine Ergebnisse</div>';
             } else {
-                $history = $this->render_history_recursive($results);
-                $name = $results['umsteiger'][0]['new_name'];
-                $content = $this->render_search_result(
-                    ['code' => $code, 'name' => $name, 'history' => $history]
+                $content = $this->renderView('umsteiger_search_result.html.twig',
+                    ['code' => $code, 'name' => $name, 'data' => $data]
                 );
             }
         }

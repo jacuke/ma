@@ -1,6 +1,18 @@
-<div class="year">{{ data.year }}<i class="bi bi-arrow-right-short"></i>{{ data.prev }}</div>
+{% if chronological %}
+    {% set thisYear = data.prev %}
+    {% set prevYear = data.year %}
+{% else %}
+    {% set thisYear = data.year %}
+    {% set prevYear = data.prev %}
+{% endif %}
+<div class="year {% if chronological %}chrono{% endif %}">{{ thisYear }}<i class="bi bi-arrow-right-short"></i>{{ prevYear }}</div>
 {% for entry in data.umsteiger %}
-    <div class="history-results-container">
+    {% if chronological %}
+        {% set codeName = entry.new_name %}
+    {% else %}
+        {% set codeName = entry.old_name %}
+    {% endif %}
+    <div class="history-results-container {% if chronological %}chrono{% endif %}">
         <div class="result">
             {% if entry.old != constant('App\\Util\\Constants::UNDEF') %}
                 <div class="umsteiger-codes">
@@ -11,11 +23,11 @@
                         ></i>
                     {% elseif entry.auto == '' %}
                         <i class="bi bi-arrow-right-square-fill"
-                           data-bs-toggle="tooltip" data-bs-title="Automatisch überleitbar von {{ data.year }} nach {{ data.prev }}"
+                           data-bs-toggle="tooltip" data-bs-title="Automatisch überleitbar von {{ thisYear }} nach {{ prevYear }}"
                         ></i>
                     {% elseif entry.auto_r == '' %}
                         <i class="bi bi-arrow-left-square-fill"
-                           data-bs-toggle="tooltip" data-bs-title="Automatisch überleitbar von {{ data.prev }} nach {{ data.year }}"
+                           data-bs-toggle="tooltip" data-bs-title="Automatisch überleitbar von {{ prevYear }} nach {{ thisYear }}"
                         ></i>
                     {% else %}
                         <i class="bi bi-dash-square-fill"
@@ -24,14 +36,14 @@
                     {% endif %}
                     {{ entry.old }}
                 </div>
-                <div class="name-container">{{ entry.old_name }}</div>
+                <div class="umsteiger-name" {% if codeName|length > 90 %}style="hyphens: auto"{% endif %}>{{ codeName }}</div>
             {% else %}
                 <div>{{ entry.new }} hinzugefügt</div>
             {% endif %}
         </div>
 
         {% if entry.subsection is defined %}
-            <div class="subsection">
+            <div class="subsection {% if chronological %}chrono{% endif %}">
                 {{ entry.subsection|raw }}
             </div>
         {% endif %}
