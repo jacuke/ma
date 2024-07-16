@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Repository\ConfigRepository;
 use App\Repository\DatabaseRepository;
 use App\Util\Constants;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
@@ -13,6 +14,7 @@ use ZipArchive;
 class SetupService {
 
     private DatabaseRepository $dbRepo;
+    private ConfigRepository $configRepo;
     private DataService $dataService;
     private string $projectDir;
 
@@ -20,10 +22,12 @@ class SetupService {
 
     public function __construct(
         DatabaseRepository $databaseRepository,
+        ConfigRepository $configRepo,
         DataService        $dataService,
         string             $projectDir
     ) {
         $this->dbRepo = $databaseRepository;
+        $this->configRepo = $configRepo;
         $this->dataService = $dataService;
         $this->projectDir = $projectDir;
 
@@ -31,7 +35,7 @@ class SetupService {
     }
 
     public function init():void {
-        $this->dbRepo->addConfigTable();
+        $this->configRepo->addConfigTable();
     }
 
     public function setupEntry (string $type, array $entry) : int {
@@ -109,7 +113,7 @@ class SetupService {
         $table = Constants::table_name($type, $year);
 
         // read/write config entry
-        $status = $this->dbRepo->readConfigStatus($table);
+        $status = $this->configRepo->readConfigStatus($table);
         if($status===Constants::CONFIG_STATUS_OK) {
             return Constants::STATUS_EXISTS_OK;
         } elseif($status!==Constants::CONFIG_STATUS_NOT_FOUND) {
@@ -118,7 +122,7 @@ class SetupService {
             $this->dbRepo->dropTable($table);
             $this->dbRepo->dropTable($table_umsteiger);
         }
-        $this->dbRepo->writeConfig($table);
+        $this->configRepo->writeConfig($table);
 
         $this->add_table_with_data($type, $year, $options, $path, $codes, Constants::TABLE_CODES);
 
@@ -128,7 +132,7 @@ class SetupService {
 
         // set status OK if no errors
         // todo: check errors
-        $this->dbRepo->updateConfigStatus($table, Constants::CONFIG_STATUS_OK);
+        $this->configRepo->writeConfig($table, Constants::CONFIG_STATUS_OK);
 
         return Constants::STATUS_OK;
     }
@@ -205,6 +209,13 @@ class SetupService {
                 array_splice($entry, 3, 1);
                 array_splice($entry, 1, 1);
             });
+        }
+
+        // add an additional column to all codes tables
+        if($table_type===Constants::TABLE_CODES) {
+            foreach($data as &$entry) {
+                $entry[] = '0';
+            }
         }
     }
 

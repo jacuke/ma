@@ -1,7 +1,8 @@
-<?php
+<?php /** @noinspection PhpPropertyOnlyWrittenInspection */
 
 namespace App\Command;
 
+use App\Repository\ConfigRepository;
 use App\Repository\PatientsRepository;
 use App\Service\ConceptMapService;
 use App\Service\DataService;
@@ -12,17 +13,13 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-use Symfony\Component\Serializer\Encoder\XmlEncoder;
-use Symfony\Component\Serializer\Serializer;
-use Symfony\Component\Serializer\Encoder\CsvEncoder;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-
 use App\Repository\DatabaseRepository;
 
 #[AsCommand(name: 'test')]
 class TestCommand extends Command {
 
     private DatabaseRepository $dbRepo;
+    private ConfigRepository $configRepo;
     private PatientsRepository $patientsRepo;
     private DataService $dataService;
     private UmsteigerService $umsteigerService;
@@ -31,6 +28,7 @@ class TestCommand extends Command {
     
     public function __construct(
         DatabaseRepository $generalRepo,
+        ConfigRepository   $configRepo,
         PatientsRepository $patientsRepo,
         DataService        $dataService,
         UmsteigerService   $umsteigerService,
@@ -40,26 +38,35 @@ class TestCommand extends Command {
         parent::__construct();
 
         $this->dbRepo = $generalRepo;
+        $this->configRepo = $configRepo;
         $this->patientsRepo = $patientsRepo;
         $this->dataService = $dataService;
         $this->umsteigerService = $umsteigerService;
         $this->conceptMapService = $conceptMapService;
         $this->projectDir = $projectDir;
-        
-        $this->serializer = new Serializer([new ObjectNormalizer()], [new CsvEncoder(), new XmlEncoder()]);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int {
 
-        $s = $this->dbRepo->searchUmsteiger('icd10gm', '2014', 'G83.88');
-        var_dump($s);
+        //$config_entry = Constants::config_name_umsteiger_info('icd10gm', '2024');
+        //$this->dbRepo->writeConfig($config_entry, 'OK');
+
+
+        //$s = $this->dbRepo->searchUmsteiger('icd10gm', '2014', 'G83.88');
+        //var_dump($s);
+
+
+        //var_dump($this->dbRepo->readData('icd10gm', Constants::TABLE_CODES, '2024', '', 'A04.7'));
+
+        $has_umsteiger_info = Constants::CONFIG_STATUS_OK === $this->configRepo->readConfigStatus(
+            Constants::config_name_umsteiger_info(Constants::ICD10GM, '2022'), true
+        );
+        var_dump($has_umsteiger_info);
+
 
         return Command::SUCCESS;
 
 
-
-        var_dump($this->patientsRepo->readPatients());
-        return Command::SUCCESS;
 
         $history = $this->dbRepo->readUmsteigerHistory('icd10gm', '2021', 'K57.02');
         var_dump($history);

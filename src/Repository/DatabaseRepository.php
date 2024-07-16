@@ -65,62 +65,6 @@ class DatabaseRepository {
         }
     }
 
-    public function addConfigTable(): bool {
-
-        $sql = sprintf("
-            CREATE TABLE IF NOT EXISTS `%s` (
-                `id` INT NOT NULL AUTO_INCREMENT,
-                `key` VARCHAR(255),
-                `status` VARCHAR(255),
-                CONSTRAINT config_index PRIMARY KEY (`id`),
-                CONSTRAINT type_key UNIQUE (`key`)
-            );
-        ", Constants::TABLE_CONFIG);
-
-        return $this->execute_wrapper($sql);
-    }
-
-    public function writeConfig(string $key, string $status = '') : bool {
-
-        $sql = sprintf("
-            INSERT IGNORE INTO `%s` (`key`, `status`)
-            VALUES('%s', '%s');
-        ", Constants::TABLE_CONFIG, $key, $status);
-
-        return $this->execute_wrapper($sql);
-    }
-
-    public function updateConfigStatus(string $key, $status) : bool {
-
-        $sql = sprintf("
-            UPDATE `%s`
-            SET `status` = '%s'
-            WHERE `key` = '%s';
-        ", Constants::TABLE_CONFIG, $status, $key);
-
-        return $this->execute_wrapper($sql);
-    }
-
-    public function readConfigStatus(string $key) : string {
-
-        $sql = sprintf("
-            SELECT `status` FROM `%s`
-            WHERE `key` = '%s';
-        ", Constants::TABLE_CONFIG, $key);
-
-        try {
-            $status = $this->connection->executeQuery($sql)->fetchOne();
-            if($status===false) {
-                return Constants::CONFIG_STATUS_NOT_FOUND;
-            } else {
-                return $status;
-            }
-        } catch (Exception $e) {
-            var_dump($e->getMessage());
-            return Constants::CONFIG_STATUS_QUERY_ERROR;
-        }
-    }
-
     private function table_structure (string $type, int $table_type, string $year, string $table):string {
 
         $code_length = match($type) {
@@ -134,11 +78,13 @@ class DatabaseRepository {
                 CREATE TABLE `%s` (
                     `%s` VARCHAR(%d),
                     `%s` VARCHAR(255),
+                    `%s` TINYINT(1),
                     CONSTRAINT `key_%s_%s` PRIMARY KEY (`code`)
                 )",
                 $table,
                 Constants::SQL_CODE, $code_length,
                 Constants::SQL_NAME,
+                Constants::SQL_UMST,
                 $type,
                 $year
             ),
@@ -230,10 +176,10 @@ class DatabaseRepository {
         $select = match($table_type) {
             Constants::TABLE_CODES => sprintf(
                 "
-                SELECT `%s`, `%s`
+                SELECT `%s`, `%s`, `%s`
                 FROM `%s`
                 %%s",
-                Constants::SQL_CODE, Constants::SQL_NAME,
+                Constants::SQL_CODE, Constants::SQL_NAME, Constants::SQL_UMST,
                 $table
             ),
             Constants::TABLE_UMSTEIGER => sprintf(
@@ -329,6 +275,22 @@ class DatabaseRepository {
             // todo: log error
             return [];
         }
+    }
+
+    public function updateUmsteigerInfo(string $type, string $year, string $code, bool $umsteiger_info) : bool {
+
+        $table = Constants::table_name($type, $year);
+
+        $sql = sprintf("
+            UPDATE `%s`
+            SET `%s` = %d
+            WHERE `%s` = '%s';
+        ", $table,
+        Constants::SQL_UMST, $umsteiger_info,
+        Constants::SQL_CODE, $code
+        );
+
+        return $this->execute_wrapper($sql);
     }
 
     public function readTerminalCodes(string $type, string $year, string $search = '') :array {

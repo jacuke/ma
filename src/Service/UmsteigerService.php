@@ -2,20 +2,57 @@
 
 namespace App\Service;
 
+use App\Repository\ConfigRepository;
 use App\Repository\DatabaseRepository;
 use App\Util\Constants;
 
 class UmsteigerService {
 
     private DatabaseRepository $dbRepo;
+    private ConfigRepository $configRepo;
     private DataService $dataService;
 
     public function __construct(
         DatabaseRepository $dbRepo,
+        ConfigRepository $configRepo,
         DataService        $dataService
     ) {
         $this->dbRepo = $dbRepo;
+        $this->configRepo = $configRepo;
         $this->dataService = $dataService;
+    }
+
+    // todo: return type
+    public function saveUmsteigerInfo(string $type, string $year): bool {
+
+        if(!$this->dbRepo->tableExists(Constants::TABLE_CONFIG)) {
+            return false; // todo
+        }
+
+        $config_entry = Constants::config_name_umsteiger_info($type, $year);
+
+        $status = $this->configRepo->readConfigStatus($config_entry);
+        if($status!==Constants::CONFIG_STATUS_OK) {
+            $codes = $this->dbRepo->readTerminalCodes($type, $year);
+            foreach ($codes as $entry) {
+                $code = $entry['code'];
+                $umsteiger_search = $this->dbRepo->searchUmsteiger($type, $year, $code);
+                $has_umsteiger = (bool)(count($umsteiger_search['fwd']) + count($umsteiger_search['rev']));
+                if($has_umsteiger) {
+                    $success = $this->dbRepo->updateUmsteigerInfo($type, $year, $code, true);
+                    if(!$success) {
+                        return false;
+                    }
+                }
+            }
+            $this->configRepo->writeConfig($config_entry, Constants::CONFIG_STATUS_OK);
+
+        } else {
+            // todo
+            var_dump($type . $year . ' already exists');
+        }
+
+        return true;
     }
 
     public function test2():void {

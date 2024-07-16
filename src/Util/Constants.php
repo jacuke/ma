@@ -16,6 +16,9 @@ final class Constants {
     public const CONFIG_STATUS_NOT_FOUND = 'N/A';
     public const CONFIG_STATUS_ERROR = 'ERROR';
     public const CONFIG_STATUS_QUERY_ERROR = 'SQL_ERROR';
+    public const CONFIG_STATUS_NO_TABLE = 'TABLE_ERROR';
+
+    public const CONFIG_ENTRY_PREFIX_UMST_INFO = 'UMST_INFO_';
     public const TABLE_CONFIG = 'BFARMER';
     public const TABLE_CODES = 1;
     public const TABLE_UMSTEIGER = 2;
@@ -26,6 +29,7 @@ final class Constants {
 
     public const SQL_CODE = 'code';
     public const SQL_NAME = 'name';
+    public const SQL_UMST = 'umst';
     public const SQL_OLD = 'old';
     public const SQL_NEW = 'new';
     public const SQL_AUTO = 'auto';
@@ -63,6 +67,11 @@ final class Constants {
     public static function table_name_umsteiger (string $type, string $year, string $prev): string {
 
         return 'UMSTEIGER_' . strtoupper($type) . '_' . $year . '_' . $prev;
+    }
+
+    public static function config_name_umsteiger_info (string $type, string $year): string {
+
+        return self::CONFIG_ENTRY_PREFIX_UMST_INFO . strtoupper($type) . '_' . $year;
     }
 
     public static function display_name (string $type): string {

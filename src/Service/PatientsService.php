@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Repository\ConfigRepository;
 use App\Repository\DatabaseRepository;
 use App\Repository\PatientsRepository;
 use App\Util\Constants;
@@ -9,6 +10,7 @@ use App\Util\Constants;
 class PatientsService {
 
     private PatientsRepository $patientsRepo;
+    private ConfigRepository $configRepo;
     private DatabaseRepository $dbRepo;
     private DataService $dataService;
 
@@ -18,10 +20,12 @@ class PatientsService {
 
     public function __construct(
         PatientsRepository $patientsRepo,
+        ConfigRepository $configRepo,
         DatabaseRepository $dbRepo,
         DataService        $dataService
     ) {
         $this->patientsRepo = $patientsRepo;
+        $this->configRepo = $configRepo;
         $this->dataService = $dataService;
         $this->dbRepo = $dbRepo;
 
@@ -52,6 +56,9 @@ class PatientsService {
     private function create_random_patients(string $year, int $num):array {
 
         $patients = array();
+        $has_umsteiger_info = Constants::CONFIG_STATUS_OK === $this->configRepo->readConfigStatus(
+            Constants::config_name_umsteiger_info(Constants::ICD10GM, $year), true
+        );
         $year_int = Constants::year_str_to_int($year);
         $data = $this->dbRepo->readTerminalCodes(Constants::ICD10GM, $year);
         for($i = 0; $i < $num; $i++) {
@@ -70,7 +77,11 @@ class PatientsService {
                 $code = $data[$key]['code'];
                 $codes[] = $code;
                 $names[] = $data[$key]['name'];
-                $umsteiger[] = (bool) count($this->dbRepo->readUmsteigerHistory(Constants::ICD10GM, $year, $code));
+                if($has_umsteiger_info) {
+                    $umsteiger[] = (bool) $data[$key]['umst'];
+                } else {
+                    $umsteiger[] = (bool) count($this->dbRepo->readUmsteigerHistory(Constants::ICD10GM, $year, $code));
+                }
             }
             $patient['id'] = '0';
             $patient['year'] = $year_int;
