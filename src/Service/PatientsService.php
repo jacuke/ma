@@ -80,7 +80,8 @@ class PatientsService {
                 if($has_umsteiger_info) {
                     $umsteiger[] = (bool) $data[$key]['umst'];
                 } else {
-                    $umsteiger[] = (bool) count($this->dbRepo->readUmsteigerHistory(Constants::ICD10GM, $year, $code));
+                    $umsteiger_search = $this->dbRepo->searchUmsteiger(Constants::ICD10GM, $year, $code);
+                    $umsteiger[] = (bool)(count($umsteiger_search['fwd']) + count($umsteiger_search['rev']));
                 }
             }
             $patient['id'] = '0';
