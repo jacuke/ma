@@ -1,9 +1,19 @@
 ### simon
+/.idea/
 simon.txt
 files/*
 !files/icd10gm.xml
 !files/ops.xml
-/.idea/
+### thesis
+tex/thesis/*
+!tex/thesis/*.tex
+!tex/thesis/*.sty
+!tex/thesis/*.cls
+!tex/thesis/thesis.pdf
+tex/draft/*
+!tex/draft/*.tex
+!tex/draft/*.bib
+!tex/draft/*.pdf
 ###
 
 ###> symfony/framework-bundle ###
@@ -20,11 +30,6 @@ files/*
 /phpunit.xml
 .phpunit.result.cache
 ###< phpunit/phpunit ###
-
-###> symfony/phpunit-bridge ###
-.phpunit.result.cache
-/phpunit.xml
-###< symfony/phpunit-bridge ###
 
 ###> symfony/webpack-encore-bundle ###
 /node_modules/
