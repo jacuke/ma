@@ -265,6 +265,8 @@ class SetupService {
             } elseif (isset($options[Constants::XML_OPS_5COL])) {
                 // ... by removing the 3rd column
                 $functions[] = function (&$data) { $this->remove_columns($data, [2]); };
+                // and replacing non-A letters with A
+                $functions[] = function (&$data) { $this-> replace_non_a_letters($data); };
             } elseif (isset($options[Constants::XML_OPS_3COL])) {
                 // ... by converting from 3 to 4 columns
                 $functions[] = function (&$data) { $this->convert_3_to_4_columns($data); };
@@ -344,6 +346,10 @@ class SetupService {
 
     private function replace_undef_none_umsteiger(array & $data): void {
         $this->replace_strings($data, [0,1], ['None'], Constants::UNDEF);
+    }
+
+    private function replace_non_a_letters(array & $data): void {
+        $this->replace_strings($data, [2,3], ['B', 'E'], 'A');
     }
 
     private function replace_strings(array & $data, array $indices, array $strings, string $replacement = ''): void {
