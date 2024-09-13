@@ -12,6 +12,7 @@ use const XML_PI_NODE;
 
 class ConceptMapService {
 
+    private const EQUIVALENCE = 0;
     private const EQUAL = 1;
     private const MULTIPLE = 2;
     private const RELATED = 3;
@@ -176,15 +177,17 @@ class ConceptMapService {
             return $element;
         }
 
+        $equivalence_tag = $this->resolve_version(self::EQUIVALENCE, $version);
+        $equivalence_value = $this->resolve_version($equivalence, $version);
+
         if($equivalence===self::MULTIPLE) {
-            $equivalence_value = $this->resolve_version($equivalence, $version);
             foreach($target_code as $target) {
                 $sub_element = [];
                 $sub_element['code'] = match($file_type){
                     Constants::XML => ['@value' => $target],
                     Constants::JSON => $target,
                 };
-                $sub_element['equivalence'] = match($file_type){
+                $sub_element[$equivalence_tag] = match($file_type){
                     Constants::XML => ['@value' => $equivalence_value],
                     Constants::JSON => $equivalence_value,
                 };
@@ -197,9 +200,9 @@ class ConceptMapService {
             Constants::XML => ['@value' => $target_code],
             Constants::JSON => $target_code,
         };
-        $element['target']['equivalence'] =  match($file_type) {
-            Constants::XML => ['@value' => $this->resolve_version($equivalence, $version)],
-            Constants::JSON => $this->resolve_version($equivalence, $version),
+        $element['target'][$equivalence_tag] =  match($file_type) {
+            Constants::XML => ['@value' => $equivalence_value],
+            Constants::JSON => $equivalence_value,
         };
 
         return $element;
@@ -215,6 +218,10 @@ class ConceptMapService {
             self::RELATED => match($version) {
                 Constants::FHIR_VERSION_4 => 'relatedto',
                 Constants::FHIR_VERSION_5 => 'related-to',
+            },
+            self::EQUIVALENCE => match($version) {
+                Constants::FHIR_VERSION_4 => 'equivalence',
+                Constants::FHIR_VERSION_5 => 'relationship',
             },
             default => ''
         };
