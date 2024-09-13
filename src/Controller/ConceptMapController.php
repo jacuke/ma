@@ -116,7 +116,7 @@ class ConceptMapController extends AbstractController  {
                         $to = $prev;
                     }
                 } else {
-                    // transistive
+                    // transitive
                     $from = $this->dataService->getNewestYear($type);
                     $to = $this->dataService->getOldestYear($type);
                 }
@@ -138,7 +138,7 @@ class ConceptMapController extends AbstractController  {
                     };
                     $this->umsteigerService->determineTwoUmsteigerVertical($type, $chronological, $target_year, $prev, $internal_function);
                 } else {
-                    // transistive
+                    // transitive
                     $first_group = true;
                     $internal_function = function (array $data, string $year, string $target_year) use
                         ($out, $type, $fhir_version, $file_type, $umst_only, &$first_group) {
