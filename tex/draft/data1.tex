@@ -200,7 +200,13 @@ Bei der Integration der BfArM-Daten kann das ``DRY''-Prinzip auf zwei Arten ange
 
 \subsection{Standardverfahren und Abweichungen}
 
-Im diesem Abschnitt werden alle Abweichungen der ICD-10-GM- und OPS-Versionen von der als Standard gewählten Version 2024 in Tabellen aufgelistet. Konkret gemeinst sind damit: Version, Download-URL, Pfad der Kode- und Umsteiger-Dateien, Sonstiges. Diese Informationen können dann dem Datenintegrationsprozess in einem strukturierten Dateiformat zur Verfügung gestellt werden. {\color{blue} §TODO: Verweis auf konkrete Implementation}
+Im diesem Abschnitt werden alle Abweichungen der ICD-10-GM- und OPS-Versionen von der als Standard gewählten Version 2024 in Tabellen aufgeführt. Konkret gemeinst sind damit: Version, Download-URL, Pfad der Kode- und Umsteiger-Dateien, Sonstiges. Diese Informationen können dann dem Datenintegrationsprozess in einem strukturierten Dateiformat zur Verfügung gestellt werden. {\color{blue} §TODO: Verweis auf konkrete Implementation}
+
+\subsubsection{Liste aller Versionen}
+
+Im Anhang befinden sich Tabellen, die alle Abweichungen zwischen den Versionen für ICD-10-GM (\ref{icd-versionen}) und OPS (\ref{ops-versionen}) bezogen auf 2024 enthalten.
+
+\subsubsection{Datei-Adressen und -Pfade}
 
 Die Download-URL der Zip-Dateien setzt sich wie folgt zusammen:
 
@@ -263,12 +269,10 @@ für OPS: & \texttt{ops} \ldots\\
 \subsubsection{Sonstige Abweichungen}
 \label{abweichungen}
 
-Eine kurze Erklärung der unter ``Sonstiges'' gelisteten Abweichungen:
-
 \begin{itemize}
-\item Vorab-Version\newline Diese Version hat noch keine Seite für die Kode-Suche.
+\item Vorab-Version\newline Diese Version hat noch keine Seite für die Kode-Suche. {\color{blue} §TODO: Verweis auf Kode-Suche (Frontend)}
 \item Zip-Unterdatei\newline Die Zip-Datei der 2022 Versionen enthielt weitere Zip-Dateien. Vorher wurden alle Dateien zu einer Versionen nach Verwendungszweck nur in Unterverzeichnisse gegliedert, weswegen die gebündelte Zip-Datei insgesamt relativ groß wurde. Ab 2023 werden die Zip-Unterdateien separat zum Download angeboten.
-\item ISO-8859-1\newline Vor 2009 waren Dateien in ISO-8859-1 kodiert, auch Latin-1 genannt, statt UTF-8.
+\item ISO-8859-1\newline Vor 2009 waren Dateien in ISO-8859-1 kodiert, auch Latin-1 genannt, statt UTF-8. Mehr dazu unter Abschnitt \ref{latin1-encoding}.
 \item Punkt-Strich-Notation, Kreuz-Stern-System \newline Die Kodes älterer ICD-10-GM Versionen hatten Sonderzeichen gemäß \citep{bfarmicdkk}.
 \item 6-Spalten-Umsteiger \newline Umsteiger älterer ICD-10-GM Versionen enthielten Informationen zur Mehrfachkodierung. 
 \item Nicht endständige Umsteiger\newline Im Gegensatz zu allen anderen Überleitungen sind die Umsteiger-Einträge für ICD-10-GM 2.0 auf 1.3. auch für nicht-endständige Kodes enthalten. 
@@ -279,263 +283,6 @@ Eine kurze Erklärung der unter ``Sonstiges'' gelisteten Abweichungen:
 \item 3-Spalten-Umsteiger\newline OPS Version 2.0 zeigte mit nur einer Spalte an, ob automatische Überleitungen möglich sind. 
 \item Keine Überleitung\newline Aus der ältesten Version, die Überleitungen enthält, wird zusätzlich die Kodes-Datei für die Vorgänger-Versionen verarbeitet.
 \end{itemize}
-
-{\color{blue} §TODO: Verweise auf 1. Vorab-Version (Frontend), 2. Kodierung, 3. Preprocessing.}
-
-\subsubsection{ICD-10-GM Versionen}
-
-\begingroup
-\renewcommand{\arraystretch}{1.2}
-\begin{longtable}{|c|l|l|}
-\hline\hline
-
-\umsteigerTabelleKopf\hline\hline
-
-\umsteigerTabelleZeileUCUS{2025}
-{version2025-vorab/icd10gm2025syst-ueberl-vorab.zip}
-{Klassifikationsdateien/icd10gm2025syst\_vorab.txt}
-{Klassifikationsdateien/\umsteigerTabelleCodeBreak
-icd10gm2025syst\_umsteiger\_2024\_2025\_vorab.txt\umsteigerTabelleCodeBreakEnd}
-{\item Vorab-Version}
-\hline\hline
-
-\umsteigerTabelleZeileUU{2024}
-{version2024/icd10gm2024syst-ueberl.zip}
-{Klassifikationsdateien/\umsteigerTabelleCodeBreak icd10gm2024syst\_umsteiger\_2023\_20221206\_2024.txt\umsteigerTabelleCodeBreakEnd}
-\hline\hline
-
-\umsteigerTabelleZeileUCU{2023}
-{version2023/icd10gm2023syst-ueberl\_20221206.zip}
-{Klassifikationsdateien/\umsteigerTabelleCodeBreak icd10gm2023syst\_20221206.txt\umsteigerTabelleCodeBreakEnd}
-{Klassifikationsdateien/\umsteigerTabelleCodeBreak icd10gm2023syst\_umsteiger\_2022\_2023\_20221206.txt\umsteigerTabelleCodeBreakEnd}
-\hline\hline
-
-\umsteigerTabelleZeileUS{2022}{vorgaenger/icd10gm2022.zip}{\item Zip-Unterdatei: \texttt{icd10gm2022syst-ueberl.zip}}\hline\hline
-
-\umsteigerTabelleZeileUV{2021}{vorgaenger/icd10gm2021.zip}{icd10gm2021syst-ueberl-20201111}\hline\hline
-\umsteigerTabelleZeileUV{2020}{vorgaenger/icd10gm2020.zip}{icd10gm2020syst-ueberl}\hline\hline
-\umsteigerTabelleZeileUV{2019}{vorgaenger/icd10gm2019.zip}{icd10gm2019syst-ueberl}\hline\hline
-
-\umsteigerTabelleZeileUV{2018}{vorgaenger/icd10gm2018.zip}{x1gut2018}\hline\hline
-\umsteigerTabelleZeileUV{2017}{vorgaenger/icd10gm2017.zip}{x1gut2017}\hline\hline
-\umsteigerTabelleZeileUV{2016}{vorgaenger/icd10gm2016.zip}{x1gut2016}\hline\hline
-\umsteigerTabelleZeileUV{2015}{vorgaenger/icd10gm2015.zip}{x1gut2015}\hline\hline
-
-\umsteigerTabelleZeileUV{2014}{vorgaenger/icd10gm2014.zip}{x1gua2014}\hline\hline
-\umsteigerTabelleZeileUV{2013}{vorgaenger/icd10gm2013.zip}{x1gua2013}\hline\hline
-
-\umsteigerTabelleZeileUCU{2012}
-{vorgaenger/icd10gm2012.zip}
-{x1ueb2011\_2012/Klassifikationsdateien/\umsteigerTabelleCodeBreak icd10gmsyst2012.txt\umsteigerTabelleCodeBreakEnd}
-{x1ueb2011\_2012/Klassifikationsdateien/\umsteigerTabelleCodeBreak umsteiger\_icd10gmsyst2011\_icd10gmsyst2012.txt\umsteigerTabelleCodeBreakEnd}
-\hline\hline
-
-\umsteigerTabelleZeileUCU{2011}
-{vorgaenger/icd10gm2011.zip}
-{x1ueb2010\_2011/Klassifikationsdateien/\umsteigerTabelleCodeBreak icd10gmsyst2011.txt\umsteigerTabelleCodeBreakEnd}
-{x1ueb2010\_2011/Klassifikationsdateien/\umsteigerTabelleCodeBreak umsteiger\_icd10gmsyst2010\_icd10gmsyst2011.txt\umsteigerTabelleCodeBreakEnd}
-\hline\hline
-
-\umsteigerTabelleZeileUCU{2010}
-{vorgaenger/icd10gm2010.zip}
-{x1ueb2009\_2010/Klassifikationsdateien/\umsteigerTabelleCodeBreak icd10gmsyst2010.txt\umsteigerTabelleCodeBreakEnd}
-{x1ueb2009\_2010/Klassifikationsdateien/\umsteigerTabelleCodeBreak umsteiger\_icd10gmsyst2009\_icd10gmsyst2010.txt\umsteigerTabelleCodeBreakEnd}
-\hline\hline
-
-\umsteigerTabelleZeileUCU{2009}
-{vorgaenger/icd10gm2009.zip}
-{x1ueb2008\_2009/Klassifikationsdateien/\umsteigerTabelleCodeBreak icd10gmsyst2009.txt\umsteigerTabelleCodeBreakEnd}
-{x1ueb2008\_2009/Klassifikationsdateien/\umsteigerTabelleCodeBreak umsteiger\_icd10gmsyst2008\_icd10gmsyst2009.txt\umsteigerTabelleCodeBreakEnd}
-\hline\hline
-
-\umsteigerTabelleZeileUCUS{2008}
-{vorgaenger/icd10gm2008.zip}
-{x1ueb2007\_2008/Klassifikationsdateien/\umsteigerTabelleCodeBreak
-icd10v2008.txt\umsteigerTabelleCodeBreakEnd}
-{x1ueb2007\_2008/Klassifikationsdateien/\umsteigerTabelleCodeBreak
-umsteiger20072008.txt\umsteigerTabelleCodeBreakEnd}
-{\item ISO-8859-1}
-\hline\hline
-
-\umsteigerTabelleZeileUCUS{2007}
-{vorgaenger/icd10gm2007.zip}
-{x1ueb2006\_2007/Klassifikationsdateien/\umsteigerTabelleCodeBreak
-ICD10V2007.txt\umsteigerTabelleCodeBreakEnd}
-{x1ueb2006\_2007/Klassifikationsdateien/\umsteigerTabelleCodeBreak
-Umsteiger.txt\umsteigerTabelleCodeBreakEnd}
-{\item ISO-8859-1}
-\hline\hline
-
-\umsteigerTabelleZeileUCUS{2006}
-{vorgaenger/icd10gm2006.zip}
-{x1ueb2005\_2006/ICD10V2006.txt}
-{x1ueb2005\_2006/umsteiger.txt}
-{\item ISO-8859-1}
-\hline\hline
-
-\umsteigerTabelleZeileUCUS{2005}
-{vorgaenger/icd10gm2005.zip}
-{x1ueb2004\_2005/ICD10V2005.txt}
-{x1ueb2004\_2005/umsteiger.txt}
-{\item ISO-8859-1}
-\hline\hline
-
-\umsteigerTabelleZeileUCUS{2004}
-{vorgaenger/icd10gm2004.zip}
-{x1ueb20\_2004/icd10v2004.txt}
-{x1ueb20\_2004/Umsteiger.txt}
-{\item ISO-8859-1 \item Punkt-Strich-Notation \item 6-Spalten-Umsteiger}
-\hline\hline
-
-\umsteigerTabelleZeileUCUS{2.0}
-{vorgaenger/icd10gm20.zip}
-{x1ueb13\_20\_v11/icd10v20.txt}
-{x1ueb13\_20\_v11/Umsteiger.txt}
-{\item ISO-8859-1 \item Punkt-Strich-Notation \item Kreuz-Stern-System \item 6-Spalten-Umsteiger \item Nicht endständige Umsteiger}
-\hline\hline
-
-\umsteigerTabelleZeileLetzte{1.3}
-{x1ueb13\_20\_v11/icd10v13.txt}
-{\item ISO-8859-1 \item Punkt-Strich-Notation \item Kreuz-Stern-System \item Keine Überleitung}
-\hline\hline
-
-\end{longtable}
-\endgroup
-
-\subsubsection{OPS Versionen}
-
-\begingroup
-\renewcommand{\arraystretch}{1.2}
-\begin{longtable}{|c|l|l|}
-\hline\hline
-
-\umsteigerTabelleKopf\hline\hline
-
-\umsteigerTabelleZeileUCUS{2025}
-{version2025-vorab/ops2025syst-ueberl-vorab.zip}
-{Klassifikationsdateien/ops2025syst\_vorab.txt}
-{Klassifikationsdateien/\umsteigerTabelleCodeBreak
-ops2025syst\_umsteiger\_2024\_2025\_vorab.txt\umsteigerTabelleCodeBreakEnd}
-{\item Vorab-Version}
-\hline\hline
-
-\umsteigerTabelleZeileU{2024}{version2024/ops2024syst-ueberl.zip}\hline\hline
-
-\umsteigerTabelleZeileU{2023}{version2023/ops2023syst-ueberl.zip}\hline\hline
-
-%\umsteigerTabelleAnmerkung{Für Version 2022 waren die Überleitungsdateien enthalten als eigene Zip-Datei zusammen mit allen anderen Dateien in einer großen Zip-Datei.}\hline\hline
-
-\umsteigerTabelleZeileUS{2022}{vorgaenger/ops2022.zip}{\item Zip-Unterdatei: \texttt{ops2022syst-ueberl.zip}}\hline\hline
-
-%\umsteigerTabelleAnmerkung{Bis Version 2021 lagen die Überleitungsdateien in einem Unterverzeichnis zusammen in einer Zip-Datei, welche auch allen anderen Dateien für eine Version enthielt.}\hline\hline
-
-\umsteigerTabelleZeileUV{2021}{vorgaenger/ops2021.zip}{ops2021syst-ueberl}\hline\hline
-\umsteigerTabelleZeileUV{2020}{vorgaenger/ops2020.zip}{ops2020syst-ueberl}\hline\hline
-\umsteigerTabelleZeileUV{2019}{vorgaenger/ops2019.zip}{ops2019syst-ueberl}\hline\hline
-\umsteigerTabelleZeileUV{2018}{vorgaenger/ops2018.zip}{p1sut2018}\hline\hline
-\umsteigerTabelleZeileUV{2017}{vorgaenger/ops2017.zip}{p1sut2017}\hline\hline
-\umsteigerTabelleZeileUV{2016}{vorgaenger/ops2016.zip}{p1sut2016}\hline\hline
-\umsteigerTabelleZeileUV{2015}{vorgaenger/ops2015.zip}{p1sut2015}\hline\hline
-
-\umsteigerTabelleZeileUCU{2014}
-{vorgaenger/ops2014.zip}
-{p1sua2014-20131104/Klassifikationsdateien/\umsteigerTabelleCodeBreak ops2014syst\_20131104.txt\umsteigerTabelleCodeBreakEnd}
-{p1sua2014-20131104/Klassifikationsdateien/\umsteigerTabelleCodeBreak ops2014syst\_umsteiger\_2013\_2014\_20131104.txt\umsteigerTabelleCodeBreakEnd}
-\hline\hline
-
-\umsteigerTabelleZeileUCU{2013}
-{vorgaenger/ops2013.zip}
-{p1sua2013/Klassifikationsdateien/\umsteigerTabelleCodeBreak ops2013syst\_20121113.txt\umsteigerTabelleCodeBreakEnd}
-{p1sua2013/Klassifikationsdateien/\umsteigerTabelleCodeBreak ops2013syst\_umsteiger\_2012\_2013\_20121109.txt\umsteigerTabelleCodeBreakEnd}
-\hline\hline
-
-\umsteigerTabelleZeileUCU{2012}
-{vorgaenger/ops2012.zip}
-{p1ueb2011\_2012/Klassifikationsdateien/\umsteigerTabelleCodeBreak opssyst2012.txt\umsteigerTabelleCodeBreakEnd}
-{p1ueb2011\_2012/Klassifikationsdateien/\umsteigerTabelleCodeBreak umsteiger\_opssyst2011\_opssyst2012.txt\umsteigerTabelleCodeBreakEnd}
-\hline\hline
-
-\umsteigerTabelleZeileUCU{2011}
-{vorgaenger/ops2011.zip}
-{p1ueb2010\_2011/Klassifikationsdateien/\umsteigerTabelleCodeBreak opssyst2011.txt\umsteigerTabelleCodeBreakEnd}
-{p1ueb2010\_2011/Klassifikationsdateien/\umsteigerTabelleCodeBreak umsteiger\_opssyst2010\_opssyst2011.txt\umsteigerTabelleCodeBreakEnd}
-\hline\hline
-
-\umsteigerTabelleZeileUCU{2010}
-{vorgaenger/ops2010.zip}
-{p1ueb2009\_2010/Klassifikationsdateien/\umsteigerTabelleCodeBreak opssyst2010.txt\umsteigerTabelleCodeBreakEnd}
-{p1ueb2009\_2010/Klassifikationsdateien/\umsteigerTabelleCodeBreak umsteiger\_opssyst2009\_opssyst2010.txt\umsteigerTabelleCodeBreakEnd}
-\hline\hline
-
-\umsteigerTabelleZeileUCUS{2009}
-{vorgaenger/ops2009.zip}
-{p1ueb2008\_2009/Klassifikationsdateien/\umsteigerTabelleCodeBreak opsamtl2009.txt\umsteigerTabelleCodeBreakEnd}
-{p1ueb2008\_2009/Klassifikationsdateien/\umsteigerTabelleCodeBreak umsteigeramtl20082009.txt\umsteigerTabelleCodeBreakEnd}
-{\item ISO-8859-1 \item None statt UNDEF \item 6-Spalten-Umsteiger (altes Format)}
-\hline\hline
-
-\umsteigerTabelleZeileUCUS{2008}
-{vorgaenger/ops2008.zip}
-{ops2008amtl/p1ueb2007\_2008/\umsteigerTabelleCodeBreak
-Klassifikationsdateien/opsamtl2008.txt\umsteigerTabelleCodeBreakEnd}
-{ops2008amtl/p1ueb2007\_2008/\umsteigerTabelleCodeBreak
-Klassifikationsdateien/umsteigeramtl20072008.txt\umsteigerTabelleCodeBreakEnd}
-{\item ISO-8859-1 \item None statt UNDEF \item 6-Spalten-Umsteiger (altes Format)}
-\hline\hline
-
-\umsteigerTabelleZeileUCUS{2007}
-{vorgaenger/ops2007.zip}
-{ops2007amtl/p1ueb2006\_2007/\umsteigerTabelleCodeBreak
-Klassifikationsdateien/opsamtl2007.txt\umsteigerTabelleCodeBreakEnd}
-{ops2007amtl/p1ueb2006\_2007/\umsteigerTabelleCodeBreak
-Klassifikationsdateien/UmsteigerAmtlich.txt\umsteigerTabelleCodeBreakEnd}
-{\item ISO-8859-1 \item None statt UNDEF \item 6-Spalten-Umsteiger (altes Format)}
-\hline\hline
-
-\umsteigerTabelleZeileUCUS{2006}
-{vorgaenger/ops2006.zip}
-{ops2006amtl/p1ueb2005\_2006/opsv2006.txt}
-{ops2006amtl/p1ueb2005\_2006/umsteiger.txt}
-{\item ISO-8859-1 \item None statt UNDEF \item 6-Spalten-Umsteiger (altes Format)}
-\hline\hline
-
-\umsteigerTabelleZeileUCUS{2005}
-{vorgaenger/ops2005.zip}
-{ops2005amtl/p1ueb2004\_2005\_v10/OPS2005.txt}
-{ops2005amtl/p1ueb2004\_2005\_v10/umsteiger.txt}
-{\item ISO-8859-1 \item None statt UNDEF \item 5-Spalten-Umsteiger}
-\hline\hline
-
-\umsteigerTabelleZeileUCUS{2004}
-{vorgaenger/ops2004.zip}
-{ops2004amtl/p1ueb21\_2004\_v10/opsv2004.txt}
-{ops2004amtl/p1ueb21\_2004\_v10/Umsteiger.txt}
-{\item ISO-8859-1 \item 4-Spalten-Umsteiger}
-\hline\hline
-
-\umsteigerTabelleZeileUCUS{2.1}
-{vorgaenger/ops21.zip}
-{ops21amtl/p1ueb20\_21\_v10/opsv21.txt}
-{ops21amtl/p1ueb20\_21\_v10/Umsteiger.txt}
-{\item ISO-8859-1 \item KOMBI-Kode \item 6-Spalten-Umsteiger (ursprüngliches Format)}
-\hline\hline
-
-\umsteigerTabelleZeileUCUS{2.0}
-{vorgaenger/ops20.zip}
-{p1ueb11\_20\_v11/Opsv20.txt}
-{p1ueb11\_20\_v11/Umsteiger.txt}
-{\item ISO-8859-1 \item KOMBI-Kode \item 3-Spalten-Umsteiger}
-\hline\hline
-
-\umsteigerTabelleZeileLetzte{1.1}
-{p1ueb11\_20\_v11/Opsv11.txt}
-{\item ISO-8859-1 \item Keine Überleitung}
-\hline\hline
-
-%\umsteigerTabelleAnmerkung{Für Version 1.1 werden nur die Kodes aus Version 2.0 genommen.}\hline\hline
-
-\end{longtable}
-\endgroup
 
 \section{Datenintegrationsprozess}
 
@@ -555,6 +302,8 @@ Wie erwähnt durchlaufen alle Daten unabhängig von Version und Kodiersystem den
     \caption{ETL-Modell nach \citep[Seite 63]{bonnefoy2024definitive}}
 \end{figure}
 
+\newpage %§
+
 Für die BfArM-Daten sieht der Integrationsprozess konkret so aus:
 
 \begin{figure}[H]
@@ -566,7 +315,7 @@ Für die BfArM-Daten sieht der Integrationsprozess konkret so aus:
 \begin{enumerate}
 \item \emph{Download:} Die Zip-Dateien werden heruntergeladen. Alternativ kann geprüft werden, ob die Dateien schon lokal vorhanden sind mit einem bestimmten Pfad, der sich nach Kodiersystem und Versionsnummer immer gleich zusammensetzt, zum Beispiel: \texttt{files/icd10gm2024.zip}. Die Download-Funktion sollte die Zip-Dateien ebenfalls unter diesem Pfad abspeichern, falls so gewünscht.
 \item \emph{Unzip:} Die Kodes- und Umsteiger-Dateien werden aus der Zip-Datei extrahiert. Normalerweise muss dafür nicht das ganze Archiv in temporäre Dateien entpackt werden -- außer eventuell bei den Versionen 2022, weil das Extrahieren verschachtelter Zip-Dateien eher ein Nischenfall ist und nicht unbedingt standardmäßig von Programmiersprachen oder Bibliotheken unterstützt wird. 
-\item \emph{Convert Encoding:} Die in ISO-8859-1 kodierten Kodes-Dateien müssen in UTF-8 umgewandelt werden. In \citep{charencoding} werden die beiden Zeichenkodierungen genauer erklärt, aber für die BfArM-Daten ist eigentlich nur relevant, dass Umlaute mit unterschiedlichen Werten kodiert sind. Also würde das Einlesen eines in ISO-8859-1 kodierten Umlauts als UTF-8 ein anderes Zeichen als Resultat ergeben. Die Umsteiger-Dateien sind davon nicht betroffen, weil in diesen keine Umlaute enthalten sind. 
+\item \emph{Convert Encoding:}\label{latin1-encoding} Die in ISO-8859-1 kodierten Kodes-Dateien müssen in UTF-8 umgewandelt werden. In \citep{charencoding} werden die beiden Zeichenkodierungen genauer erklärt, aber für die BfArM-Daten ist eigentlich nur relevant, dass Umlaute mit unterschiedlichen Werten kodiert sind. Also würde das Einlesen eines in ISO-8859-1 kodierten Umlauts als UTF-8 ein anderes Zeichen als Resultat ergeben. Die Umsteiger-Dateien sind davon nicht betroffen, weil in diesen keine Umlaute enthalten sind. 
 \item \emph{Parse CSV:} Ein Parser wandelt eine Datei in eine Datenstruktur um; für CSV sollte jede Programmiersprache so eine Funktion standardmäßig zur Verfügung stellen. Für die BfArM-Dateien ist das Ergebnis ein zweidimensionales Array mit zwei Spalten für die Kodes, beziehungsweise drei bis sechs Spalten für die Umsteiger je nach Kodiersystem und Version. 
 \item \emph{Process Data:} Aufgrund der oben erwähnten Abweichungen ist die Vorverarbeitung der Daten der komplexeste Schritt und wird im nächsten Abschnitt genauer erklärt. Außerdem müssen nicht alle Daten gespeichert werden. Vor allem in Bezug auf die Zip-Dateien ergibt das eine Reduktion der Datenmenge um etwa einen Faktor von zehn. 
 \item \emph{Insert:} Die bearbeiteten Daten werden für die Verwendung durch Applikationen gespeichert. Zum Beispiel für eine relationale Datenbank werden pro Dateityp, Kodiersystem und Version eine Tabelle angelegt und die Daten in diese geschrieben. Konkret für SQL müssen außerdem die Hochkommata in den Codes-Dateien beachtet werden. 
@@ -583,13 +332,13 @@ Für die BfArM-Daten sieht der Integrationsprozess konkret so aus:
 \item \emph{Missing values imputation:} Falls Informationen fehlen, müssen die betroffenen Datensätze mit einer bestimmten Logik behandelt werden oder alternativ können Daten durch eine Zufallsfunktion simuliert werden. 
 \end{enumerate}
 
-Die folgenden Unterabschnitte erklären die Vorverarbeitungsschritte für die BfArM-Daten und beziehen sich damit auf die in \ref{abweichungen} genannten Abweichungen. Die Schritte erfolgen in der gelisteten Reihenfolge. Obwohl die Daten nach dem CSV-Parsing schon in einer von der Programmiersprache abhängigen Struktur vorliegen, wird zur Erklärung trotzdem noch die Datei-Struktur verwendet.
-
 \begin{figure}[H]
     \centering
-    \includegraphics[width=.8\linewidth]{../img/data-preproc.png}
+    \includegraphics[width=.7\linewidth]{../img/data-preproc.png}
     \caption{``Preprocessing Tasks'' aus \citep[Seite 4]{garcia2016big}}
 \end{figure}
+
+Die folgenden Unterabschnitte erklären die Vorverarbeitungsschritte für die BfArM-Daten und beziehen sich damit auf die in \ref{abweichungen} genannten Abweichungen. Die Schritte erfolgen in der gelisteten Reihenfolge. Obwohl die Daten nach dem CSV-Parsing schon in einer von der Programmiersprache abhängigen Struktur vorliegen, wird zur Erklärung trotzdem noch die Datei-Struktur verwendet.
 
 \subsection{Datennormalisierung}
 
@@ -654,54 +403,66 @@ Die zweite Spalte zeigt allein die Überleitbarkeit an. Für die Angleichung an 
 
 Für viele Versionen sind über 90\% der Umsteiger-Einträge automatische Überleitungen in den gleichen Kode. Diese müssen also gar nicht in eine Applikation aufgenommen werden, unter der Annahme, dass nicht vorhandene Umsteiger gleich automatische Überleitungen sind. In dem Fall können alle Umsteiger ausgeschlossen werden, bei denen der neue Kode gleich dem alten Kode ist und die automatische Überleitbarkeit in beide Richtungen gegeben ist. 
 
-\subsubsection{Nicht-endständige Kodes}
-
-Für die meisten Anwendungen sind eigentlich nur die endständigen Kodes relevant. Statt diese bei jeder Operation herauszufiltern, können beim einmaligen Einlesen der Daten auch einfach die nicht-endständigen Kodes ausgeschlossen werden. Da die Dateien alphabetisch nach dem Kode sortiert sind, geht das mit folgendem Algorithmus\footnote{Der Pseudocode ist in Struktogrammen nach \citep{nassishneid} beschrieben. Die später vorkommenden Algorithmen zur Umsteiger-Suche enthalten viele Variablenzuweisungen, die abhängig von einer Bedingung sind und deren parallele Darstellung in Nassi-Shneidermann-Diagrammen übersichtlicher ist. Sie werden also im Sinne der Einheitlichkeit ebenfalls für die einfachen Algorithmen in diesem Abschnitt verwendet.}:
-
-\begin{struktogramm}(100,76)
-    \assign[\heightNS]{index = 1}
-    \while[\heightNS]{WHILE index NOT (Anzahl der Kodes - 1)}
-    \assign[\heightNS]{current = Kodes [index]}
-    \assign[\heightNS]{next = Kodes [index+1]}
-        \ifthenelse{2}{2}{next enthält current AND Länge(next) > Länge(current)}{YES}{NO}
-      \assign[\heightNS]{entferne current}
-    \change
-    \ifend
-    \assign[\heightNS]{index = index + 1}
-    \whileend
-\end{struktogramm}
-
-\begin{comment}
-
-foreach($data as $k => $v) {
-            $current = $v[0];
-            $next = next($data)[0] ?? '';
-            if(str_contains($next, $current) &&
-                (strlen($next) > strlen($current))) {
-                unset($data[$k]);
-            }
-        }
-\end{comment}
+\newpage
 
 \subsubsection{Nicht-endständige Umsteiger}
 
-Die Überleitung von ICD-10-GM Version 2.0 auf 1.3 ist der einzige Fall, in dem die Umsteiger-Datei nicht-endständige Kodes enthält. Durch das Entfernen der Sonderzeichen von Punkt-Strich-Notation und Kreuz-Stern-System gibt es außerdem doppelte Einträge in der ersten Spalte, das heißt bei den Kodes der Vorgänger-Version. Folgender Algorithmus entfernt die überflüssigen Einträge:
+Die Überleitung von ICD-10-GM Version 2.0 auf 1.3 ist der einzige Fall, in dem die Umsteiger-Datei nicht-endständige Kodes enthält. Durch das Entfernen der Sonderzeichen von Punkt-Strich-Notation und Kreuz-Stern-System gibt es außerdem doppelte Einträge in der ersten Spalte, das heißt bei den Kodes der Vorgänger-Version. Folgender Algorithmus\footnote{Der Pseudocode ist beschrieben in Struktogrammen nach \citep{nassishneid}. Die später vorkommenden Algorithmen zur Umsteiger-Suche enthalten viele Variablenzuweisungen, die abhängig von einer Bedingung sind und deren parallele Darstellung in Nassi-Shneidermann-Diagrammen übersichtlicher ist. Sie werden also im Sinne der Einheitlichkeit ebenfalls für den Algorithmus in diesem Abschnitt verwendet.}
+entfernt die überflüssigen Einträge.
 
-\newpage
+Angenommen die Kodes befinden sich in einem Array mit Index von 0 bis (n-1), zum Beispiel für die ersten sechs Zeilen der Umsteiger-Datei aus ICD-10-GM, Überleitung 2.0 nach 1.3: 
 
-\begin{struktogramm}(100,76)
-    \assign[\heightNS]{index = Anzahl der Umsteiger}
-    \while[\heightNS]{WHILE index NOT 2}
-    \assign[\heightNS]{current = Umsteiger [index]}
-    \assign[\heightNS]{prev = Umsteiger [index-1]}
-    \ifthenelse{2}{2}{current enthält prev AND Länge(current) > Länge(prev)}{YES}{NO}
-        \assign[\heightNS]{entferne prev}
+\begingroup
+\renewcommand{\arraystretch}{1.2}
+\setlength{\tabcolsep}{12pt}
+\begin{tabular}{cll}
+Index & Alter Kode & Neuer Kode \\
+\hline
+0 & \texttt{A00} & \texttt{A00.0}  \\
+1 & \texttt{A00} & \texttt{A00.1} \\
+2 & \texttt{A00} & \texttt{A00.9} \\
+3 & \texttt{A00.0} & \texttt{A00.0} \\
+4 & \texttt{A00.1} & \texttt{A00.1} \\
+5 & \texttt{A00.9} & \texttt{A00.9} \\
+\end{tabular}
+\endgroup
+
+\begin{struktogramm}(120,96)
+    \assign[\heightNS]{data = Umsteiger-Einträge}
+    \assign[\heightNS]{index = Anzahl(data) - 1}
+    \assign[\heightNS]{current = data [ index ][ Alter Kode ]}
+    \while[\heightNS]{WHILE index > 0}
+    \assign[\heightNS]{prev = data [ index-1 ][ Alter Kode ]}
+    \ifthenelse{2}{2}{IF current enthält prev AND Länge(current) > Länge(prev)}{TRUE}{FALSE}
+        \assign[\heightNS]{Entferne data[index-1]}
     \change
         \assign[\heightNS]{current = prev}
     \ifend
     \assign[\heightNS]{index = index - 1}
     \whileend
+    \assign[\heightNS]{Reindiziere data}
 \end{struktogramm}
+
+Die IF-Bedingung bezieht sich auf String-basierte Operationen; also ``enthält'' als Sub-String und String-``Länge''.
+
+Entfernt wird eine ganze Zeile. 
+
+\newpage
+
+Das Beispiel-Array nach Durchlaufen des Algorithmus: 
+
+\begingroup
+\renewcommand{\arraystretch}{1.2}
+\setlength{\tabcolsep}{12pt}
+\begin{tabular}{cll}
+Index & Alter Kode & Neuer Kode \\
+\hline
+0 & \texttt{A00.0} & \texttt{A00.0} \\
+1 & \texttt{A00.1} & \texttt{A00.1} \\
+2 & \texttt{A00.9} & \texttt{A00.9} \\
+\end{tabular}
+\endgroup
+
 
 \begin{comment}
         $index = end($data)[0];
@@ -719,6 +480,10 @@ Die Überleitung von ICD-10-GM Version 2.0 auf 1.3 ist der einzige Fall, in dem 
         }
 \end{comment}
 
+\subsubsection{Nicht-endständige Kodes}
+
+Für die meisten Anwendungen sind eigentlich nur die endständigen Kodes relevant. Statt diese bei jeder Operation herauszufiltern, können beim einmaligen Einlesen der Daten auch einfach die nicht-endständigen Kodes ausgeschlossen werden. Zu diesem Zweck funktioniert der oben erklärte Algorithmus ebenfalls. 
+
 \subsection{Integration zusätzlicher Informationen}
 
 Im nächsten Abschnitt wird erklärt, wie ermittelt wird, ob es zu einem Kode einer bestimmten Version Umsteiger in einer älteren oder neueren Version gibt. Um diese zusätzliche Information speichern zu können, werden die Kodes um eine Spalte erweitert. 
@@ -726,7 +491,9 @@ Im nächsten Abschnitt wird erklärt, wie ermittelt wird, ob es zu einem Kode ei
 \bibliographystyle{IEEEtranSN}
 \bibliography{data1}
 
-%\appendix
-%\section*{Anhang}
+\appendix
+\section*{Anhang}
+
+\input{data1_tables.tex}
 
 \end{document}
