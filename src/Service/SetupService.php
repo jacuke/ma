@@ -292,7 +292,7 @@ class SetupService {
         if($table_type===Constants::TABLE_UMSTEIGER &&
             isset($options[Constants::XML_NONTERM_UMST])
         ) {
-            $functions[] = function(&$data) { $this->remove_non_terminal_umsteiger($data); };
+            $functions[] = function(&$data) { $this->remove_non_terminal($data); };
         }
 
         // remove non-umsteiger (new code = old code and 2x A)
@@ -304,7 +304,7 @@ class SetupService {
         // remove non-terminal codes
         if($table_type===Constants::TABLE_CODES
         ) {
-            $functions[] = function(&$data) { $this->remove_non_terminal_codes($data); };
+            $functions[] = function(&$data) { $this->remove_non_terminal($data); };
         }
 
         // add an additional column to all codes tables
@@ -388,7 +388,7 @@ class SetupService {
         }
     }
 
-    private function remove_non_terminal_umsteiger(array & $data):void {
+    private function remove_non_terminal(array & $data):void {
 
         $index = end($data)[0];
         $prev = prev($data)[0] ?? '';
@@ -411,19 +411,6 @@ class SetupService {
 
         foreach($data as $k => $v) {
             if($v[0]===$v[1] && $v[2]==='A' && $v[3]==='A') {
-                unset($data[$k]);
-            }
-        }
-        $data = array_values($data);
-    }
-
-    private function remove_non_terminal_codes (array& $data): void {
-
-        foreach($data as $k => $v) {
-            $current = $v[0];
-            $next = next($data)[0] ?? '';
-            if(str_contains($next, $current) &&
-                (strlen($next) > strlen($current))) {
                 unset($data[$k]);
             }
         }
