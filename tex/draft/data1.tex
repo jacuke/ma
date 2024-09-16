@@ -427,13 +427,13 @@ Index & Alter Kode & Neuer Kode \\
 \end{tabular}
 \endgroup
 
-\begin{struktogramm}(120,96)
+\begin{struktogramm}(110,96)
     \assign[\heightNS]{data = Umsteiger-Einträge}
     \assign[\heightNS]{index = Anzahl(data) - 1}
-    \assign[\heightNS]{current = data [ index ][ Alter Kode ]}
+    \assign[\heightNS]{current = data [ index ][ 'Alter Kode' ]}
     \while[\heightNS]{WHILE index > 0}
-    \assign[\heightNS]{prev = data [ index-1 ][ Alter Kode ]}
-    \ifthenelse{2}{2}{IF current enthält prev AND Länge(current) > Länge(prev)}{TRUE}{FALSE}
+    \assign[\heightNS]{prev = data [ index-1 ][ 'Alter Kode' ]}
+    \ifthenelse[24]{2}{2}{IF current enthält prev AND Länge(current) > Länge(prev)}{TRUE}{FALSE}
         \assign[\heightNS]{Entferne data[index-1]}
     \change
         \assign[\heightNS]{current = prev}
@@ -443,9 +443,13 @@ Index & Alter Kode & Neuer Kode \\
     \assign[\heightNS]{Reindiziere data}
 \end{struktogramm}
 
-Die IF-Bedingung bezieht sich auf String-basierte Operationen; also ``enthält'' als Sub-String und String-``Länge''.
+Anmerkungen:
 
-Entfernt wird eine ganze Zeile. 
+\begin{itemize}
+\item  data [ index ][ 'Alter Kode' ] bedeutet Zugriff auf Zeile mit Index = Wert von index, Spalte 'Alter Kode'. Zum Beispiel: data[ 4 ][ 'Alter Kode' ] = \texttt{A00.1}.
+\item Die IF-Bedingung bezieht sich auf String-basierte Operationen; also ``enthält'' als Sub-String und String-``Länge''.
+\item Entfernt wird eine ganze Zeile. 
+\end{itemize}
 
 \newpage
 
