@@ -90,12 +90,18 @@ class UmsteigerSearchController extends AbstractController {
             $content = '<div></div>';
         } else {
             $name = '';
+            $code_search = $this->bfarmRepository->readData($type, Constants::TABLE_CODES, $year, '', $code);
+            if(!empty($code_search)) {
+                $name = $code_search[0]['name'];
+            }
             $data = array();
             $searchUmsteiger = $this->umsteigerService->searchUmsteigerHorizontal($type, $year, $code);
             foreach ($searchUmsteiger as $key => $direction) {
                 if(!empty($direction)) {
-                    $name = $direction['umsteiger'][0][$key==='fwd' ? 'old_name' : 'new_name'] ?? '';
                     $data[$key] = $this->render_recursive($type, $direction, $key==='fwd');
+                    if($name==='') {
+                        $name = $direction['umsteiger'][0][$key==='fwd' ? 'old_name' : 'new_name'] ?? '';
+                    }
                 }
             }
             if(empty($data)) {
