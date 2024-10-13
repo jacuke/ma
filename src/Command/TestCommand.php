@@ -109,6 +109,33 @@ class TestCommand extends Command implements LoggerAwareInterface {
 
     protected function execute(InputInterface $input, OutputInterface $output): int {
 
+        $source = 'Upper motor neuron facial paralysis'; // G83.6 // no result
+        $source = 'Flat foot [pes planus] (acquired)'; // M21.4
+        $data = [
+            203533003 => 'Peroneal spastic flat foot',
+            90374001 => 'Acquired spastic flat foot',
+            53226007 => 'Talipes planus',
+            44480001 => 'Acquired flexible flat foot',
+            203531001 => 'Hypermobile flat foot',
+            203534009 => 'Acquired pes planus',
+            203532008 => 'Rigid flat foot'
+        ];
+
+        $comparison = new \Atomescrochus\StringSimilarities\Compare();
+        $measure = array_map(function ($v) use ($comparison, $source) {
+            return $comparison->jaroWinkler($source, $v);
+            //return $comparison->smg($source, $v);
+        }, $data);
+
+        arsort($measure);
+        //var_dump($measure);
+
+        foreach($measure as $k => $v) {
+            $output->writeln($data[$k]);
+        }
+
+        return 0;
+
         //
 //        $file = file_get_contents($this->projectDir . '/files/Umsteiger.txt');
 //        $file =  mb_convert_encoding($file, "UTF-8", "ISO-8859-1");

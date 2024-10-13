@@ -4,8 +4,80 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "06d221a06c9a0c46c692f0733002d4d0",
+    "content-hash": "98f485c7e758231f1ff91bb1d323a215",
     "packages": [
+        {
+            "name": "atomescrochus/laravel-string-similarities",
+            "version": "2.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/atomescrochus/laravel-string-similarities.git",
+                "reference": "8f3fa2ba4377a51552d64101f381eb5d156eec09"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/atomescrochus/laravel-string-similarities/zipball/8f3fa2ba4377a51552d64101f381eb5d156eec09",
+                "reference": "8f3fa2ba4377a51552d64101f381eb5d156eec09",
+                "shasum": ""
+            },
+            "require": {
+                "php": "~7.0 || ~8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0||~5.0",
+                "squizlabs/php_codesniffer": "^2.3"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Atomescrochus\\StringSimilarities\\StringSimilaritiesServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Atomescrochus\\StringSimilarities\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jean-Philippe Murray",
+                    "email": "jp@atomescroch.us",
+                    "homepage": "http://atomescroch.us",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Compare two string and get a similarity percentage",
+            "homepage": "https://github.com/atomescrochus/laravel-string-similarities",
+            "keywords": [
+                "Gotoh",
+                "Jaro",
+                "Smith",
+                "Waterman",
+                "Winkler",
+                "atomescrochus",
+                "comparison",
+                "laravel-string-similarities",
+                "levenshtein",
+                "string"
+            ],
+            "support": {
+                "issues": "https://github.com/atomescrochus/laravel-string-similarities/issues",
+                "source": "https://github.com/atomescrochus/laravel-string-similarities/tree/2.1.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/jpmurray",
+                    "type": "github"
+                }
+            ],
+            "time": "2022-10-27T14:46:39+00:00"
+        },
         {
             "name": "doctrine/cache",
             "version": "2.2.0",
