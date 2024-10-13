@@ -1,0 +1,251 @@
+(Abschnitt: BfArM-Daten -- Umsteiger-Algorithmen)
+
+\begin{comment}
+Beispiele für Umsteiger Historie
+
+http://127.0.0.1:8000/icd10gm-umsteiger-suche?s=M21.6&y=2014
+
+http://127.0.0.1:8000/icd10gm-umsteiger-suche?s=T30.6&y=2005
+
+http://127.0.0.1:8000/icd10gm-umsteiger-suche?s=U69&y=2025
+
+http://127.0.0.1:8000/icd10gm-umsteiger-suche?s=G83.8&y=1.3
+
+
+file:///home/simon/Downloads/TR1206.pdf
+p. 92f Purdom
+p. 96 "Search"
+
+\end{comment}
+
+
+
+\begin{figure}[H]
+    \centering\large%\sffamily
+    \resizebox{.99\textwidth}{!}{\input{../dia/nodes.tex}}
+    \normalsize\caption{caption}
+\end{figure}
+
+\newpage
+
+%\begin{comment}
+
+\begin{figure}[H]
+    \centering\large%\sffamily
+    \resizebox{.99\textwidth}{!}{\input{../dia/nodes2.tex}}
+    \normalsize\caption{caption}
+\end{figure}
+
+\begin{figure}[H]
+    \centering\large%\sffamily
+    \resizebox{.99\textwidth}{!}{\input{../dia/nodes3.tex}}
+    \normalsize\caption{caption}
+\end{figure}
+
+\newpage
+
+\begin{figure}[H]
+    \centering\LARGE%\sffamily
+    \resizebox{.60\textwidth}{!}{\input{../dia/merge.tex}}
+    \normalsize\caption{caption}
+\end{figure}
+
+\newpage
+
+\begin{figure}[H]
+    \centering
+    \setlength{\fboxsep}{10pt}\color{black!20}\fbox{
+    \includegraphics[width=.8\linewidth]{../img/grapht1.png}}
+    \normalcolor\caption{aus \citep[Seite 172]{gross2013handbook}}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \setlength{\fboxsep}{10pt}\color{black!20}\fbox{
+    \includegraphics[width=.8\linewidth]{../img/grapht2.png}}
+    \normalcolor\caption{aus \citep[Seite 172]{gross2013handbook}}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \setlength{\fboxsep}{10pt}\color{black!20}\fbox{
+    \includegraphics[width=.8\linewidth]{../img/purdom_r.png}}
+    \normalcolor\caption{aus \citep[Seite 76f]{dar1993augmenting}}
+\end{figure}
+
+\newpage
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.48\linewidth]{../img/purdom_g1.png}
+    \caption{aus \citep[Seite 78]{purdom1970transitive}}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.45\linewidth]{../img/purdom_g2.png}
+    \caption{aus \citep[Seite 78]{purdom1970transitive}}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.49\linewidth]{../img/purdom_g1.png}
+    \includegraphics[width=.49\linewidth]{../img/purdom_g2b.png}
+    \caption{aus \citep[Seite 78]{purdom1970transitive}}
+\end{figure}
+
+\newpage
+
+\begin{figure}[H]
+    \centering
+    \setlength{\fboxsep}{10pt}\color{black!20}\fbox{
+    \includegraphics[width=.5\linewidth]{../img/search.png}}
+    \normalcolor\caption{aus \citep[Seite 200]{jakobsson1991mixed}}
+\end{figure}
+
+%\end{comment}
+
+\newpage
+
+\section{Allgemeines}
+
+Angenommen eine Funktion, die Daten liest:
+
+\texttt{lies\_daten (system, version, typ, kode)}
+
+Beispiel:
+
+\texttt{lies\_daten ('icd10gm', '2014', 'codes', 'M21.4')} \newline
+\texttt{lies\_daten ('icd10gm', '2014', 'codes', 'M21.6')}
+
+\begingroup
+\renewcommand{\arraystretch}{1.2}
+\setlength{\tabcolsep}{12pt}
+\begin{tabular}{ll}
+Kode & Titel \\
+\hline
+M21.4 & Plattfuß [Pes planus] (erworben) \\
+M21.6 & Sonstige erworbene Deformitäten des Knöchels und des Fußes \\
+\end{tabular}
+\endgroup
+
+Analog dazu die Umsteiger, wobei sich diese immer von der angebebenen Version auf die nächstältere Version beziehen, zum Beispiel: \newline
+\texttt{lies\_daten ('icd10gm', '2014', 'umsteiger', 'M21.4')} \newline
+\texttt{lies\_daten ('icd10gm', '2014', 'umsteiger', 'M21.6')}
+
+\begingroup
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{p{58pt}p{58pt}lr}
+new (2014) & old (2013) & \multicolumn{2}{c}{$\leftarrow$Auto$\rightarrow$} \\
+\hline
+M21.4 & M21.4 & A & A \\
+\hdashline[0.5pt/5pt]
+M21.6 & M21.6 & A & A \\
+\end{tabular}
+\endgroup
+
+``Auto'' steht für die automatische Überleitbarkeit in die jeweilige Richtung, das heißt 2014$\leftarrow$2013 und 2014$\rightarrow$2013.
+
+Insgesamt hat M21.4 über alle Versionen keine Umsteiger.
+
+M21.6 hat folgende:
+
+\begin{minipage}[t]{.5\textwidth}\vspace{0pt}
+%
+\begingroup
+\begin{tabular}{p{58pt}p{58pt}lr}
+new (2015) & old (2014) & \multicolumn{2}{c}{$\leftarrow$Auto$\rightarrow$} \\
+\hline
+M21.4 & M21.4 & A & A \\
+\hdashline[0.5pt/5pt]
+M21.60 & M21.6 & & A \\
+M21.61 & M21.6 & & A \\
+M21.62 & M21.6 & & A \\
+M21.63 & M21.6 & & A \\
+M21.68 & M21.6 & & A \\
+\end{tabular}
+%
+
+\ \\
+
+%\ \\
+
+%
+\begin{tabular}{p{58pt}p{58pt}lr}
+new (2013) & old (2012) & \multicolumn{2}{c}{$\leftarrow$Auto$\rightarrow$} \\
+\hline
+M21.4 & M21.4 & A & A \\
+\hdashline[0.5pt/5pt]
+M21.6 & M21.60 & A &  \\
+M21.6 & M21.67 & A &  \\
+M21.6 & M21.87 & A & A \\
+\end{tabular}
+\endgroup
+%
+\end{minipage}
+\begin{minipage}[t]{.5\textwidth}%\vspace{0pt}
+%
+\begingroup
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}[t]{p{58pt}p{58pt}lr}
+new (2.0) & old (1.3) & \multicolumn{2}{c}{$\leftarrow$Auto$\rightarrow$} \\
+\hline
+M21.4 & M21.4 & A & A \\
+\hdashline[0.5pt/5pt]
+M21.60 & M21.6 &  & A \\
+M21.67 & M21.6 &  & A \\
+\hdashline[0.5pt/5pt]
+M21.80 & M21.8 &  & A \\
+M21.81 & M21.8 &  & A \\
+M21.82 & M21.8 &  & A \\
+M21.83 & M21.8 &  & A \\
+M21.84 & M21.8 &  & A \\
+M21.85 & M21.8 &  & A \\
+M21.86 & M21.8 &  & A \\
+M21.87 & M21.8 &  & A \\
+M21.88 & M21.8 &  & A \\
+M21.89 & M21.8 & A & A \\
+\end{tabular}
+\endgroup
+%
+\end{minipage}
+
+\begin{comment}
+
+2.0
+
+M21.6;M21.60;;A
+M21.6;M21.67;;A
+
+M21.8;M21.80;;A
+M21.8;M21.81;;A
+M21.8;M21.82;;A
+M21.8;M21.83;;A
+M21.8;M21.84;;A
+M21.8;M21.85;;A
+M21.8;M21.86;;A
+M21.8;M21.87;;A
+M21.8;M21.88;;A
+M21.8;M21.89;A;A
+
+\end{comment}
+
+\begin{minipage}[t]{.5\textwidth}
+test1
+\end{minipage}
+\begin{minipage}[t]{.5\textwidth}
+test2
+\end{minipage}
+
+%% algo
+
+\newpage
+
+Purdom einfach:
+
+\begin{enumerate}
+\item Ausgehend von einem Graphen $G$: Bestimme die stark zusammenhängenden Komponenten ($SCC$) in $G$ und vereinige diese in jeweils einen einzelnen Knoten. Das ergibt einen zyklenfreien, verdichteten Graphen $G_c$.  %Let the original graph be G. Compute the strongly connected components in G, and collapse each one into a single node. Let the resulting acyclic condensation graph be Gc.
+\item Sortiere $G_c$ topologisch. % Obtain a topological sort on Gc.
+\item Ermittele die transitive Hülle von $G_c$ über dessen Adjazenzlisten in rückwärts topologischer Reihenfolge. % (Bestimme die erreichbaren Knoten über Adjazenzlisten) % Compute the transitive closure of Gc by expanding successor lists in reverse topological order.
+\item Bestimme die transitive Hülle des ursprünglichen Graphens $G$ über die Nachbarschaftslisten der stark zusammenhängenen Komponenten in $G_c$: ein Knoten $y$ ist ein erreichbarer Nachbar von Knoten $x$, falls $SCC(y) = SCC(x)$ oder falls $SCC(y)$ ein erreichbarer Nachbar von $SCC(x)$ ist. % Compute the successor lists of the nodes in the original graph G from the successor lists of their respective SCCs: a node y is a successor of node x in G if SCC(y) = SCC(x) or SSC(y) is a succcessor of SCC(x) in Gc. 
+\end{enumerate}

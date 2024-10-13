@@ -19,6 +19,10 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 use App\Repository\BfarmRepository;
+use Symfony\Component\Serializer\Encoder\CsvEncoder;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 
 #[AsCommand(name: 'test')]
 class TestCommand extends Command implements LoggerAwareInterface {
@@ -70,7 +74,53 @@ class TestCommand extends Command implements LoggerAwareInterface {
         $this->addOption(self::COMPARE_UMSTEIGER_SEARCHES, 'c', InputOption::VALUE_NONE, 'Compare umsteiger searches');
     }
 
+    private function remove_non_terminal_codes (array& $data): void {
+
+        foreach($data as $k => $v) {
+            $current = $v[0];
+            $next = next($data)[0] ?? '';
+            if(str_contains($next, $current) &&
+                (strlen($next) > strlen($current))) {
+                unset($data[$k]);
+            }
+        }
+        $data = array_values($data);
+    }
+
+    private function remove_non_terminal_umsteiger(array & $data):void {
+
+        $index = end($data)[0];
+        $prev = prev($data)[0] ?? '';
+        while($prev!=='') {
+            $prev = prev($data)[0] ?? '';
+
+            if(str_contains($index, $prev) &&
+                strlen($index) > strlen($prev)
+            ) {
+                unset($data[key($data)]);
+            } else {
+                $index = $prev;
+            }
+            //$prev = prev($data)[0] ?? '';
+        }
+
+        $data = array_values($data);
+    }
+
     protected function execute(InputInterface $input, OutputInterface $output): int {
+
+        //
+//        $file = file_get_contents($this->projectDir . '/files/Umsteiger.txt');
+//        $file =  mb_convert_encoding($file, "UTF-8", "ISO-8859-1");
+//        $serializer = new Serializer([new ObjectNormalizer()], [new CsvEncoder(), new XmlEncoder()]);
+//        $data = $serializer->decode($file, 'csv', ['csv_delimiter' => ';', 'no_headers' => true]);
+//        $this->remove_non_terminal_umsteiger($data);
+//        var_dump($data);
+
+        $data = $this->umsteigerService->searchUmsteigerHorizontal('icd10gm', '2014', 'M21.6');
+        var_dump(json_encode($data, JSON_PRETTY_PRINT));
+
+        return 0;
 
         if($input->getOption(self::COMPARE_UMSTEIGER_SEARCHES)) {
 

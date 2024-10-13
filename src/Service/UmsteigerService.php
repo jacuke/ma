@@ -45,30 +45,31 @@ class UmsteigerService {
             $table_type = Constants::TABLE_UMSTEIGER_JOIN;
             $which = 'old';
         }
-        if($prev!=='') {
-            $umsteiger_in = $this->bfarmRepository->readData($type, $table_type, $year, $prev, $search);
-            if(count($umsteiger_in) > 0) {
-                $umsteiger_out = array();
-                foreach($umsteiger_in as $find) {
-                    $search_code = $find[$which];
-                    if($search_code!==Constants::UNDEF) {
-                        $history = $this->searchUmsteigerHorizontal_recursion($type, $prev, $search_code, $chronological);
-                        if(count($history)>0) {
-                            $find['recursion'] = $history;
-                        }
-                        $umsteiger_out[] = $find;
-                    } else {
-                        array_unshift($umsteiger_out, $find);
-                    }
+        if($prev==='') {
+            return $ret;
+        }
+
+        $umsteiger_in = $this->bfarmRepository->readData($type, $table_type, $year, $prev, $search);
+        if(empty($umsteiger_in)) {
+            return $this->searchUmsteigerHorizontal_recursion($type, $prev, $search, $chronological);
+        }
+
+        $umsteiger_out = array();
+        foreach($umsteiger_in as $find) {
+            $search_code = $find[$which];
+            if($search_code!==Constants::UNDEF) {
+                $history = $this->searchUmsteigerHorizontal_recursion($type, $prev, $search_code, $chronological);
+                if(count($history)>0) {
+                    $find['recursion'] = $history;
                 }
-                $ret['umsteiger'] = $umsteiger_out;
-                $ret['year'] = $year;
-                $ret['prev'] = $prev;
-                return $ret;
+                $umsteiger_out[] = $find;
             } else {
-                return $this->searchUmsteigerHorizontal_recursion($type, $prev, $search, $chronological);
+                array_unshift($umsteiger_out, $find);
             }
         }
+        $ret['umsteiger'] = $umsteiger_out;
+        $ret['year'] = $year;
+        $ret['prev'] = $prev;
         return $ret;
     }
 

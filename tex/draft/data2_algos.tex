@@ -1,0 +1,177 @@
+\section{Horizontale Suche}
+
+data[ 'key' ] = 'value'
+
+\texttt{'key' => 'value'}
+
+\begin{centernss}
+\begin{struktogramm}(95,50)[test]
+\assign{%
+\begin{declaration}[Parameter:]
+\description{\pVar{iPar}}{ an \pKey{int} parameter with the
+meaning described here}
+\end{declaration}
+\begin{declaration}[local Variables:]
+\description{\pVar{iVar}}{an \pKey{int} variable with the meaning
+described here}
+\description{\pVar{dVar}}{a \pKey{double} variable with the
+meaning described here}
+\end{declaration}
+}
+\end{struktogramm}
+\end{centernss}
+
+\newpage
+
+\begingroup
+\renewcommand{\arraystretch}{1.2}
+\setlength{\tabcolsep}{12pt}
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline
+ & 2024 & 2023 & \dots & 2004 & 2.0 & 1.3 & \\
+\hline
+\end{tabular}
+\endgroup
+
+\begin{struktogramm}(170,96)[searchUmsteigerHorizontal]
+    \assign[\heightNS]{data = [ ]}
+    \assign[\heightNS]{data [ 'fwd' ] = searchUmsteigerHorizontal\_recursion (type, version, code, true)}
+    \assign[\heightNS]{data [ 'rev' ] = searchUmsteigerHorizontal\_recursion (type, version, code, false)}
+    \return[\heightNS]{RETURN data}
+\end{struktogramm}
+
+\newpage
+
+{\small
+\begin{struktogramm}(170,200)[searchUmsteigerHorizontal\_recursion]
+    \assign[\heightNS]{ret = [ ]}
+    \ifthenelse[10]{3}{1}{IF version === ' '}{TRUE}{FALSE}
+        \return[\heightNS]{RETURN ret}
+    \change
+    \ifend
+    \ifthenelse[10]{1}{1}{IF chronological}{TRUE}{FALSE}
+        \assign[\heightNS]{other = nextNewerVersion(type, version)}
+        \assign[\heightNS]{table = 'umsteiger\_join\_rev'}
+        \assign[\heightNS]{which = 'new'}
+    \change
+        \assign[\heightNS]{other = nextOlderVersion(type, version)}
+        \assign[\heightNS]{table = 'umsteiger\_join'}
+        \assign[\heightNS]{which = 'old'}
+    \ifend
+    \ifthenelse[10]{3}{1}{IF other === ' '}{TRUE}{FALSE}
+        \return[\heightNS]{RETURN ret}
+    \change
+    \ifend
+    \assign[\heightNS]{umsteiger = readData(type, table, version, year, other, code)}
+    \ifthenelse[10]{3}{1}{IF empty(umsteiger)}{TRUE}{FALSE}
+        \return[\heightNS]{RETURN searchHorizontalRec(type, other, code, chronological)}
+    \change
+    \ifend
+    \assign[\heightNS]{data = [ ]}
+    \while[\heightNS]{FOREACH item IN umsteiger}
+        \assign[\heightNS]{code = item[which]}
+        \ifthenelse[10]{5}{1}{IF code !== 'UNDEF'}{TRUE}{FALSE}
+            \assign[\heightNS]{recursion = searchHorizontalRec(type, other, search, chronological)}
+            \ifthenelse[10]{4}{1}{IF NOT empty(recursion)}{TRUE}{FALSE}
+                \assign[\heightNS]{item['recursion'] = recursion}
+            \change
+            \ifend
+        \change
+        \ifend
+        \assign[\heightNS]{data[ ] = item}
+    \whileend
+    \assign[\heightNS]{ret['umsteiger'] = umsteiger}
+    \assign[\heightNS]{ret['version'] = version}
+    \assign[\heightNS]{ret['other'] = other}
+    \return[\heightNS]{RETURN ret}
+\end{struktogramm}
+}
+
+% Bei UNDEF: array_unshift($umsteiger_out, $find);
+
+Q
+
+\newpage
+
+\section{Horizontale Suche}
+
+{\small
+\begin{struktogramm}(170,32)[searchUmsteigerVertical]
+    \assign[\heightNS]{data = [ ]}
+    \assign[\heightNS]{data += searchUmsteigerVertical\_subroutine (type, target\_version, false, function)}
+    \assign[\heightNS]{data += searchUmsteigerVertical\_subroutine (type, target\_version, true, function)}
+    \return[\heightNS]{RETURN data}
+\end{struktogramm}
+}
+
+Q
+
+\ \\
+
+{\small
+\begin{struktogramm}(170,116)[searchUmsteigerVertical\_subroutine]
+    \assign[\heightNS]{data = [ ]}
+    \assign[\heightNS]{merge = [ ]}
+    \assign[\heightNS]{version = target\_version}
+    \while[\heightNS]{WHILE TRUE}
+        \assign[\heightNS]{other = version}
+        \ifthenelse[10]{1}{1}{IF chronological}{TRUE}{FALSE}
+            \assign[\heightNS]{version = nextOlderVersion(type,other)}
+        \change
+            \assign[\heightNS]{version = nextNewerVersion(type,other)}
+        \ifend
+        \ifthenelse[10]{1}{1}{IF version === ' '}{TRUE}{FALSE}
+            \return[\heightNS]{RETURN data}
+        \change
+        \ifend
+        \ifthenelse[10]{1}{1}{IF chronological}{TRUE}{FALSE}
+            \assign[\heightNS]{merge = merge\_umsteiger(type, chronological, other, version, merge)}
+        \change
+            \assign[\heightNS]{merge = merge\_umsteiger(type, chronological, version, other, merge)}
+        \ifend
+        \ifthenelse[10]{1}{1}{IF function}{TRUE}{FALSE}
+            \assign[\heightNS]{function(merge, version, target\_version)}
+        \change
+            \assign[\heightNS]{data['version'] = merge}
+        \ifend
+    \whileend
+\end{struktogramm}
+}
+
+Q
+
+\newpage
+
+{\small
+\begin{struktogramm}(170,140)[merge\_umsteiger]
+    \assign[\heightNS]{umsteiger = [ ]}
+    \ifthenelse[10]{1}{1}{IF chronological}{TRUE}{FALSE}
+        \assign[\heightNS]{current = 'old'}
+        \assign[\heightNS]{other = 'new'}
+    \change
+        \assign[\heightNS]{current = 'new'}
+        \assign[\heightNS]{other = 'old'}
+    \ifend
+    \assign[\heightNS]{data = readData(type, 'umsteiger', version, prev)}
+    \while[\heightNS]{FOREACH umst IN data}
+        \assign[\heightNS]{current\_code = umst[current]}
+        \assign[\heightNS]{other\_code = umst[other]}
+        \ifthenelse[16]{1}{1}{IF current\_code==='UNDEF' OR other\_code==='UNDEF'}{TRUE}{FALSE}
+            \assign[\heightNS]{undef = true}
+        \change
+            \assign[\heightNS]{undef = false}
+        \ifend
+        \ifthenelse[16]{1}{1}{IF NOT undef AND isset(merge\_into[other\_code])}{TRUE}{FALSE}
+            \assign[\heightNS]{umsteiger[current\_code] =
+            array\_merge(merge\_into[other\_code], umsteiger[current\_code] ?? [])}
+        \change
+            \assign[\heightNS]{umsteiger[current\_code] = other\_code}
+        \ifend
+    \whileend
+    \return[\heightNS]{RETURN umsteiger + merge\_into}
+\end{struktogramm}
+}
+
+Q
+
+\newpage
