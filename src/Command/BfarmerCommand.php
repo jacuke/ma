@@ -20,24 +20,14 @@ class BfarmerCommand extends Command {
     private const KEEP = 'keep';
     private const PATIENTS = 'patients';
     private const UMSTEIGER_INFO = 'umsteiger';
-
-    private DataService $dataService;
-    private SetupService $setupService;
-    private PatientsService $patientsService;
-    private UmsteigerService $umsteigerService;
     
     public function __construct(
-        DataService $dataService,
-        SetupService $setupService,
-        PatientsService $patientsService,
-        UmsteigerService $umsteigerService
+        private readonly DataService $dataService,
+        private readonly SetupService $setupService,
+        private readonly PatientsService $patientsService,
+        private readonly UmsteigerService $umsteigerService
     ) {
         parent::__construct();
-
-        $this->dataService = $dataService;
-        $this->setupService = $setupService;
-        $this->patientsService = $patientsService;
-        $this->umsteigerService = $umsteigerService;
     }
 
     protected function configure() : void {

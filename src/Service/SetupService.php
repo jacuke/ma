@@ -14,27 +14,16 @@ use ZipArchive;
 
 class SetupService {
 
-    private string $projectDir;
-    private BfarmRepository $bfarmRepository;
-    private ConfigRepository $configRepository;
-    private DataService $dataService;
-    private ClientService $clientService;
     private Serializer $serializer;
     private Filesystem $filesystem;
 
     public function __construct(
-        BfarmRepository  $bfarmRepository,
-        ConfigRepository $configRepository,
-        DataService      $dataService,
-        ClientService    $clientService,
-        string           $projectDir
+        private readonly BfarmRepository  $bfarmRepository,
+        private readonly ConfigRepository $configRepository,
+        private readonly DataService      $dataService,
+        private readonly ClientService    $clientService,
+        private readonly string           $projectDir
     ) {
-        $this->bfarmRepository = $bfarmRepository;
-        $this->configRepository = $configRepository;
-        $this->dataService = $dataService;
-        $this->clientService = $clientService;
-        $this->projectDir = $projectDir;
-
         $this->serializer = new Serializer([new ObjectNormalizer()], [new CsvEncoder(), new XmlEncoder()]);
         $this->filesystem = new Filesystem();
     }

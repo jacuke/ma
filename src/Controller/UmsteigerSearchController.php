@@ -13,19 +13,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class UmsteigerSearchController extends AbstractController {
 
-    private BfarmRepository $bfarmRepository;
-    private DataService $dataService;
-    private UmsteigerService $umsteigerService;
-
     public function __construct(
-        BfarmRepository  $bfarmRepository,
-        DataService      $dataService,
-        UmsteigerService $umsteigerService
-    ) {
-        $this->bfarmRepository = $bfarmRepository;
-        $this->dataService = $dataService;
-        $this->umsteigerService = $umsteigerService;
-    }
+        private readonly BfarmRepository  $bfarmRepository,
+        private readonly DataService      $dataService,
+        private readonly UmsteigerService $umsteigerService
+    ) {}
 
     /** @noinspection PhpUnused */
     #[Route('/{type}-umsteiger-suche', name: 'umsteiger_suche')]

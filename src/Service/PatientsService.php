@@ -9,31 +9,18 @@ use App\Util\Constants;
 
 class PatientsService {
 
-    private PatientsRepository $patientsRepository;
-    private ConfigRepository $configRepository;
-    private BfarmRepository $bfarmRepository;
-    private DataService $dataService;
-    private UmsteigerService   $umsteigerService;
-
     private array $yearBins;
     private const YEAR_BINS = 3;
     private const NUM_CODES_BINS = [1, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 5];
 
     public function __construct(
-        PatientsRepository $patientsRepository,
-        ConfigRepository   $configRepository,
-        BfarmRepository    $bfarmRepository,
-        DataService        $dataService,
-        UmsteigerService   $umsteigerService,
+        private readonly PatientsRepository $patientsRepository,
+        private readonly ConfigRepository   $configRepository,
+        private readonly BfarmRepository    $bfarmRepository,
+        private readonly DataService        $dataService,
+        private readonly UmsteigerService   $umsteigerService,
     ) {
-        $this->patientsRepository = $patientsRepository;
-        $this->configRepository = $configRepository;
-        $this->bfarmRepository = $bfarmRepository;
-        $this->dataService = $dataService;
-        $this->umsteigerService = $umsteigerService;
-
         $this->patientsRepository->addPatientsTable();
-
         $this->yearBins = array();
     }
 

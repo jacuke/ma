@@ -8,13 +8,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AdminerController extends AbstractController {
 
-    private string $projectDir;
+    public function __construct(private readonly string $projectDir) {}
 
-    public function __construct(string $projectDir) {
-
-        $this->projectDir = $projectDir;
-    }
-
+    /** @noinspection PhpUnused */
     #[Route('/adminer', name: 'adminer_test')]
     public function adminer(): Response {
 

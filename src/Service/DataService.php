@@ -9,7 +9,6 @@ use Symfony\Component\Serializer\Serializer;
 class DataService {
 
     private Serializer $serializer;
-    private string $projectDir;
     private array $data;
 
     private const YEARS = 'y';
@@ -21,10 +20,8 @@ class DataService {
     private const VORAB = 'v';
 
     public function __construct(
-        string $projectDir
+        private readonly string $projectDir
     ) {
-        $this->projectDir = $projectDir;
-
         $this->serializer = new Serializer([], [new XmlEncoder()]);
 
         foreach (Constants::CODE_SYSTEMS as $codesys) {

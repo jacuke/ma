@@ -10,13 +10,8 @@ use Psr\Log\LoggerInterface;
 class DatabaseRepository implements LoggerAwareInterface {
 
     protected LoggerInterface $logger;
-    protected Connection $connection;
 
-    public function __construct(
-        Connection  $connection
-    ) {
-        $this->connection = $connection;
-    }
+    public function __construct(protected readonly Connection $connection) {}
 
     public function setLogger(LoggerInterface $logger): void {
         $this->logger = $logger;

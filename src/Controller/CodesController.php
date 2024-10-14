@@ -12,16 +12,10 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CodesController extends AbstractController  {
 
-    private BfarmRepository $bfarmRepository;
-    private ConfigRepository $configRepository;
-
     public function __construct(
-        BfarmRepository  $bfarmRepository,
-        ConfigRepository $configRepository
-    ) {
-        $this->bfarmRepository = $bfarmRepository;
-        $this->configRepository = $configRepository;
-    }
+        private readonly BfarmRepository  $bfarmRepository,
+        private readonly ConfigRepository $configRepository
+    ) {}
 
     /** @noinspection PhpUnused */
     #[Route('/{type}-codes-{year}', name: 'codes')]

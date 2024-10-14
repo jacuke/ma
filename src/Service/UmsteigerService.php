@@ -8,19 +8,11 @@ use App\Util\Constants;
 
 class UmsteigerService {
 
-    private BfarmRepository $bfarmRepository;
-    private ConfigRepository $configRepository;
-    private DataService $dataService;
-
     public function __construct(
-        BfarmRepository  $bfarmRepository,
-        ConfigRepository $configRepository,
-        DataService      $dataService
-    ) {
-        $this->bfarmRepository = $bfarmRepository;
-        $this->configRepository = $configRepository;
-        $this->dataService = $dataService;
-    }
+        private readonly BfarmRepository  $bfarmRepository,
+        private readonly ConfigRepository $configRepository,
+        private readonly DataService      $dataService
+    ) {}
 
     public function searchUmsteigerHorizontal(string $type, string $year, string $search) :array {
 

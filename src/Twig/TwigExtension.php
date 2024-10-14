@@ -9,11 +9,7 @@ use Twig\TwigFunction;
 
 class TwigExtension extends AbstractExtension {
 
-    private DataService $dataService;
-
-    public function __construct(DataService $dataService) {
-        $this->dataService = $dataService;
-    }
+    public function __construct(private readonly DataService $dataService) {}
 
     public function getFunctions(): array {
         return [

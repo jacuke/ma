@@ -11,13 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DimdiController extends AbstractController {
 
-    private ClientService $clientService;
-
-    public function __construct(
-        ClientService $clientService
-    ) {
-        $this->clientService = $clientService;
-    }
+    public function __construct(private readonly ClientService $clientService) {}
 
     #[Route('/dimdi-findcode', name: 'dimdi_findcode')]
     public function dimdi_findcode(Request $request): Response {

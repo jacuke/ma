@@ -10,13 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class IndexController extends AbstractController  {
 
-    private DataService $dataService;
-
-    public function __construct(
-        DataService $dataService
-    ) {
-        $this->dataService = $dataService;
-    }
+    public function __construct(private readonly DataService $dataService) {}
 
     #[Route('/', name: 'index')]
     public function simon(): Response  {

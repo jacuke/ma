@@ -9,13 +9,9 @@ use Symfony\Contracts\HttpClient\Exception\ExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class ClientService implements LoggerAwareInterface {
-
-    private HttpClientInterface $client;
     private LoggerInterface $logger;
 
-    public function __construct(HttpClientInterface $client) {
-        $this->client = $client;
-    }
+    public function __construct(private readonly HttpClientInterface $client) {}
 
     public function setLogger(LoggerInterface $logger): void {
         $this->logger = $logger;

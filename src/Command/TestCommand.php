@@ -29,16 +29,6 @@ class TestCommand extends Command implements LoggerAwareInterface {
 
     private const COMPARE_UMSTEIGER_SEARCHES = 'compare';
 
-    private BfarmRepository $bfarmRepository;
-    private ConfigRepository $configRepository;
-    private PatientsRepository $patientsRepository;
-    private DataService $dataService;
-    private UmsteigerService $umsteigerService;
-    private ConceptMapService $conceptMapService;
-    private SetupService $setupService;
-    private ClientService $clientService;
-    private string $projectDir;
-
     private LoggerInterface $logger;
 
     public function setLogger(LoggerInterface $logger): void {
@@ -46,27 +36,17 @@ class TestCommand extends Command implements LoggerAwareInterface {
     }
 
     public function __construct(
-        BfarmRepository    $bfarmRepository,
-        ConfigRepository   $configRepository,
-        PatientsRepository $patientsRepository,
-        DataService        $dataService,
-        UmsteigerService   $umsteigerService,
-        ConceptMapService  $conceptMapService,
-        SetupService       $setupService,
-        ClientService      $clientService,
-        string             $projectDir
+        private readonly BfarmRepository    $bfarmRepository,
+        private readonly ConfigRepository   $configRepository,
+        private readonly PatientsRepository $patientsRepository,
+        private readonly DataService        $dataService,
+        private readonly UmsteigerService   $umsteigerService,
+        private readonly ConceptMapService  $conceptMapService,
+        private readonly SetupService       $setupService,
+        private readonly ClientService      $clientService,
+        private readonly string             $projectDir
     ) {
         parent::__construct();
-
-        $this->bfarmRepository = $bfarmRepository;
-        $this->configRepository = $configRepository;
-        $this->patientsRepository = $patientsRepository;
-        $this->dataService = $dataService;
-        $this->umsteigerService = $umsteigerService;
-        $this->conceptMapService = $conceptMapService;
-        $this->setupService = $setupService;
-        $this->clientService = $clientService;
-        $this->projectDir = $projectDir;
     }
 
     protected function configure() : void {
@@ -108,6 +88,9 @@ class TestCommand extends Command implements LoggerAwareInterface {
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int {
+
+        $output->writeln($this->projectDir);
+        return 0;
 
         //
 //        $file = file_get_contents($this->projectDir . '/files/Umsteiger.txt');

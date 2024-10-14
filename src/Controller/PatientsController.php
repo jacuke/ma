@@ -11,13 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PatientsController extends AbstractController  {
 
-    private PatientsRepository $patientsRepository;
-
-    public function __construct(
-        PatientsRepository $patientsRepository
-    ) {
-        $this->patientsRepository = $patientsRepository;
-    }
+    public function __construct(private readonly PatientsRepository $patientsRepository) {}
 
     /** @noinspection PhpUnused */
     #[Route('/icd10gm-patients', name: 'patients')]

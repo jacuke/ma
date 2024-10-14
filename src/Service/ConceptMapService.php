@@ -25,13 +25,11 @@ class ConceptMapService {
     ];
 
     private Serializer $serializer;
-    private BfarmRepository $bfarmRepository;
 
     public function __construct(
-        BfarmRepository $bfarmRepository
+        private readonly BfarmRepository $bfarmRepository
     ) {
         $this->serializer = new Serializer([], [new XmlEncoder(), new JsonEncoder()]);
-        $this->bfarmRepository = $bfarmRepository;
     }
 
     public function head (string $id, string $file_type):string {

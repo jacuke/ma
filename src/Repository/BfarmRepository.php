@@ -13,13 +13,10 @@ use Symfony\Component\Serializer\Serializer;
 
 class BfarmRepository extends DatabaseRepository {
 
-    private DataService $dataService;
-
     public function __construct(
         Connection  $connection,
-        DataService $dataService
+        private readonly DataService $dataService
     ) {
-        $this->dataService = $dataService;
         parent::__construct($connection);
     }
 

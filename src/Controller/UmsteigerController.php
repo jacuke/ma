@@ -12,16 +12,10 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class UmsteigerController extends AbstractController {
 
-    private BfarmRepository $bfarmRepository;
-    private DataService $dataService;
-
     public function __construct(
-        BfarmRepository $bfarmRepository,
-        DataService     $dataService
-    ) {
-        $this->bfarmRepository = $bfarmRepository;
-        $this->dataService = $dataService;
-    }
+        private readonly BfarmRepository $bfarmRepository,
+        private readonly DataService     $dataService
+    ) {}
 
     /** @noinspection PhpUnused */
     #[Route('/{type}-umsteiger', name: 'umsteiger')]

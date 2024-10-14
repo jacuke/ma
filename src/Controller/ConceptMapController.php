@@ -15,21 +15,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ConceptMapController extends AbstractController  {
 
-    private DataService $dataService;
-    private ConceptMapService $conceptMapService;
-    private UmsteigerService $umsteigerService;
-
     private bool $ob_flush;
 
     public function __construct(
-        DataService       $dataService,
-        ConceptMapService $conceptMapService,
-        UmsteigerService  $umsteigerService
+        private readonly DataService       $dataService,
+        private readonly ConceptMapService $conceptMapService,
+        private readonly UmsteigerService  $umsteigerService
     ) {
-        $this->dataService = $dataService;
-        $this->conceptMapService = $conceptMapService;
-        $this->umsteigerService = $umsteigerService;
-
         $ob_status = ob_get_status();
         $this->ob_flush = isset($ob_status['flags']) && ($ob_status['flags'] & PHP_OUTPUT_HANDLER_FLUSHABLE);
     }
