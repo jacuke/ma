@@ -1,0 +1,247 @@
+\section{Einleitung}
+
+\subsection{BfArM-Daten}
+
+\subsection{FHIR}
+
+\subsection{Patienten-Daten}
+
+Medizininformatik-Initiative
+\texttt{https://www.medizininformatik-initiative.de/de/start}
+
+Deutsches Forschungsdatenportal für Gesundheit
+\texttt{https://forschen-fuer-gesundheit.de}
+
+\section{Verwandete Arbeiten}
+
+\subsection{Mapping Qualität}
+
+Health Informatics, Terminology resource map quality measures (MapQual) \citep{ISO21564}
+
+Terminoloy vs Classification (terminology easier to re-use; but class. map to current version)
+
+Health informatics -- Principles of mapping between terminological resources \citep{ISO12300}
+
+\subsection{Medicats}
+
+\begin{comment}
+\bibitem{Medicats}
+Medicats Library \newline
+\url{https://github.com/hhund/medicats}
+
+\bibitem{Medicats Thesis}
+``Medical Classification and Terminology Systems in a Secondary Use Context: Challenges and Perils'' \newline
+\url{https://www.researchgate.net/publication/320962066_Medical_Classification_and_Terminology_Systems_in_a_Secondary_Use_Context_Challenges_and_Perils}
+\end{comment}
+
+\subsection{UMLS / FHIR Using Multiple Groups}
+
+\begin{comment}
+\bibitem{UMLS FHIR}
+``An Interoperable UMLS Terminology Service Using FHIR'' \newline
+\url{https://www.mdpi.com/1999-5903/12/11/199}
+% (Vorgehensweise im Kontext UMLS: das hatten wir ja in der Master-Vorlesung)
+
+\bibitem{UMLS FHIR 2}
+``Representing UMLS knowledge using FHIR Terminological Resources'' \newline
+\url{https://ieeexplore.ieee.org/abstract/document/8983305}
+% (wie vorher zu UMLS; siehe auch Anhang)
+\end{comment}
+
+\subsection{SNOMED}
+
+WHO-FIC Classifications and Terminology Mapping -- Principles and Best Practice 
+
+\begin{comment}
+\bibitem{WHO-FIC-Class}
+``WHO-FIC Classifications and Terminology Mapping -- Principles and Best Practice'' \newline
+\url{https://cdn.who.int/media/docs/default-source/classification/who-fic-network/whofic_terminology_mapping_guide.pdf?sfvrsn=2cae387c_7&download=true}
+
+\bibitem{SNOMED Browser}
+SNOMED CT Browser \newline
+\url{https://browser.ihtsdotools.org/}
+% Extraktion aller SNOMED CT-Konzepte (mit der Expression Contraint Lanugage (ECL)), die auf den gleichen ICD-10 – Code gemappt werden,
+% z.B. mit der Anfrage: ^ [referencedComponentId, mapTarget] 447562003 |ICD-10 complex map refset| {{M mapGroup=#1, mapTarget="J45.9"}}
+% => diese kann man interaktiv eingeben unter https://browser.ihtsdotools.org/ (oben rechts)
+
+\bibitem{CrowdHEALTH}
+``Interoperability Techniques in CrowdHEALTH project: The Terminology Service'' \newline
+\url{https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7085336/}
+% (eine weitere Anwendung)
+
+\bibitem{ICD-10 to SNOMED CT}
+``Evaluation of an Automated Mapping from ICD-10 to SNOMED CT'' \newline
+\url{https://american-cse.org/csci2022-ieee/pdfs/CSCI2022-2lPzsUSRQukMlxf8K2x89I/202800b612/202800b612.pdf}
+% ODER: Man mappt die Klassen (unterhalb der Klassenebene) auf präzisere SNOMED CT-Codes (das sind mehrere, d.h. welchen nimmt man?) und garantiert so jahres- bzw. versionsübergreifende Auswertungen?
+
+\bibitem{OHDSI FHIR}
+``Building Interoperable FHIR-Based Vocabulary Mapping Services: A Case Study of OHDSI Vocabularies and Mappings'' \newline
+\url{https://ebooks.iospress.nl/doi/10.3233/978-1-61499-830-3-1327}
+% (Vorgehensweise im Kontext OHDSI, einem langjährigen Real-World-Evidence-Projekt, wo heterogene Daten auf ein Standard-Datenmodell (OMOP) inkl. Standard-Terminologie (Athena-Tool) gemappt wird.) 
+
+\bibitem{OHDSI Athena}
+OHDSI Athena \newline
+\url{https://cdn.who.int/media/docs/default-source/classification/who-fic-network/whofic_terminology_mapping_guide.pdf?sfvrsn=2cae387c_7&download=true}
+% Ein ganz anderer Ansatz wäre, die Klassifikations-Codes auf Terminologie-Codes (insb. SNOMED CT) zu mappen, um nochmal ganz anders vorzugehen. Ein ähnliches Vorgehen gibt es im OHDSI-Projekt, wo ein interessantes Terminologie-Tool „Athena“ (LINK) verwendet wird.
+
+\bibitem{SNOMED-FHIR}
+``SNOMED CT -- FHIR ConceptMap Translate'' \newline
+\url{https://github.com/IHTSDO/snowstorm/blob/master/docs/fhir-resources/concept-map.md}
+% (SNOMED CT verwendet natürlich selber ConceptMaps)
+
+=> IHTSDO / Snowstorm
+
+\bibitem{I-MAGIC}
+``I-MAGIC: SNOMED CT to ICD-10-CM Map'' \newline
+\url{https://www.nlm.nih.gov/research/umls/mapping_projects/snomedct_to_icd10cm.html}
+% (I-MAGIC-Tool für ein differenziertes Mapping von Problems/SNOMED CT nach ICD-10)
+
+\bibitem{MAGPIE}
+``MAGPIE: Map Assisted Generation of Procedure and Intervention Encoding'' \newline
+\url{https://magpie.nlm.nih.gov/demo}
+% (MAGPIE-Tool für ein Mapping von Prozeduren zum amerikanischen ICD-9-CM bzw. ICD-10-PCS)
+
+% Das Problem mit den obigen Beispielen (die technisch durchaus die FHIR ConceptMap-Ressource benutzen) ist, dass es um Mappings zwischen Codes von verschiedenen CodeSystemen geht, insb. unter Beteiligung von SNOMED CT. Es gibt wenig Publikationen und Informationen zum Mapping zwischen Versionen von Klassifikationen, d.h. von ICD-10-GM-2024 ó ICD-10-GM-2023 ó ICD-10-GM-2022 ó usw. (und das Ganze auch für OPS und ATC).
+
+\end{comment}
+
+\section{Sources}
+
+FHIR \citep{braunstein2022health}
+
+using multiple groups \citep{saripalle2019representing}
+
+SNOMED \citep{icd10-to-snomed}
+
+\begin{comment}
+\begingroup
+\renewcommand{\section}[2]{}
+\begin{thebibliography}{99}
+
+\bibitem{fhir-term}
+FHIR Terminology Module \newline
+\url{https://build.fhir.org/terminology-module.html}
+%https://www.youtube.com/watch?v=Hd8A_gBnpzk
+
+\bibitem{fhir-concept}
+FHIR ConceptMap2 \newline
+\url{https://hl7.org/fhir/conceptmap.html}
+
+\bibitem{fhir-mule}
+Mulesoft FHIR R4 ConceptMap Library \newline
+\url{https://anypoint.mulesoft.com/exchange/org.mule.examples/fhir-r4-conceptmap-library/}
+
+\bibitem{medinf-init}
+Medizininformatik-Initiative \newline
+\url{https://www.medizininformatik-initiative.de/de/start}
+% Der Druck andererseits ist groß, mit vorhandenen Versorgungsdaten (insb. in der Medizininformatik-Initiative (LINK), in der auch wir aktiv sind) für die Forschung zu arbeiten.
+
+\bibitem{fdpg}
+Deutsches Forschungsdatenportal für Gesundheit \newline
+\url{https://forschen-fuer-gesundheit.de}
+% Hierzu gibt es eine Forschungsdaten für Gesundheits-Plattform (LINK), wo im großen Stil Daten aus sogenannten Datenintegrationszentren (DIZ) aus etwa 30 Universitätskliniken in Deutschland föderiert abgefragt werden. 
+
+\bibitem{ICD-10-GM}
+ICD-10-GM Kodiersystem \newline
+\url{https://www.bfarm.de/DE/Kodiersysteme/Klassifikationen/ICD/ICD-10-GM/_node.html}
+
+-------------
+
+\bibitem{MENDS-on-FHIR}
+``MENDS-on-FHIR: Leveraging the OMOP common data model and FHIR standards for national chronic disease surveillance'' \newline
+\url{https://www.medrxiv.org/content/10.1101/2023.08.09.23293900v2}
+% (wie vorher zum Kontext OHDSI; siehe auch Anhang)
+
+\bibitem{ICD-O SNOMED}
+``Mapping of ICD-O Tuples to OncoTree Codes Using SNOMED CT Post-Coordination'' \newline
+\url{https://pubmed.ncbi.nlm.nih.gov/35612082/}
+% (eigene Vorgehensweise im Kontext „ICD-O vs. SNOMED CT vs OncoTree“: realisiert u.a. über ConceptMaps)
+
+\bibitem{i2b2}
+``i2b2 implemented over SMART-on-FHIR'' \newline
+\url{https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5961782/}
+% (eine weitere Anwendung)
+
+\bibitem{8-Steps}
+``8 Steps to Success in ICD-10-CM/PCS Mapping: Best Practices to Establish Precise Mapping Between Old and New ICD Code Sets'' \newline
+\url{https://library.ahima.org/doc?oid=106975} \newline
+\url{https://pubmed.ncbi.nlm.nih.gov/22741510/}
+
+
+\bibitem{ICD-8-9-10}
+``Mapping three versions of the international classification of diseases to categories of chronic conditions '' \newline
+\url{https://pubmed.ncbi.nlm.nih.gov/34007901/}
+
+
+
+\end{thebibliography}
+\endgroup
+\end{comment}
+
+\section{Grundlagen}
+
+Zitiert
+
+\begin{centernss}
+\setlength{\fboxsep}{.03\linewidth}\color{black!20}\fbox{
+\normalcolor\begin{minipage}[t]{.8\linewidth}
+7.2
+Grundsätzliches zum Ordnungsprinzip Klassifikation
+Von allen Ordnungsprinzipien ist die Klassifikation das einfachste. Es beruht auf dem
+Grundsatz: „Jedes Ding (jeder Sachverhalt) an seinen Platz“. Das zu dokumentierende Sach-
+gebiet wird in einzelne getrennte Sachverhalte eingeteilt, die man als Klassen bezeichnet.
+Bildlich gesprochen werden also die einzelnen Sachverhalte eines Sachgebiets in die Fächer
+oder Schubladen eines Schrankes eingeordnet. Die einzelnen Fächer oder Klassen sind dis-
+junkt, d.h. sie schließen sich gegenseitig aus und überlappen sich nicht. Jede Klasse wird
+durch einen Deskriptor repräsentiert. Die Klassen einer Klassifikation sind gleichzeitig
+Äquivalenzklassen von Begriffen. Im strengen Fall ist die Zuordnung einer Dokumentati-
+onseinheit zu einer Klasse eindeutig, d.h. eine Dokumentationseinheit wird genau einer
+Klasse zugeteilt. Eine Klassifikation ist einfach und praktisch. Sie ist sozusagen das „natür-
+liche Ordnungsprinzip“.
+Beispiele für Klassifikationen sind:
+xMutters Wäscheschrank,
+xdie meisten Magazinordnungen und Ersatzteillager (falls sie nicht als reine Lager nach
+Signatur, Ersatzteilnummer oder dergleichen geordnet sind),
+xdas Aufstellungsprinzip in einer Freihandbibliothek.Ordnungsprinzip Klassifikation
+
+Aufteilung des Sachgebiets
+
+Ein Klassifikationssystem -- ein Ordnungssystem, das nach dem Ordnungsprinzip Klassifi-
+kation aufgebaut ist -- muss vollständig sein. Vollständig sein bedeutet, dass die Klassen alle
+Sachverhalte des dokumentarisch zu bearbeitenden Sachgebiets umfassen. Ein Klassifika-
+tionssystem kann auch mit einem Mosaik verglichen werden. Dabei entsprechen die Klassen
+den Mosaiksteinchen, das komplette Ordnungssystem dem vollständigen Mosaikbild und das
+Ordnungsprinzip Klassifikation der Kunsttechnik des Mosaiks. Wichtig ist, dass in dem Mo-
+saikbild keine Steinchen fehlen bzw. dass alle Sachverhalte im Ordnungssystem vorhanden
+sind und es keine Dokumentationseinheiten und keine Suchfragen gibt, die nicht in die Klas-
+sifikation eingeordnet werden können. Durch Schaffung einer Klasse „sonstiges“ oder besser
+durch die Schaffung mehrerer Klassen mit dem Zusatz „sonstiges“ (z.B. sonstige Knochen-
+erkrankungen, sonstige Blutkrankheiten, sonstige Krankheiten des Verdauungstraktes) wird
+die geforderte Vollständigkeit des Klassifikationssystems sozusagen durch ein Hintertürchen
+formal erreicht. Andererseits gehört es zum Prinzip der Mosaiktechnik, dass an jeder Stelle
+des Mosaiks nur ein Steinchen sein kann, d.h. dass die Klassen disjunkt sind.
+Die Klassen einer Klassifikation können unterschiedlich große Sachverhalte abdecken. Im
+Zentrum der bearbeiteten Thematik sind die Klassen meist sehr speziell und eng, am Rande
+der bearbeiteten Thematik dagegen allgemein und weit. Auch in dieser Hinsicht passt der
+Vergleich mit einem Mosaik: An wichtigen Stellen will der Künstler detailliert darstellen
+und verwendet kleine Steinchen, an anderen Stellen mit größeren Steinen nur grob
+skizzieren.
+\end{minipage}
+}
+\normalcolor
+\end{centernss}
+
+\begin{customIndentRight}
+Von allen Ordnungsprinzipien ist die Klassifikation das einfachste. Es beruht auf dem
+Grundsatz: „Jedes Ding (jeder Sachverhalt) an seinen Platz“. Das zu dokumentierende Sach-
+gebiet wird in einzelne getrennte Sachverhalte eingeteilt, die man als Klassen bezeichnet.
+Bildlich gesprochen werden also die einzelnen Sachverhalte eines Sachgebiets in die Fächer
+oder Schubladen eines Schrankes eingeordnet. Die einzelnen Fächer oder Klassen sind dis-
+junkt, d.h. sie schließen sich gegenseitig aus und überlappen sich nicht. Jede Klasse wird
+durch einen Deskriptor repräsentiert. Die Klassen einer Klassifikation sind gleichzeitig
+Äquivalenzklassen von Begriffen. Im strengen Fall ist die Zuordnung einer Dokumentati-
+onseinheit zu einer Klasse eindeutig, d.h. eine Dokumentationseinheit wird genau einer
+Klasse zugeteilt. Eine Klassifikation ist einfach und praktisch. Sie ist sozusagen das „natür-
+liche Ordnungsprinzip“.
+\end{customIndentRight}
+

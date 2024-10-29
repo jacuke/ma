@@ -6,7 +6,7 @@ Dieses Kapitel behandelt die Verarbeitung der BfArM-Daten unabhängig von einer 
 
 Das BfArM stellt für jede neue ICD-10-GM- und OPS-Version Dateien für die Überleitung auf die Vorgänger-Version zum Download zur Verfügung, gebündelt jeweils in einer Zip-Datei: \citep[Downloads]{bfarmdl}.
 
-Es handelt sich hierbei um CSV formatierte Text-Dateien. CSV steht für ``Comma-Separated Values'' und ist ein sehr einfaches Format, um Daten zu strukturieren. Es wird ein Satzzeichen verwendet, um den restlichen Text in Spalten zu trennen -- laut dem Namen normalerweise ein Komma, aber für die BfArM-Dateien wurde Strichpunkt als Trennzeichen gewählt, wahrscheinlich weil die Klassentitel auch Kommata enthalten können. Weitere Informationen zum CSV Datei-Format finden sich hier: \citep[Seite 131f]{bonnefoy2024definitive}. 
+Es handelt sich hierbei um CSV-formatierte Text-Dateien. CSV steht für "`Comma-Separated Values"' und ist ein sehr einfaches Format, um Daten zu strukturieren. Es wird ein Satzzeichen verwendet, um den restlichen Text in Spalten zu trennen -- laut dem Namen normalerweise ein Komma, aber für die BfArM-Dateien wurde Strichpunkt als Trennzeichen gewählt, wahrscheinlich weil die Klassentitel auch Kommata enthalten können. Weitere Informationen zum CSV Datei-Format finden sich hier: \citep[Seite 131f]{bonnefoy2024definitive}. 
 
 Vom BfArM werden Kodes als Schlüsselnummern bezeichnet, wenn diese eindeutig sind und einzelne Überleitungen zwischen Kodes werden Umsteiger genannt.
 
@@ -70,13 +70,13 @@ Dazu im Vergleich ein einzelner Umsteiger aus dem OPS, Version 2024 Überleitung
 
 Die zusätzlichen Spalten jeweils nach den Kodes speziell für OPS sagen aus, ob Zusatzkennzeichen notwendig sind, siehe dazu auch: \citep[Kategorie und Kode im OPS]{bfarmopskk}.
 
-\subsection{``DRY''-Prinzip}
+\subsection{"`DRY"'-Prinzip}
 
-``Don't Repeat Yourself'' ist eines der Kardinalprinzipien in der Software-Entwicklung. Obwohl der Grundsatz, Wiederholungen zu vermeiden, wahrscheinlich schon in der Programmierung angewandt wird seit es diesen Beruf gibt, wurde ``DRY'' erstmals 1999 ausformuliert von \citep[Seite 79ff]{thomas2019pragmatic}. In der zwanzigjährigen Jubiläumsausgabe verdeutlichen die Autoren, dass es ihnen hierbei nicht nur um das Schreiben von Programmcode geht, sondern vielmehr um die Absichten hinter einem Prozess. Das heißt eine Änderung der Intention einer Software-Lösung sollte nicht mehrere Änderungen an mehreren Stellen nach sich ziehen. 
+"`Don't Repeat Yourself"' ist eines der Kardinalprinzipien in der Software-Entwicklung. Obwohl der Grundsatz, Wiederholungen zu vermeiden, wahrscheinlich schon in der Programmierung angewandt wird seit es diesen Beruf gibt, wurde "`DRY"' erstmals 1999 ausformuliert von \citep[Seite 79ff]{thomas2019pragmatic}. In der zwanzigjährigen Jubiläumsausgabe verdeutlichen die Autoren, dass es ihnen hierbei nicht nur um das Schreiben von Programmcode geht, sondern vielmehr um die Absichten hinter einem Prozess. Das heißt eine Änderung der Intention einer Software-Lösung sollte nicht mehrere Änderungen an mehreren Stellen nach sich ziehen. 
 
 \newpage %§
 
-Bei der Integration der BfArM-Daten kann das ``DRY''-Prinzip auf zwei Arten angewandt werden.
+Bei der Integration der BfArM-Daten kann das "`DRY"'-Prinzip auf zwei Arten angewandt werden.
 
 \begin{enumerate}
 \item Bezogen auf Kodiersysteme: Alle Funktionen sollten unabhängig davon funktionieren, ob es sich um ICD-10-GM- oder OPS-Daten handelt. Auch die Aufnahme eines zusätzlichen Systems, beispielsweise ATC, sollte möglichst nur Anpassungen erfordern, die durch Abweichungen in der Integration der Daten dieses Systems notwendig sind. 
@@ -84,6 +84,7 @@ Bei der Integration der BfArM-Daten kann das ``DRY''-Prinzip auf zwei Arten ange
 \end{enumerate}
 
 \subsection{Standardverfahren und Abweichungen}
+\label{struktdateiversionen}
 
 Im diesem Abschnitt werden alle Abweichungen der ICD-10-GM- und OPS-Versionen von der als Standard gewählten Version 2024 in Tabellen aufgeführt. Konkret gemeinst sind damit: Version, Download-URL, Pfad der Kode- und Umsteiger-Dateien, Sonstiges. Diese Informationen können dann dem Datenintegrationsprozess in einem strukturierten Dateiformat zur Verfügung gestellt werden. {\color{blue} §TODO: Verweis auf konkrete Implementation}
 
@@ -97,12 +98,12 @@ Die Download-URL der Zip-Dateien setzt sich wie folgt zusammen:
 
 \begingroup
 \renewcommand{\arraystretch}{1.0}
-\begin{tabular}{p{4cm}l}
-\multicolumn{2}{l}{\texttt{https://multimedia.gsb.bund.de/BfArM/downloads/klassifikationen/} \ldots} \\
-\& für ICD-10-GM: & \texttt{icd-10/ \ldots} \\
-\& für OPS: & \texttt{ops/ \ldots} \\
-\multicolumn{2}{l}{\& einen pro Version unterschiedlichen Teil, siehe URL-Eintrag in den Tabellen.} \\
-\multicolumn{2}{l}{Die URL dient damit auch als ``Single Source of Truth'' \citep[Seite 257]{bonnefoy2024definitive}.} \\
+\begin{tabular}{p{\abstandLinksDataInt}p{4cm}l}
+& \multicolumn{2}{l}{\texttt{https://multimedia.gsb.bund.de/BfArM/downloads/klassifikationen/} \ldots} \\
+& \& für ICD-10-GM: & \texttt{icd-10/ \ldots} \\
+& \& für OPS: & \texttt{ops/ \ldots} \\
+& \multicolumn{2}{l}{\& einen pro Version unterschiedlichen Teil, siehe URL-Eintrag in den Tabellen.} \\
+& \multicolumn{2}{l}{Die URL dient damit auch als "`Single Source of Truth"' \citep[Seite 257]{bonnefoy2024definitive}.} \\
 \end{tabular}
 \endgroup \\
 
@@ -110,11 +111,11 @@ Die Kode- und Umsteiger-Dateien sind in einem Verzeichnis enthalten:
 
 \begingroup
 \renewcommand{\arraystretch}{1.0}
-\begin{tabular}{l}
-\texttt{Klassifikationsdateien} \\
-Wenn die Tabellen einen Verzeichnis-Eintrag enthalten, dann wird dieser vorangestellt. \\
-Zum Beispiel für ICD-10-GM Version 2021: \\
-\texttt{icd10gm2021syst-ueberl-20201111/Klassifikationsdateien} \\
+\begin{tabular}{p{\abstandLinksDataInt}l}
+& \texttt{Klassifikationsdateien} \\
+& Wenn die Tabellen einen Verzeichnis-Eintrag enthalten, dann wird dieser vorangestellt. \\
+& Zum Beispiel für ICD-10-GM Version 2021: \\
+& \texttt{icd10gm2021syst-ueberl-20201111/Klassifikationsdateien} \\
 \end{tabular}
 \endgroup \\
 
@@ -122,14 +123,14 @@ Der Pfad der Kode-Datei lautet:
 
 \begingroup
 \renewcommand{\arraystretch}{1.0}
-\begin{tabular}{p{4cm}l}
-Verzeichnis & \ldots \\
-\& für ICD-10-GM: & \texttt{icd10gm} \ldots \\
-\& für OPS: & \texttt{ops} \ldots \\
-\& die Version & \ldots\\
-\& \texttt{syst.txt} \\
-\multicolumn{2}{l}{Also zum Beispiel: \texttt{Klassifikationsdateien/icd10gm2024syst.txt}} \\
-\multicolumn{2}{l}{Wenn die Tabellen einen Kodes-Eintrag enthalten, wird dieser stattdessen verwendet.} \\
+\begin{tabular}{p{\abstandLinksDataInt}p{4cm}l}
+& Verzeichnis & \ldots \\
+& \& für ICD-10-GM: & \texttt{icd10gm} \ldots \\
+& \& für OPS: & \texttt{ops} \ldots \\
+& \& die Version & \ldots\\
+& \& \texttt{syst.txt} \\
+& \multicolumn{2}{l}{Also zum Beispiel: \texttt{Klassifikationsdateien/icd10gm2024syst.txt}} \\
+& \multicolumn{2}{l}{Wenn die Tabellen einen Kodes-Eintrag enthalten, wird dieser stattdessen verwendet.} \\
 \end{tabular}
 \endgroup \\
 
@@ -139,15 +140,15 @@ Das gleiche gilt für die Umsteiger-Datei, nur dass der Dateiname normalerweise 
 
 \begingroup
 \renewcommand{\arraystretch}{1.0}
-\begin{tabular}{p{4cm}l}
-für ICD-10-GM: & \texttt{icd10gm} \ldots\\
-für OPS: & \texttt{ops} \ldots\\
-\& Version & \ldots\\
-\& \texttt{syst\_umsteiger\_} & \ldots\\
-\& Vorgänger-Version & \ldots\\
-\& \texttt{\_} & \ldots\\
-\& Version & \ldots\\
-\& \texttt{.txt} & Zum Beispiel: \texttt{ops2024syst\_umsteiger\_2023\_2024.txt}\\
+\begin{tabular}{p{\abstandLinksDataInt}p{4cm}l}
+& für ICD-10-GM: & \texttt{icd10gm} \ldots\\
+& für OPS: & \texttt{ops} \ldots\\
+& \& Version & \ldots\\
+& \& \texttt{syst\_umsteiger\_} & \ldots\\
+& \& Vorgänger-Version & \ldots\\
+& \& \texttt{\_} & \ldots\\
+& \& Version & \ldots\\
+& \& \texttt{.txt} & Zum Beispiel: \texttt{ops2024syst\_umsteiger\_2023\_2024.txt}\\
 \end{tabular}
 \endgroup \\
 
@@ -161,8 +162,8 @@ für OPS: & \texttt{ops} \ldots\\
 \item Punkt-Strich-Notation, Kreuz-Stern-System \newline Die Kodes älterer ICD-10-GM Versionen hatten Sonderzeichen gemäß \citep{bfarmicdkk}.
 \item 6-Spalten-Umsteiger \newline Umsteiger älterer ICD-10-GM Versionen enthielten Informationen zur Mehrfachkodierung. 
 \item Nicht endständige Umsteiger\newline Im Gegensatz zu allen anderen Überleitungen sind die Umsteiger-Einträge für ICD-10-GM 2.0 auf 1.3. auch für nicht-endständige Kodes enthalten. 
-\item None statt UNDEF\newline Von OPS Version 2009 bis 2004 wurde statt UNDEF der Bezeichner ``None'' verwendet. 
-\item KOMBI-Kode\newline OPS Versionen 2.1 und 2.0 enthalten in der Kodes-Datei einen zusätzlichen Eintrag: KOMBI, ``Kombinationsschlüsselnummer erforderlich''. 
+\item None statt UNDEF\newline Von OPS Version 2009 bis 2004 wurde statt UNDEF der Bezeichner "`None"' verwendet. 
+\item KOMBI-Kode\newline OPS Versionen 2.1 und 2.0 enthalten in der Kodes-Datei einen zusätzlichen Eintrag: KOMBI, "`Kombinationsschlüsselnummer erforderlich"'. 
 \item 6-Spalten-Umsteiger (altes Format), 5-Spalten-Umsteiger, 4-Spalten-Umsteiger\newline Die Umsteiger der OPS-Versionen von 2009 bis 2005 waren anders formatiert, weil 2005 die Informationen bezüglich Zusatzkennzeichen hinzukamen und bis 2009 die Spalten unterschiedlich angeordnet waren als in allen neueren OPS Versionen. 
 \item 6-Spalten-Umsteiger (ursprüngliches Format)\newline Die Umsteiger für OPS Version 2.1 enthielen zusätzliche Spalten wegen Mehrfachverschlüsselung wie die älteren ICD-10-GM Versionen. 
 \item 3-Spalten-Umsteiger\newline OPS Version 2.0 zeigte mit nur einer Spalte an, ob automatische Überleitungen möglich sind. 
@@ -171,7 +172,7 @@ für OPS: & \texttt{ops} \ldots\\
 
 \section{Datenintegrationsprozess}
 
-Wie erwähnt durchlaufen alle Daten unabhängig von Version und Kodiersystem den gleichen Integrationsprozess. Dieser orientiert sich an dem klassischen ``Extract-Transform-Load'' Modell, siehe \citep[Seite 247ff]{bonnefoy2024definitive}.
+Wie erwähnt durchlaufen alle Daten unabhängig von Version und Kodiersystem den gleichen Integrationsprozess. Dieser orientiert sich an dem klassischen "`Extract-Transform-Load"' Modell, siehe \citep[Seite 247ff]{bonnefoy2024definitive}.
 
 \begin{enumerate}
 \item \emph{Extract:} Die Daten werden in einem bestimmten Format aus einem Quell-System extrahiert. 
@@ -179,12 +180,14 @@ Wie erwähnt durchlaufen alle Daten unabhängig von Version und Kodiersystem den
 \item \emph{Insert:} Die Daten werden in ein Ziel-System integriert, um dort von weiteren Applikationen verwendet zu werden. 
 \end{enumerate}
 
-\vspace{10pt}
+%\vspace{10pt}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth]{../img/etl.jpg}
-    \caption{ETL-Modell nach \citep[Seite 63]{bonnefoy2024definitive}}
+    \setlength{\fboxsep}{.02\linewidth}\color{black!20}\fbox{
+    \includegraphics[width=.96\linewidth]{../img/etl.jpg}}
+    \vspace{-10pt}
+    \normalcolor\caption{ETL-Modell nach \citep[Seite 63]{bonnefoy2024definitive}}
 \end{figure}
 
 \newpage %§
@@ -208,7 +211,7 @@ Für die BfArM-Daten sieht der Integrationsprozess konkret so aus:
 
 \section{Datenvorverarbeitung}
 
-``Data Preprocessing'' ist ein wichtiger Schritt in Feldern der Informatik wie \emph{Machine Learning} und \emph{Big Data}. In \citep{garcia2016big} werden mehrere Methoden vorgestellt, wovon folgende in der Verarbeitung der BfArM-Daten zur Verwendung kommen:
+"`Data Preprocessing"' ist ein wichtiger Schritt in Feldern der Informatik wie \emph{Machine Learning} und \emph{Big Data}. In \citep{garcia2016big} werden mehrere Methoden vorgestellt, wovon folgende in der Verarbeitung der BfArM-Daten zur Verwendung kommen:
 
 \begin{enumerate}
 \item \emph{Data Cleaning:} Daten werden bereinigt, was sowohl das Korrigieren einzelner Werte, als auch das Entfernen überflüssiger Datensätze beinhaltet. Letzteres wird \emph{Instance Reduction} genannt. 
@@ -219,8 +222,9 @@ Für die BfArM-Daten sieht der Integrationsprozess konkret so aus:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=.7\linewidth]{../img/data_preproc.png}
-    \caption{``Preprocessing Tasks'' aus \citep[Seite 4]{garcia2016big}}
+    \setlength{\fboxsep}{.02\linewidth}\color{black!20}\fbox{
+    \includegraphics[width=.7\linewidth]{../img/data_preproc.png}}
+    \normalcolor\caption{"`Preprocessing Tasks"' aus \citep[Seite 4]{garcia2016big}}
 \end{figure}
 
 Die folgenden Unterabschnitte erklären die Vorverarbeitungsschritte für die BfArM-Daten und beziehen sich damit auf die in \ref{abweichungen} genannten Abweichungen. Die Schritte erfolgen in der gelisteten Reihenfolge. Obwohl die Daten nach dem CSV-Parsing schon in einer von der Programmiersprache abhängigen Struktur vorliegen, wird zur Erklärung trotzdem noch die Datei-Struktur verwendet.
@@ -292,7 +296,7 @@ Für viele Versionen sind über 90\% der Umsteiger-Einträge automatische Überl
 
 \subsubsection{Nicht-endständige Umsteiger}
 
-Die Überleitung von ICD-10-GM Version 2.0 auf 1.3 ist der einzige Fall, in dem die Umsteiger-Datei nicht-endständige Kodes enthält. Durch das Entfernen der Sonderzeichen von Punkt-Strich-Notation und Kreuz-Stern-System gibt es außerdem doppelte Einträge in der ersten Spalte, das heißt bei den Kodes der Vorgänger-Version. Folgender Algorithmus\footnote{Der Pseudocode ist beschrieben in Struktogrammen nach \citep{nassishneid}. Die später vorkommenden Algorithmen zur Umsteiger-Suche enthalten viele Variablenzuweisungen, die abhängig von einer Bedingung sind und deren parallele Darstellung in Nassi-Shneidermann-Diagrammen übersichtlicher ist. Sie werden also im Sinne der Einheitlichkeit ebenfalls für den Algorithmus in diesem Abschnitt verwendet.}
+Die Überleitung von ICD-10-GM Version 2.0 auf 1.3 ist der einzige Fall, in dem die Umsteiger-Datei nicht-endständige Kodes enthält. Durch das Entfernen der Sonderzeichen von Punkt-Strich-Notation und Kreuz-Stern-System gibt es außerdem doppelte Einträge in der ersten Spalte, das heißt bei den Kodes der Vorgänger-Version. Folgende Funktion\footnote{Der Pseudocode ist beschrieben in Struktogrammen nach \citep{nassishneid}. Die später vorkommenden Algorithmen zur Umsteiger-Suche enthalten viele Variablenzuweisungen, die abhängig von einer Bedingung sind und deren parallele Darstellung in Nassi-Shneidermann-Diagrammen übersichtlicher ist. Sie werden also im Sinne der Einheitlichkeit ebenfalls für den Algorithmus in diesem Abschnitt verwendet.}
 entfernt die überflüssigen Einträge.
 
 Angenommen die Kodes befinden sich in einem Array mit Index von 0 bis (n-1), zum Beispiel für die ersten sechs Zeilen der Umsteiger-Datei aus ICD-10-GM, Überleitung 2.0 nach 1.3: 
@@ -301,7 +305,7 @@ Angenommen die Kodes befinden sich in einem Array mit Index von 0 bis (n-1), zum
 \renewcommand{\arraystretch}{1.2}
 \setlength{\tabcolsep}{12pt}
 \begin{tabular}{cll}
-Index & Alter Kode & Neuer Kode \\
+Index & old (Alter Kode) & new (Neuer Kode) \\
 \hline
 0 & \texttt{A00} & \texttt{A00.0}  \\
 1 & \texttt{A00} & \texttt{A00.1} \\
@@ -312,62 +316,66 @@ Index & Alter Kode & Neuer Kode \\
 \end{tabular}
 \endgroup
 
-\begin{struktogramm}(110,96)
-    \assign[\heightNS]{data = Umsteiger-Einträge}
-    \assign[\heightNS]{index = Anzahl(data) - 1}
-    \assign[\heightNS]{current = data [ index ][ 'Alter Kode' ]}
-    \while[\heightNS]{WHILE index > 0}
-    \assign[\heightNS]{prev = data [ index-1 ][ 'Alter Kode' ]}
-    \ifthenelse[24]{2}{2}{IF current enthält prev AND Länge(current) > Länge(prev)}{TRUE}{FALSE}
-        \assign[\heightNS]{Entferne data[index-1]}
+\paragraph*{RemoveNonTerminal} \
+
+Funktionsparameter:
+
+\begin{itemize}
+\item \texttt{\$data} \newline Umsteiger-Einträge
+\end{itemize}
+
+Lokale Variablen:
+
+\begin{itemize}
+\item \texttt{\$index}
+  \newline Der Umsteiger-Eintrag, der aktuell verarbeitet wird.
+  \newline Die Funktion läuft vom letztem Eintrag zum ersten.
+\item \texttt{\$current}
+  \newline Der alte Kode des aktuellen Umsteiger-Eintrags.
+  \newline Hierbei bedeutet \$data[ \$index ][ 'old' ] Zugriff auf Zeile mit Index = Wert von \$index und Spalte 'Alter Kode'. Zum Beispiel: data[ 4 ][ 'old' ] = \texttt{A00.1}.
+\item \texttt{\$prev}
+  \newline Der alte Kode des zuletzt verarbeiteten Umsteiger-Eintrags.
+  \newline Die Variable wird auf \$current gesetzt, wenn der Eintrag \emph{nicht} entfernt wird.
+\end{itemize}
+
+\begin{centernss}
+\small
+\begin{struktogramm}(120,84)
+    \assign[\heightNS]{\$index = count(\$data) - 1}
+    \assign[\heightNS]{\$current = \$data[ \$index ][ 'old' ]}
+    \while[\heightNS]{WHILE \$index > 0}
+    \assign[\heightNS]{\$prev = \$data[ \$index-1 ][ 'old' ]}
+    \ifthenelse[24]{2}{2}{IF \$current contains \$prev AND length(\$current) > length(\$prev)}{Y}{N}
+        \assign[\heightNS]{remove \$data[ \$index-1 ]}
     \change
-        \assign[\heightNS]{current = prev}
+        \assign[\heightNS]{\$current = \$prev}
     \ifend
-    \assign[\heightNS]{index = index - 1}
+    \assign[\heightNS]{\$index = \$index - 1}
     \whileend
-    \assign[\heightNS]{Reindiziere data}
+    \assign[\heightNS]{re-index \$data}
 \end{struktogramm}
+\end{centernss}
 
 Anmerkungen:
 
 \begin{itemize}
-\item  data [ index ][ 'Alter Kode' ] bedeutet Zugriff auf Zeile mit Index = Wert von index, Spalte 'Alter Kode'. Zum Beispiel: data[ 4 ][ 'Alter Kode' ] = \texttt{A00.1}.
-\item Die IF-Bedingung bezieht sich auf String-basierte Operationen; also ``enthält'' als Sub-String und String-``Länge''.
-\item Entfernt wird eine ganze Zeile. 
+\item Die IF-Bedingung bezieht sich auf String-basierte Operationen; also contains: "`enthält"' als Sub-String und length: Anzahl der Zeichen im String.
+\item remove: Entfernt eine ganze Zeile. 
 \end{itemize}
 
-\newpage
-
-Das Beispiel-Array nach Durchlaufen des Algorithmus: 
+Beispiel-Array nach Durchlaufen des Algorithmus:
 
 \begingroup
 \renewcommand{\arraystretch}{1.2}
 \setlength{\tabcolsep}{12pt}
 \begin{tabular}{cll}
-Index & Alter Kode & Neuer Kode \\
+Index & old (Alter Kode) & new (Neuer Kode) \\
 \hline
 0 & \texttt{A00.0} & \texttt{A00.0} \\
 1 & \texttt{A00.1} & \texttt{A00.1} \\
 2 & \texttt{A00.9} & \texttt{A00.9} \\
 \end{tabular}
 \endgroup
-
-
-\begin{comment}
-        $index = end($data)[0];
-        $prev = prev($data)[0] ?? '';
-        while($prev!=='') {
-
-            if(str_contains($index, $prev) &&
-                strlen($index) > strlen($prev)
-            ) {
-                unset($data[key($data)]);
-            } else {
-                $index = $prev;
-            }
-            $prev = prev($data)[0] ?? '';
-        }
-\end{comment}
 
 \subsubsection{Nicht-endständige Kodes}
 
