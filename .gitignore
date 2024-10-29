@@ -10,6 +10,7 @@ tex/thesis/*
 tex/thesis/thesis_sub.tex
 !tex/thesis/*.sty
 !tex/thesis/*.cls
+!tex/thesis/*.bib
 !tex/thesis/thesis.pdf
 tex/draft/*
 !tex/draft/*.tex
