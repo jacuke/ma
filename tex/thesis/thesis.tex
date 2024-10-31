@@ -24,164 +24,58 @@
 % English text, while 'Zusammenfassung' needs German text).
 
 \UzLThesisSetup{
-  %
-  % !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  % !!! Your action is needed here !!!
-  % !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  %
-  % First, specify the institut or clinic at which the thesis was
-  % written. You get the logo file from them (make sure it has the
-  % correct size, namely the same as the example). If they do not have
-  % a logo, the university's default logo is used.
-  %
-  % The 'verfasst' gets two arguments. Change the first to {an der}
-  % for clinics, as in 'Verfasst = {an der}{Medizinischen Klinik I}'
-  %
   Logo-Dateiname        = {uzl-thesis-logo-itcs.pdf},
-  Verfasst              = {am}{Institut für Theoretische Informatik},
-  %
-  % The titles:
-  %
-  Titel auf Deutsch     = {
-    Vorlage für die \LaTeX-Klasse »uzl-thesis« zur Nutzung bei
-    Bachelor-~und Masterarbeiten an der  Universität~zu~Lübeck
-  }, 
-  Titel auf Englisch    = {
-    Template for the \LaTeX\ Class “uzl-thesis” for
-    Bachelor's and Master's Theses Written at the University~of~Lübeck 
-  },
-  %
-  % Author and supervisor:
-  % 
-  % Note that the 'Betreuer' or 'Betreuerin' is the supervisor, that
-  % is, the professor who officially supervises the thesis. If there
-  % is also an assistent of the professor who helped (typically a
-  % lot), use 'Mit Unterstützung von' to thank that person. If the
-  % thesis was mainly written 'externally' at some company or another
-  % institute, point this out using 'Weitere Unterstützung'. 
-  % 
-  % For your own name, do *not* add things like "BSc" or "BSc
-  % cand.". For the supervisor, you should normally include
-  % "Prof. Dr." or "PD Dr." (ask your supervisor, what is
-  % appropriate), but nothing more (so no
-  % "Univ.-Prof. Dr. Dr. h.c. mult." unless your supervisor insists).  
-  %
-  Autor                 = {Max Mustermann (alias Till Tantau)},
-  Betreuerin            = {Prof. Dr. Petra Wichtig-Wichtig},
-  % 
-  % Optional: Supporting persons and institutions. The text should be
-  % in German, even for an English thesis.
-  %
-  Mit Unterstützung von = {Harry Hilfreich},
-  % 
-  %   Weitere Unterstützung = {
-  %     Die Arbeit ist im Rahmen einer Tätigkeit bei der Firma Muster GmbH
-  %     entstanden.
-  %   },
-  %
-  %
-  % Your Degree Programm (Studiengang)
-  %
-  % Specify 'Bachelorarbeit' or 'Masterarbeit' and the degree
-  % programme. Make sure the name of programme is correct and not
-  % some abbreviation or some incorrect variant. For instance:
-  % 'Medizinische Ingenierwissenschaft', but not 'MIW';
-  % 'Medizinische Informatik', but not 'Medizin-Informatik';
-  % 'Informatik', but not 'Informatik (SSE)'.
-  %
-  % Use German names for German programmes and English names for
-  % English ones, so 'Infection Biology', not 'Infektionsbiologie'. 
-  % For programmes that have a German bachelor and an English master,
-  % use the German name for a bachelor thesis and the English name for
-  % the master thesis.
-  %
+  Verfasst              = {am}{Institut für Medizinische Informatik},
+  Titel auf Deutsch     = {Abbilden und Nutzen von versionsübergreifenden medizinischen Klassifikationen mittels FHIR ConceptMaps},
+  Titel auf Englisch    = {Visualization and Mapping of Medical Classifications across Multiple Versions with FHIR ConceptMaps},
+  Autor                 = {Simon Müller},
+  Betreuer              = {Prof. Dr. Josef Ingenerf},
+  Mit Unterstützung von = {Tessa Ohlsen, M. Sc.},
   Masterarbeit,
-  Studiengang           = {Informatik},
-  %
-  % Date on which the thesis is turned in German, formatted the
-  % traditional German way:
-  %
-  Datum                 = {1. Januar 2021},
+  Studiengang           = {Medizinische Informatik},
+  Datum                 = {1. November 2024},
   %
   % The English abstract. You must always provide abstracts in German
   % and in English. 
   %
   Abstract              = {
-    It is not easy to write a thesis that does not only advance
-    science, but that is also a pleasure to read. While the scientific
-    contribution of a thesis is undoubtedly of greater importance, the
-    impact of \emph{writing well} should not be underestimated: If
-    the person who grades a thesis finds no pleasure in the reading,
-    that person are also unlikely to find pleasure in giving outstanding
-    grades. A well-written text uses good German or English phrasing with a clear and correct 
-    sentence structure and language rhythm, there are no spelling
-    mistakes and the author's arguments are presented in a
-    clear, logical and understandable manner using well-chosen
-    examples and explanations. In addition, a nice-to-read font and a
-    pleasing layout are also helpful. The \LaTeX\ class presented in
-    this document helps with the latter: It contains a number of
-    ready-to-use designs and 
-    takes care of many small typographical chores.
   },
   Zusammenfassung       = {
-    Es ist nicht leicht, eine Abschlussarbeit so zu schreiben, dass sie
-    nicht nur inhaltlich gut ist, sondern es auch eine Freude ist, sie
-    zu lesen. Diese Freude ist aber wichtig: Wenn die Person, die die 
-    Arbeit benoten soll, wenig Gefallen am Lesen der Arbeit findet,
-    so wird sie auch wenig Gefallen an einer guten Note
-    finden. Glücklicherweise gibt es einige Kniffe, gut lesbare
-    Arbeiten zu schreiben. Am wichtigsten ist zweifelsohne, dass
-    die Arbeit in gutem Deutsch oder Englisch verfasst wurde mit klarem
-    Satzbau und gutem Sprachrhythmus, dass keine Rechtschreib- oder
-    Grammatikfehlern im Text auftauchen und dass die Argumente der
-    Autorin oder des Autors klar, logisch, verständlich und gut
-    veranschaulicht dargestellt werden. Daneben sind aber auch gut
-    lesbare Schriftbilder und ein angenehmes Layout hilfreich. Die Nutzung
-    dieser \LaTeX-Vorlage hilft der Schreiberin oder dem Schreiber
-    dabei zumindest bei Letzterem: Sie umfasst gute, sofort nutzbare
-    Designs und sie kümmert sich um viele typographische
-    Details.  
   },
   Alphabetische Bibliographie,
 }
 
 \UzLStyle{pagella basic design}
 
-%\addbibresource{../draft/intro.bib}
+\addbibresource{../draft/intro.bib}
+\addbibresource{../draft/data1.bib}
 \addbibresource{../draft/data2.bib}
 
 \begin{document}
 
-\chapter{Test}
-\input{../draft/data2_sub.tex}
-
 %\input{thesis_sub.tex}
 
-%\chapter{Einleitung}
-%\section{Beiträge dieser Arbeit}
-%\section{Verwandte Arbeiten}
-%\section{Aufbau dieser Arbeit}
+\chapter{Einleitung} \input{../draft/intro_sub.tex}
 
-%\chapter{Zusammenfassung und Ausblick}
+\chapter{BfArM-Daten} \input{../draft/data1_sub.tex}
 
+\chapter{Versionsübergreifende Umsteiger-Suche} \input{../draft/data2_sub.tex}
 
+\chapter{Web-Applikation}
 
+\chapter{Zusammenfassung}
+\section{Ergebnisse}
+\section{Diskussion}
+\section{Ausblick}
 
-
-
-
-
-% If you need to have an appendix (I advise against it), insert it
-% here using, first, \appendix and then \chapter and then,
-% possibly, \section. 
-%
-% \appendix
-%
-% \chapter{Technical Appendix}
-%
-% \section{Experimental Parameters} % possibly
-%
-% Again, I advise against using an appendix.
-
+\appendix
+\chapter{Appendix}
+\input{../draft/data1_tables.tex}
+%\newpage
+%\input{../draft/data2_json.tex}
+\newpage
+\input{../draft/uzl_json.tex}
+\newpage
+\input{../draft/uzl_conceptmap.tex}
 
 \end{document}

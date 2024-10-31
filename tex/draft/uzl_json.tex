@@ -1,0 +1,99 @@
+\section{Beispielergebnis der Horizontalen Suche}
+\label{search-horizontal-example}
+
+Ergebnis im JSON-Format für den Aufruf: \newline \texttt{searchHorizontal('icd10gm', '2014', 'M21.6')}
+
+Um Platz zu sparen enthält nur der erste Umsteiger die zusätzlichen Informationen, die pro Eintrag ermittelt werden, also die automatische Überleitbarkeit sowie die Titel der Kodes. Außerdem sind für die Lesbarkeit die Sonderzeichen nicht kodiert. \\
+
+\begin{Code}
+{
+  "fwd": {
+    "year": "2014",
+    "other": "2015",
+    "umsteiger": [
+      {
+        "old": "M21.6",
+        "new": "M21.60",
+        "auto": "",
+        "auto_r": "A",
+        "old_name": "Sonstige erworbene Deformitäten des Knöchels und des Fußes",
+        "new_name": "Erworbener Hohlfuß [Pes cavus]"
+      },
+      {
+        "old": "M21.6",
+        "new": "M21.61",
+      },
+      {
+        "old": "M21.6",
+        "new": "M21.62",
+      },
+      {
+        "old": "M21.6",
+        "new": "M21.63",
+      },
+      {
+        "old": "M21.6",
+        "new": "M21.68",
+      }
+    ]
+  },
+
+
+
+
+
+
+
+
+
+  "rev": {
+    "year": "2013",
+    "other": "2012",
+    "umsteiger": [
+      {
+        "old": "M21.60",
+        "new": "M21.6",
+        "recursion": {
+          "year": "2.0",
+          "other": "1.3",
+          "umsteiger": [
+            {
+              "old": "M21.6",
+              "new": "M21.60",
+            }
+          ]
+        }
+      },
+      {
+        "old": "M21.67",
+        "new": "M21.6",
+        "recursion": {
+          "year": "2.0",
+          "other": "1.3",
+          "umsteiger": [
+            {
+              "old": "M21.6",
+              "new": "M21.67",
+            }
+          ]
+        }
+      },
+      {
+        "old": "M21.87",
+        "new": "M21.6",
+        "recursion": {
+          "year": "2.0",
+          "other": "1.3",
+          "umsteiger": [
+            {
+              "old": "M21.8",
+              "new": "M21.87",
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
+\end{Code}
+

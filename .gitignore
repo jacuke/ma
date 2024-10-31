@@ -7,11 +7,11 @@ files/*
 ### thesis
 tex/thesis/*
 !tex/thesis/*.tex
-tex/thesis/thesis_sub.tex
 !tex/thesis/*.sty
 !tex/thesis/*.cls
 !tex/thesis/*.bib
 !tex/thesis/thesis.pdf
+tex/thesis/thesis_sub.tex
 tex/draft/*
 !tex/draft/*.tex
 !tex/draft/*.bib

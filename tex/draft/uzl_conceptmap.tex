@@ -1,0 +1,91 @@
+\section{Beispiel ConceptMap}
+\label{conceptmap-example}
+
+Für Abbildung \ref{vertical-example} ... § \\
+
+\begin{Code}
+<?xml version="1.0"?>
+<ConceptMap xmlns="http://hl7.org/fhir">
+  <id value="icd10gm_from:2024_to:1.3_target:2024"/>
+  <url value="urn:uuid:0192e098-0871-79d5-a4e6-039398aa7803"/>
+
+<group>
+  <source value="2018"/>
+  <target value="2024"/>
+  <element>
+    <code value="G83.8"/>
+    <target>
+      <code value="G83.6"/>
+      <equivalence value="wider"/>
+    </target>
+    <target>
+      <code value="G83.8"/>
+      <equivalence value="wider"/>
+    </target>
+  </element>
+</group>
+
+<group>
+  <source value="2015"/>
+  <target value="2024"/>
+  <element>
+    <code value="G83.80"/>
+    <target>
+      <code value="G83.5"/>
+      <equivalence value="relatedto"/>
+    </target>
+  </element>
+  <element>
+    <code value="G83.88"/>
+    <target>
+      <code value="G83.6"/>
+      <equivalence value="wider"/>
+    </target>
+    <target>
+      <code value="G83.8"/>
+      <equivalence value="wider"/>
+    </target>
+  </element>
+</group>
+
+<group>
+  <source value="2004"/>
+  <target value="2024"/>
+  <element>
+    <code value="G83.8"/>
+    <target>
+      <code value="G83.6"/>
+      <equivalence value="wider"/>
+    </target>
+    <target>
+      <code value="G83.8"/>
+      <equivalence value="wider"/>
+    </target>
+    <target>
+      <code value="G83.5"/>
+      <equivalence value="wider"/>
+    </target>
+  </element>
+</group>
+
+<group>
+  <source value="1.3"/>
+  <target value="2024"/>
+  <element>
+    <code value="G83.8"/>
+    <target>
+      <code value="G83.6"/>
+      <equivalence value="wider"/>
+    </target>
+    <target>
+      <code value="G83.8"/>
+      <equivalence value="wider"/>
+    </target>
+    <target>
+      <code value="G83.5"/>
+      <equivalence value="wider"/>
+    </target>
+  </element>
+</group>
+</ConceptMap>
+\end{Code}

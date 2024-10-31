@@ -1,6 +1,6 @@
-Dieser Abschnitt behandelt die versionsübergreifende Suche nach Umsteigern. Es geht also zum einen darum zu bestimmen, ob ein bestimmter Kode einer bestimmten Version sich überhaupt verändert hat, sowie zum anderen darum, abhängig von einer Start- und Zielversion zu ermitteln, welche Überleitungen von Kodes möglich sind. 
+Dieser Abschnitt behandelt die versionsübergreifende Suche nach Umsteigern. Es geht also zum einen darum zu bestimmen, ob ein bestimmter Kode einer bestimmten Version sich überhaupt verändert hat, sowie zum anderen darum, abhängig von einer Start- und Zielversion zu ermitteln, welche Überleitungen von Kodes möglich sind. Die hier aufgeführten Algorithmen sind unabhängig von einer konkreten Implementation verfasst. 
 
-Die hier aufgeführten Algorithmen sind unabhängig von einer konkreten Implementation verfasst. 
+§ Wichtig: 1 Umsteiger nur Veränderungen 2 Datenstrukturen
 
 \section{Allgemeine Funktionen}
 
@@ -39,7 +39,7 @@ erwähnte strukturierte Datei dienen, welche die Versionen und Abweichungen defi
 \begin{figure}[H]
     \centering\large%\sffamily
     \resizebox{.99\linewidth}{!}{\input{../dia/versions.tex}}
-    \normalsize\vspace{-1em}\caption{Ermitteln der nächstliegenden Versionen am Beispiel von ICD-10-GM 2013.}
+    \normalsize\vspace{-1em}\caption{Ermitteln der nächstliegenden Versionen am Beispiel von ICD-10-GM.}
 \end{figure}
 
 \subsection{Beispieldaten mit graphischer Darstellung}
@@ -86,9 +86,7 @@ M21.6 & M21.6 & A & A \\
 
 Von Version 2014 auf 2013 ändern sich die angegebenen ICD-10-GM Kodes nicht. Wie bereits in der Datenintegration erwähnt, müssen diese Einträge gar nicht aufgenommen werden. Sie sind hier nur zur Vereinfachung aufgelistet, weil die Einträge auch so in den BfArM-Dateien enthalten sind. Bei der versionsübergreifenden Suche nach Umsteigern sind nur die Veränderungen relevant. Anstatt alle nicht relevanten Umsteiger-Einträge abzuspeichern und bei jeder Abfrage auszuschließen, kann alternativ auch angenommen werden, weil eine Suche nach Umsteigern immer von einem vorhanden Kode ausgeht, dass bei Nichtvorhandensein eines Umsteigers zwischen zwei Versionen dieser Kode einfach gleich bleibt.
 
-Insgesamt treten bei M21.4 über alle Versionen keine Veränderungen in den Umsteigern auf.
-
-M21.6 hat allerdings folgende:
+Insgesamt treten bei M21.4 über alle Versionen keine Veränderungen in den Umsteigern auf. M21.6 hat allerdings folgende:
 
 \begin{centernss}
 \renewcommand{\arraystretch}{1.2}
@@ -268,6 +266,7 @@ Dann ergibt sich ein gerichteter Graph. Das heißt ein Graph, der nur einfach ge
     \centering\Large%\sffamily
     \resizebox{.99\linewidth}{!}{\input{../dia/nodes2.tex}}
     \normalsize\caption{Von M21.6, Version 2014 erreichbare Kodes als gerichteter Graph.}
+    \label{img-m21-6}
 \end{figure}
 
 Die transitive Hülle wird in \cite[Seite 172]{gross2013handbook} wie folgt definiert: 
@@ -353,7 +352,7 @@ Lokale Variable:
 
 \begin{itemize}
 \item \texttt{\$data} \hspace{2em} Rückgabewert, initial: leer.
-\newline Eine assoziative Datenstruktur mit Key \texttt{fwd} $\Rightarrow$ Umsteiger, die chronologisch vorwärts von dem Suchkode erreichbar sind und \texttt{rev} $\Rightarrow$ entsprechend chronologisch rückwärts. Initial: leer. \\
+\newline Eine assoziative Datenstruktur mit Key \texttt{fwd} $\Rightarrow$ Umsteiger, die chronologisch vorwärts von dem Suchkode erreichbar sind und \texttt{rev} $\Rightarrow$ chronologisch rückwärts. \\
 \end{itemize}
 
 \begin{comment}
@@ -368,14 +367,14 @@ Lokale Variable:
 \endgroup
 \end{comment}
 
-\struktogrammAO{27}
+\struktogrammAO{24}
 {
-    \assign[\heightNS]{\$data[ 'fwd' ] = searchHorizontalRecursion (\$system, \$version, \$code, true)}
-    \assign[\heightNS]{\$data[ 'rev' ] = searchHorizontalRecursion (\$system, \$version, \$code, false)}
-    \return[\heightNS]{RETURN \$data}
+\assign[\heightNS]{\$data[ 'fwd' ] = searchHorizontalRecursion (\$system, \$version, \$code, true)}
+\assign[\heightNS]{\$data[ 'rev' ] = searchHorizontalRecursion (\$system, \$version, \$code, false)}
+\return[\heightNS]{RETURN \$data}
 }
 
-Ausgehend von einem gegebenen Kode einer Version eines Kodiersystems wird chronologisch vorwärts und rückwärts eine rekursive Suche über alle Versionen gestartet. 
+\struktkommentar{Ausgehend von einem gegebenen Kode einer Version eines Kodiersystems wird chronologisch vorwärts und rückwärts eine rekursive Suche über alle Versionen gestartet.}
 
 %\subsection{SearchHorizontalRecursion}
 
@@ -389,42 +388,45 @@ Funktionsparameter:
 \newline Bestimmt die Suchrichtung. TRUE: chronologisch vorwärts und FALSE: rückwärts. 
 \end{itemize}
 
-Lokale Variable:
-
-{\color{blue} §TODO} 
+Lokale Variablen:
 
 \begin{itemize}
-\item \texttt{\$data}  \hspace{2em} Rückgabewert, initial: leer.
-\newline bla bla \\ %Eine assoziative Datenstruktur (zum Beispiel HashMap), mit Key \texttt{fwd} $\Rightarrow$ Umsteiger, die chronologisch vorwärts von dem Suchkode erreichbar sind und \texttt{rev} $\Rightarrow$ entsprechend chronologisch rückwärts.
+\item \texttt{\$data} \hspace{2em} Rückgabewert, initial: leer.
+\newline Eine mehrdimensionale, assoziative Datenstruktur, die die Ergebnisse der rekursiven Suche enthält. Gefundene Umsteiger werden als Liste mit dem Key \texttt{umsteiger} gespeichert; zusätzlich zu der Listen auch die Versionen vorher und nachher. Jeder einzelne Umsteiger-Eintrag enthält wiederum die Informationen zur automatischen Überleitbarkeit, sowie die Titel der Kodes vorher und nachher. Falls ein Umsteiger weitere Umsteiger hat, werden diese unter dem einem Key \texttt{recursion} abgelegt und die Suche fortgesetzt. Das Beispielergebnis für M21.4 befindet sich im Anhang \ref{search-horizontal-example}.
+\item \texttt{\$otherVersion} \newline Die Version, zu der die Umsteiger ermittelt werden.
+\item \texttt{\$otherCode} \newline Die Kode, zu dem der aktuelle Kode übergeleitet wird.
+\item \texttt{\$readType} \newline Auf welche Art die Daten gelesen werden; siehe \texttt{readData}.
+\item \texttt{\$umsteiger}, \texttt{\$entry} \newline Liste der Umsteiger, Schleifenvariable: Umsteiger-Eintrag.
+\item \texttt{\$recursion} \newline Ergebnis des rekursiven Funktionsaufrufs bei gefundenen Umsteigern. \\
 \end{itemize}
 
-\struktogrammAO{34}{
+\struktogrammAO{35}{
     \ifthenelse[10]{1}{1}{IF \$chronological}{Y}{N}
-        \assign[\heightNS]{\$ov = nextNewerVersion(\$system, \$version)}
-        \assign[\heightNS]{\$table = 'umsteiger\_join\_alt'}
-        \assign[\heightNS]{\$which = 'new'}
+        \assign[\heightNS]{\$otherVersion = \newline nextNewerVersion(\$system, \$version)}
+        \assign[\heightNS]{\$readType = 'umsteiger\_join\_alt'}
+        \assign[\heightNS]{\$otherCode = 'new'}
     \change
-        \assign[\heightNS]{\$ov = nextOlderVersion(\$system, \$version)}
-        \assign[\heightNS]{\$table = 'umsteiger\_join'}
-        \assign[\heightNS]{\$which = 'old'}
+        \assign[\heightNS]{\$otherVersion = \newline nextOlderVersion(\$system, \$version)}
+        \assign[\heightNS]{\$readType = 'umsteiger\_join'}
+        \assign[\heightNS]{\$otherCode = 'old'}
     \ifend
 }
 
 \struktkommentar{Lokale Variablen werden anhand der Suchrichtung unterschiedlich belegt.}
 
-\struktogrammAO{15}{
-    \ifthenelse[10]{3}{1}{IF empty(\$version) OR empty(\$ov)}{Y}{}
+\struktogrammAO{16}{
+    \ifthenelse[10]{5}{1}{IF empty(\$version) OR empty(\$otherVersion)}{Y}{}
         \return[\heightNS]{RETURN \$data}
     \change
     \ifend
 }
 
-\struktkommentar{Falls es keine weitere Version mehr gibt, endet die Rekursion.}
+\struktkommentar{Falls es in der Suchrichtung keine weitere Version mehr gibt, endet die Rekursion.}
 
-\struktogrammAO{24}{
-    \assign[\heightNS]{\$umsteiger = readData(\$system, \$version, \$code, \$table)}
-    \ifthenelse[10]{3}{1}{IF empty(\$umsteiger)}{Y}{}
-        \return[\heightNS]{RETURN searchHorizontalRec(\$type, \$other, \$code, \$chronological)}
+\struktogrammAO{27}{
+    \assign[\heightNS]{\$umsteiger = readData(\$system, \$version, \$code, \$readType)}
+    \ifthenelse[10]{5}{1}{IF empty(\$umsteiger)}{Y}{}
+        \return[\heightNS]{RETURN \newline searchHorizontalRecursion(\$type, \$otherVersion, \$code, \$chronological)}
     \change
     \ifend
 }
@@ -433,10 +435,10 @@ Lokale Variable:
 
 %\texttt{readData ('icd10gm', '2014', 'M21.4', 'kodes')} 
 
-\struktogrammAO{56}{
+\struktogrammAO{54}{
     \while[\heightNS]{FOREACH \$entry IN \$umsteiger}
-        \ifthenelse[10]{5}{1}{IF \$entry[ \$which ] NOT 'UNDEF'}{Y}{}
-            \assign[\heightNS]{\$recursion = searchHorizontalRec(\$system, \$version, \$entry[ \$which ], \$chronological)}
+        \ifthenelse[10]{5}{1}{IF \$entry[ \$otherCode ] NOT 'UNDEF'}{Y}{}
+            \assign[\heightNS]{\$recursion = searchHorizontalRecursion \newline (\$system, \$version, \$entry[ \$otherCode ], \$chronological)}
             \ifthenelse[10]{4}{1}{IF NOT empty(\$recursion)}{Y}{}
                 \assign[\heightNS]{\$entry[ 'recursion' ] = \$recursion}
             \change
@@ -447,17 +449,19 @@ Lokale Variable:
     \whileend
 }
 
-\struktkommentar{Für jeden Umsteiger wird die Rekursion mit dem veränderten Kode fortgesetzt. Allerdings nur falls dieser nicht UNDEF ist, weil es sich dann um einen entfernten oder neu hinzugefügten Kode handelt. Also wenn wie im Beispiel der M21.6 der ICD-10-GM Version 2013 die Umsteiger [ M21.60, M21.67, M21.87 ] in der Version 2012 hat, dann wird die Suche in die rückwärts chronologische Richtung mit diesen drei Kodes fortgesetzt statt mit M21.6. Die Ergebnisse dieser Verzweigung, sofern vorhanden, werden abgespeichert mit dem Key \texttt{'recursion'} zusätzlich zu jedem Umsteiger-Eintrag. Die Liste aller Umsteiger-Einträge, inklusive der UNDEF-Umsteiger, wird in das Ergebnis mit dem Key \texttt{'umsteiger'} aufgenommen.}
+\struktkommentar{Für jeden Umsteiger wird die Rekursion mit dem veränderten Kode fortgesetzt. Allerdings nur falls dieser nicht UNDEF ist, weil es sich dann um einen entfernten oder neu hinzugefügten Kode handelt. Also wenn wie im Beispiel der M21.6 der ICD-10-GM Version 2013 die Umsteiger [ M21.60, M21.67, M21.87 ] in der Version 2012 hat, dann wird die Suche in die rückwärts chronologische Richtung mit diesen drei Kodes fortgesetzt statt mit M21.6. Die Ergebnisse dieser Verzweigung, sofern vorhanden, werden abgespeichert mit dem Key \texttt{recursion} zusätzlich zu jedem Umsteiger-Eintrag. Die Liste aller Umsteiger-Einträge, inklusive der UNDEF-Umsteiger, wird in das Ergebnis mit dem Key \texttt{umsteiger} aufgenommen.}
 
-\struktogrammAO{24}{
-    \assign[\heightNS]{\$data[ 'version' ] = version}
-    \assign[\heightNS]{\$data[ 'other' ] = other}
+\struktogrammAO{23}{
+    \assign[\heightNS]{\$data[ 'version' ] = \$version}
+    \assign[\heightNS]{\$data[ 'other' ] = \$otherVersion}
     \return[\heightNS]{RETURN \$data}
 }
 
 \struktkommentar{Falls es Umsteiger für einen Kode gibt, werden zusätzlich die Versionen vorher/nachher gespeichert. Dann endet auch hier die Rekursion.}
 
-{\color{blue} §TODO: Verweis auf Appendix} Ergebnis für den Beispielaufruf im JSON-Format. \ref{search-horizontal-example}
+Appendix \ref{search-horizontal-example} enthält das Ergebnis im JSON-Format für den Beispielaufruf der horizontale Suche für M21.6, Version 2014
+%\texttt{searchHorizontal('icd10gm', '2014', 'M21.6')}
+entsprechend der Abbildung \ref{img-m21-6}.
 
 \begin{comment}
 \struktogrammA{200}{searchUmsteigerHorizontal\_recursion
@@ -572,16 +576,14 @@ Die Vereinigung der stark zusammenhängenden Komponenten aus Schritt eins wird i
 \begin{figure}[H]
     \centering
     \includegraphics[width=.6\linewidth]{../img/purdom_g1.png}
-    \caption{Beispiel Graph $G$ von \cite[Seite 78]{purdom1970transitive}}
+%    \caption{Beispiel Graph $G$ von \cite[Seite 78]{purdom1970transitive}}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=.6\linewidth]{../img/purdom_g2.png}
-    \caption{Vereinigung der der stark zusammenhängenden Komponenten von $G$ aus \cite[Seite 78]{purdom1970transitive}}
+    \caption{Beispielgraph $G$ und Vereinigung der stark zusammenhängenden Komponenten aus \cite[Seite 78]{purdom1970transitive}.}
 \end{figure}
-
-{\color{blue} §TODO: caption}
 
 Die hier vorgestellte vertikale Suche nach Umsteigern entspricht nicht ganz Purdoms Algorithmus.
 
@@ -596,21 +598,22 @@ Aber die vertikale Suche verwendet wesentlich zwei Besonderheiten von Purdoms Al
     \normalcolor%\caption{aus \cite[Seite 76f]{dar1993augmenting}}
 \end{figure}
 
-Konkret bedeuten diese Besonderheiten:
+Konkret bedeuten diese Besonderheiten für die Umsteiger-Suche:
 
 \begin{enumerate}
-\item Topologisch rückwärts gerichtete Vorgehensweise \newline Also ist zum Beispiel bei der Suche nach den Umsteigern eines ICD-GM-10 Kode der Version 1.3 die Reihenfolge, in der die anderen Versionen abgearbeitet werden: 2024, 2023, 2022 und so weiter. Oder anders ausgedrückt: Wenn die Überleitungen in chronologischer Reihenfolge bestimmt werden sollen, dann läuft die vertikale Suche chronologisch rückwärts. 
-\item Vereinigung der stark zusammenhängenden Komponenten \newline
-Nach jedem Schritt über eine Version können die bereits ermittelten Umsteiger vereinigt werden. 
+\item Topologisch rückwärts gerichtete Vorgehensweise: So ist zum Beispiel bei der Suche nach den Umsteigern eines ICD-GM-10 Kode der Version 1.3 die Reihenfolge, in der die anderen Versionen abgearbeitet werden: 2024, 2023, 2022 und so weiter. Oder anders ausgedrückt: Wenn die Überleitungen in chronologischer Reihenfolge bestimmt werden sollen, dann läuft die vertikale Suche umgekehrt, also chronologisch rückwärts. 
+\item Vereinigung der stark zusammenhängenden Komponenten: Nach jedem Schritt über eine Version, wird geprüft, ob ein neu gefundener Umsteiger eine Überleitung in einen Kode enthält, der bereits in den davor abgearbeitet Versionen als Umsteiger vorkommt. Falls ja, dann werden diese Umsteiger vereinigt, das heißt die Zwischenschritte werden zu einem Schritt zusammengefügt. 
 \end{enumerate}
 
 Einfaches Beispiel für die Vereinigung: 
 
-Angenommen ein abstraktes System hat Umsteiger von der Version 1.0 auf 2.0: $A$$\rightarrow$$B$ und $M$$\rightarrow$$N$, sowie von Version 2.0 auf 3.0: $B$$\rightarrow$$C$. Wenn nun in chronologischer Reihenfolge 1.0$\rightarrow$2.0$\rightarrow$3.0 Umsteiger gesucht werden sollen, erfolgt die Suche sowie Vereinigung gefundener Umsteiger in umgekehrter Reihenfolge. Das heißt wenn im Schritt 3.0$\leftarrow$2.0 der Umsteiger $C$$\leftarrow$$B$ gefunden wird, dann wird bei der Vereinigung mit Version 1.0 der Umsteiger $B$$\leftarrow$$A$ in $C$$\leftarrow$$A$ umgewandelt. Denn A in Version 1.0 entspricht C in Version 3.0. 
+Angenommen ein abstraktes System hat Umsteiger von der Version 1.0 auf 2.0: $A$$\rightarrow$$B$ und $M$$\rightarrow$$N$, sowie von Version 2.0 auf 3.0: $B$$\rightarrow$$C$. Wenn nun in chronologischer Reihenfolge 1.0$\rightarrow$2.0$\rightarrow$3.0 Umsteiger ermittelt werden sollen, erfolgt die Suche sowie Vereinigung gefundener Umsteiger in umgekehrter Reihenfolge. Das heißt wenn im Schritt 3.0$\leftarrow$2.0 der Umsteiger $C$$\leftarrow$$B$ gefunden wird, dann wird danach bei der Vereinigung mit Version 1.0 der Umsteiger $B$$\leftarrow$$A$ in $C$$\leftarrow$$A$ umgewandelt. $A$ in Version 1.0 entspricht $C$ in Version 3.0. 
+
+Falls es Verzweigungen gibt, also es mehrere Umsteiger für einen Kode gibt, dann werden entsprechend Listen vereinigt. Ein reales Beispiel dazu folgt später. 
 
 \begin{figure}[H]
     \centering\Huge%\sffamily
-    \resizebox{.85\linewidth}{!}{\input{../dia/merge.tex}}
+    \resizebox{.75\linewidth}{!}{\input{../dia/merge.tex}}
     \normalsize\caption{Graphische Veranschaulichung der zwei Besonderheiten von Purdoms Algorithmus, die in der vertikalen Suche zur Anwendung kommen.}
 \end{figure}
 
@@ -622,7 +625,7 @@ Funktionsparameter:
 
 \begin{itemize}
 \item \texttt{\$system} \newline Das Kodiersystem, beispielsweise als Konstanten definiert \texttt{'icd10gm'} und \texttt{'ops'}. 
-\item \texttt{\$target} \newline Die Zielversion, auf die von allen anderen Version die Umsteiger über alle Kodes ermittelt werden.
+\item \texttt{\$targetVersion} \newline Die Zielversion, auf die von allen anderen Version die Umsteiger über alle Kodes ermittelt werden.
 \item \texttt{\$function} \newline Eine optionale, anonyme Funktion.
 \end{itemize}
 
@@ -633,58 +636,58 @@ Lokale Variable:
 \newline Eine zweidimensionale, assoziative Datenstruktur -- wird nur befüllt wenn \texttt{\$function} nicht gesetzt ist. Die erste Dimension hat als Keys alle Versionen außer der Zielversion. Die zweite Dimension hat als Keys die Kodes der Version und als Value die Liste der zugehörigen Umsteiger, inklusive Vereinigung. Kodes ohne Umsteiger werden nicht aufgenommen.
 \end{itemize}
 
-\struktogrammAO{25}{
-    \assign[\heightNS]{\$data += searchVerticalSub (\$system, \$target, false, \$function)}
-    \assign[\heightNS]{\$data += searchVerticalSub (\$system, \$target, true, \$function)}
+\struktogrammAO{23}{
+    \assign[\heightNS]{\$data += searchVerticalSubroutine(\$system, \$targetVersion, false, \$function)}
+    \assign[\heightNS]{\$data += searchVerticalSubroutine(\$system, \$targetVersion, true, \$function)}
     \return[\heightNS]{RETURN \$data}
 }
 
-Basierend auf der Zielversionen wird in beider Richtungen die vertikale Suche als Unterfunktion gestartet.
+\struktkommentar{Basierend auf der Zielversionen wird in beide Richtungen die vertikale Suche als Unterfunktion gestartet.}
 
-\texttt{\$data +=} bedeutet, dass die assoziativen Datenstrukturen zusammengefasst werden. Bei einem schon vorhandenen Key würde dieser überschrieben werden; das kann allerdings hier bei den Versionen als Keys nicht passieren, weil jede Version nur einmal bearbeitet wird. 
+\texttt{\$data +=} bedeutet, dass die assoziativen Datenstrukturen zusammengefasst werden. Wenn ein Key auf beiden Seiten der Addition existiert, wird der von der linken Seite für die Summe übernommen. Das kann allerdings hier bei den Versionen als Keys nicht passieren, weil jede Version nur einmal bearbeitet wird. 
 
 \newpara{searchVerticalSub}
 
 Funktionsparameter:
 
 \begin{itemize}
-\item \texttt{\$system}, \texttt{\$target}, \texttt{\$function}  \newline Wie searchVertical. 
+\item \texttt{\$system}, \texttt{\$targetVersion}, \texttt{\$function}  \newline Wie searchVertical. 
 \item \texttt{\$chronological}
 \newline Bestimmt die Richtung, in der die Versionen abgearbeitet werden. TRUE: chronologisch vorwärts und FALSE: rückwärts. Die Reihenfolge ist wie erwähnt topologisch rückwärts, das heißt ausgehend von der Zielversion. 
 \end{itemize}
 
-{\color{blue} §TODO: ab hier weitermachen}
-
-Lokale Variable:
+Lokale Variablen:
 
 \begin{itemize}
-\item \texttt{\$data} \hspace{2em} Rückgabewert, initial: leer.
-\newline Eine zweidimensionale, assoziative Datenstruktur -- wird nur befüllt wenn \texttt{\$function} nicht gesetzt ist. Die erste Dimension hat als Keys alle Versionen außer der Zielversion. Die zweite Dimension hat als Keys die Kodes der Version und als Value die Liste der zugehörigen Umsteiger, inklusive Vereinigung. Kodes ohne Umsteiger werden nicht aufgenommen.
-\item \texttt{\$merge} \newline bla, initial: leer.
-\item \texttt{\$version} \newline bla, initial = target.
+\item \texttt{\$data \hspace{3em}} Rückgabewert, initial: leer.
+\newline Eine zweidimensionale, assoziative Datenstruktur -- wird nur befüllt wenn \texttt{\$function} nicht gesetzt ist! Die erste Dimension hat als Keys alle Versionen außer der Zielversion. Die zweite Dimension hat als Keys die Kodes aller bisher verarbeiteten Umsteiger und als Values die Listen der Kodes, in die übergeleitet wird, inklusive Vereinigungen wie oben beschrieben. Das heißt im Gegensatz zur horizontalen Suche werden die Umsteiger als Key-Value Paare gespeichert: Kode der aktuellen Version $\Rightarrow$ Kode/s in die Vergleichsversion. Kodes ohne Umsteiger werden nicht aufgenommen.
+\item \texttt{\$merge}  \newline bla
+\item \texttt{\$version} \newline bla
+\item \texttt{\$otherVersion} \newline bla
 \end{itemize}
 
-\struktogrammAO{90}{
+\struktogrammAO{100}{
+    \assign[\heightNS]{\$version = \$targetVersion}
     \while[\heightNS]{WHILE TRUE}
-        \assign[\heightNS]{other = version}
-        \ifthenelse[10]{1}{1}{IF chronological}{Y}{N}
-            \assign[\heightNS]{version = nextOlderVersion(type,other)}
+        \assign[\heightNS]{\$otherVersion = \$version}
+        \ifthenelse[10]{1}{1}{IF \$chronological}{Y}{N}
+            \assign[\heightNS]{\$version = nextOlderVersion \newline (\$system, \$otherVersion)}
         \change
-            \assign[\heightNS]{version = nextNewerVersion(type,other)}
+            \assign[\heightNS]{\$version = nextNewerVersion \newline (\$system, \$otherVersion)}
         \ifend
-        \ifthenelse[10]{1}{1}{IF empty(version)}{Y}{}
-            \return[\heightNS]{RETURN data}
+        \ifthenelse[10]{1}{1}{IF empty(\$version)}{Y}{}
+            \return[\heightNS]{RETURN \$data}
         \change
         \ifend
-        \ifthenelse[10]{1}{1}{IF chronological}{Y}{N}
-            \assign[\heightNS]{merge = merge\_umsteiger(type, chronological, other, version, merge)}
+        \ifthenelse[10]{1}{1}{IF \$chronological}{Y}{N}
+            \assign[\heightNS]{\$merge = mergeUmsteiger \newline (\$system, \$chronological, \newline \$otherVersion, \$version, \$merge)}
         \change
-            \assign[\heightNS]{merge = merge\_umsteiger(type, chronological, version, other, merge)}
+            \assign[\heightNS]{\$merge = mergeUmsteiger \newline (\$system, \$chronological, \newline \$version, \$otherVersion, \$merge)}
         \ifend
-        \ifthenelse[10]{1}{1}{IF function}{Y}{N}
-            \assign[\heightNS]{function(merge, version, target\_version)}
+        \ifthenelse[10]{1}{1}{IF \$function}{Y}{N}
+            \assign[\heightNS]{\$function \newline (\$merge, \$version, \$targetVersion)}
         \change
-            \assign[\heightNS]{data['version'] = merge}
+            \assign[10]{\$data[ \$version ] = \$merge}
         \ifend
     \whileend
 }
@@ -748,6 +751,7 @@ Lokale Variable:
     \centering\Large%\sffamily
     \resizebox{.99\linewidth}{!}{\input{../dia/nodes3.tex}}
     \normalsize\caption{caption}
+    \label{vertical-example}
 \end{figure}
 
 \begin{comment}
@@ -770,7 +774,7 @@ test2
 
 %% algo
 
-\section{Vergleich der Horizontalen und Vertikalen Suche}
+\section{Vergleich der Suchalgorithmen}
 
 Wenn die Daten aus einer Datenbank gelesen werden, dann ist der Menge pro readData Aufruf weniger entscheidend als die Anzahl solcher Aufrufe. Das heißt alle Umsteiger einer Version auf einmal zu lesen ist wesentlich schneller als sie einzeln zu lesen. 
 
@@ -792,35 +796,8 @@ Verwendung für ConceptMap
 
 Verwendung für Bestimmen ob ein Kodes Umsteiger haben für alle Kodes und Versionen
 
+
 \section{Schreiben der ConceptMap}
 
-\begin{Code}
-<?xml version="1.0"?>
-<ConceptMap xmlns="http://hl7.org/fhir">
-  <id value="icd10gm_from:2024_to:1.3_target:2024"/>
-  <url value="urn:uuid:0191ed11-d63f-779a-9131-77d4ba9764f4"/>
-
-
-
-<group>
-  <source value="1.3"/>
-  <target value="2024"/>
- <element>
-    <code value="G83.8"/>
-    <target>
-      <code value="G83.6"/>
-      <equivalence value="wider"/>
-    </target>
-    <target>
-      <code value="G83.8"/>
-      <equivalence value="wider"/>
-    </target>
-    <target>
-      <code value="G83.5"/>
-      <equivalence value="wider"/>
-    </target>
-  </element>
-</group>
-</ConceptMap>
-\end{Code}
+Appendix XML \ref{conceptmap-example}
 

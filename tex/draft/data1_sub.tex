@@ -1,12 +1,10 @@
-(Kapitel: BfArM-Daten)
-
-Dieses Kapitel behandelt die Verarbeitung der BfArM-Daten unabhängig von einer konkreten technischen Implementierung. 
+Dieses Kapitel behandelt die elektronische Verarbeitung der BfArM-Daten. % unabhängig von einer konkreten technischen Implementierung. 
 
 \section{Kode- und Umsteiger-Dateien}
 
-Das BfArM stellt für jede neue ICD-10-GM- und OPS-Version Dateien für die Überleitung auf die Vorgänger-Version zum Download zur Verfügung, gebündelt jeweils in einer Zip-Datei: \citep[Downloads]{bfarmdl}.
+Das BfArM stellt für jede neue ICD-10-GM- und OPS-Version Dateien für die Überleitung auf die Vorgänger-Version zum Download zur Verfügung, gebündelt jeweils in einer Zip-Datei: \cite[Downloads]{bfarmdl}.
 
-Es handelt sich hierbei um CSV-formatierte Text-Dateien. CSV steht für "`Comma-Separated Values"' und ist ein sehr einfaches Format, um Daten zu strukturieren. Es wird ein Satzzeichen verwendet, um den restlichen Text in Spalten zu trennen -- laut dem Namen normalerweise ein Komma, aber für die BfArM-Dateien wurde Strichpunkt als Trennzeichen gewählt, wahrscheinlich weil die Klassentitel auch Kommata enthalten können. Weitere Informationen zum CSV Datei-Format finden sich hier: \citep[Seite 131f]{bonnefoy2024definitive}. 
+Es handelt sich hierbei um CSV-formatierte Text-Dateien. CSV steht für "`Comma-Separated Values"' und ist ein sehr einfaches Format, um Daten zu strukturieren. Es wird ein Satzzeichen verwendet, um den restlichen Text in Spalten zu trennen -- laut dem Namen normalerweise ein Komma, aber für die BfArM-Dateien wurde Strichpunkt als Trennzeichen gewählt, wahrscheinlich weil die Klassentitel auch Kommata enthalten können. Weitere Informationen zum CSV Datei-Format finden sich hier: \cite[Seite 131f]{bonnefoy2024definitive}. 
 
 Vom BfArM werden Kodes als Schlüsselnummern bezeichnet, wenn diese eindeutig sind und einzelne Überleitungen zwischen Kodes werden Umsteiger genannt.
 
@@ -14,7 +12,7 @@ Vom BfArM werden Kodes als Schlüsselnummern bezeichnet, wenn diese eindeutig si
 
 Hier beispielhaft die ersten sieben Zeilen der Kode-Datei von ICD-10-GM, Version 2024:
 
-\codeBox{.74}{UNDEF;Undefined\newline
+\codeBox{.79}{UNDEF;Undefined\newline
 A00;Cholera\newline
 A00.0;Cholera durch Vibrio cholerae O:1, Biovar cholerae\newline
 A00.1;Cholera durch Vibrio cholerae O:1, Biovar eltor\newline
@@ -32,14 +30,14 @@ Anmerkungen:
 \end{enumerate}
 \item Für OPS ist das Format der Kode-Datei identisch.
 \item Mit Ausnahme des UNDEF-Eintrags in der ersten Zeile ist die Datei alphabetisch nach dem Kode sortiert. UNDEF ist kein ICD-10-GM- oder OPS-Kode, sondern wird für Umsteiger verwendet, um entfernte beziehungsweise neu hinzugefügte Kodes zu kennzeichnen.
-\item Die Datei enthält nicht-endständige Kodes -- im Beispiel oben A00 und A01. Ein Kode ist endständig, wenn er keine Subkategorie hat. \citep[Kategorie und Kode in der ICD-10-GM]{bfarmicdkk}
+\item Die Datei enthält nicht-endständige Kodes -- im Beispiel oben A00 und A01. Ein Kode ist endständig, wenn er keine Subkategorie hat. \cite[Kategorie und Kode in der ICD-10-GM]{bfarmicdkk}
 \end{itemize}
 
 \subsection{Umsteiger / Überleitungen}
 
 Im Gegensatz zu den Kodes haben die Umsteiger für ICD-10-GM und OPS unterschiedliche Formate. Hier also zuerst zwei Ausschnitte aus der Umsteiger-Datei für ICD-10-GM, Version 2017 Überleitung auf Version 2016:
 
-\codeBoxDouble{.3}{A00.0;A00.0;A;A\newline
+\codeBoxDouble{.27}{A00.0;A00.0;A;A\newline
 A00.1;A00.1;A;A\newline
 A00.9;A00.9;A;A\newline
 A01.0;A01.0;A;A\newline
@@ -68,13 +66,11 @@ Dazu im Vergleich ein einzelner Umsteiger aus dem OPS, Version 2024 Überleitung
 
 \codeBox{.3}{1-100;N;1-100;N;A;A}
 
-Die zusätzlichen Spalten jeweils nach den Kodes speziell für OPS sagen aus, ob Zusatzkennzeichen notwendig sind, siehe dazu auch: \citep[Kategorie und Kode im OPS]{bfarmopskk}.
+Die zusätzlichen Spalten jeweils nach den Kodes speziell für OPS sagen aus, ob Zusatzkennzeichen notwendig sind, siehe dazu auch: \cite[Kategorie und Kode im OPS]{bfarmopskk}.
 
 \subsection{"`DRY"'-Prinzip}
 
-"`Don't Repeat Yourself"' ist eines der Kardinalprinzipien in der Software-Entwicklung. Obwohl der Grundsatz, Wiederholungen zu vermeiden, wahrscheinlich schon in der Programmierung angewandt wird seit es diesen Beruf gibt, wurde "`DRY"' erstmals 1999 ausformuliert von \citep[Seite 79ff]{thomas2019pragmatic}. In der zwanzigjährigen Jubiläumsausgabe verdeutlichen die Autoren, dass es ihnen hierbei nicht nur um das Schreiben von Programmcode geht, sondern vielmehr um die Absichten hinter einem Prozess. Das heißt eine Änderung der Intention einer Software-Lösung sollte nicht mehrere Änderungen an mehreren Stellen nach sich ziehen. 
-
-\newpage %§
+"`Don't Repeat Yourself"' ist eines der Kardinalprinzipien in der Software-Entwicklung. Obwohl der Grundsatz, Wiederholungen zu vermeiden, wahrscheinlich schon in der Programmierung angewandt wird seit es diesen Beruf gibt, wurde "`DRY"' erstmals 1999 ausformuliert von \cite[Seite 79ff]{thomas2019pragmatic}. In der zwanzigjährigen Jubiläumsausgabe verdeutlichen die Autoren, dass es ihnen hierbei nicht nur um das Schreiben von Programmcode geht, sondern vielmehr um die Absichten hinter einem Prozess. Das heißt eine Änderung der Intention einer Software-Lösung sollte nicht mehrere Änderungen an mehreren Stellen nach sich ziehen. 
 
 Bei der Integration der BfArM-Daten kann das "`DRY"'-Prinzip auf zwei Arten angewandt werden.
 
@@ -88,22 +84,22 @@ Bei der Integration der BfArM-Daten kann das "`DRY"'-Prinzip auf zwei Arten ange
 
 Im diesem Abschnitt werden alle Abweichungen der ICD-10-GM- und OPS-Versionen von der als Standard gewählten Version 2024 in Tabellen aufgeführt. Konkret gemeinst sind damit: Version, Download-URL, Pfad der Kode- und Umsteiger-Dateien, Sonstiges. Diese Informationen können dann dem Datenintegrationsprozess in einem strukturierten Dateiformat zur Verfügung gestellt werden. {\color{blue} §TODO: Verweis auf konkrete Implementation}
 
-\subsubsection{Liste aller Versionen}
+\newpara{Liste aller Versionen}
 
-Im Anhang befinden sich Tabellen, die alle Abweichungen zwischen den Versionen für ICD-10-GM (\ref{icd-versionen}) und OPS (\ref{ops-versionen}) bezogen auf 2024 enthalten.
+Im Anhang \ref{abweichungen-versionen} befinden sich Tabellen, die alle Abweichungen zwischen den Versionen für ICD-10-GM und OPS bezogen auf 2024 enthalten.
 
-\subsubsection{Datei-Adressen und -Pfade}
+\newpara{Datei-Adressen und -Pfade}
 
 Die Download-URL der Zip-Dateien setzt sich wie folgt zusammen:
 
 \begingroup
 \renewcommand{\arraystretch}{1.0}
-\begin{tabular}{p{\abstandLinksDataInt}p{4cm}l}
-& \multicolumn{2}{l}{\texttt{https://multimedia.gsb.bund.de/BfArM/downloads/klassifikationen/} \ldots} \\
-& \& für ICD-10-GM: & \texttt{icd-10/ \ldots} \\
-& \& für OPS: & \texttt{ops/ \ldots} \\
-& \multicolumn{2}{l}{\& einen pro Version unterschiedlichen Teil, siehe URL-Eintrag in den Tabellen.} \\
-& \multicolumn{2}{l}{Die URL dient damit auch als "`Single Source of Truth"' \citep[Seite 257]{bonnefoy2024definitive}.} \\
+\begin{tabular}{p{4cm}l}
+\multicolumn{2}{l}{\texttt{https://multimedia.gsb.bund.de/BfArM/downloads/klassifikationen/} \ldots} \\
+\& für ICD-10-GM: & \texttt{icd-10/ \ldots} \\
+\& für OPS: & \texttt{ops/ \ldots} \\
+\multicolumn{2}{l}{\& einen pro Version unterschiedlichen Teil, siehe URL-Eintrag in den Tabellen.} \\
+\multicolumn{2}{l}{Die URL dient damit als "`Single Source of Truth"' \cite[Seite 257]{bonnefoy2024definitive}.} \\
 \end{tabular}
 \endgroup \\
 
@@ -111,11 +107,11 @@ Die Kode- und Umsteiger-Dateien sind in einem Verzeichnis enthalten:
 
 \begingroup
 \renewcommand{\arraystretch}{1.0}
-\begin{tabular}{p{\abstandLinksDataInt}l}
-& \texttt{Klassifikationsdateien} \\
-& Wenn die Tabellen einen Verzeichnis-Eintrag enthalten, dann wird dieser vorangestellt. \\
-& Zum Beispiel für ICD-10-GM Version 2021: \\
-& \texttt{icd10gm2021syst-ueberl-20201111/Klassifikationsdateien} \\
+\begin{tabular}{l}
+\texttt{Klassifikationsdateien} \\
+Wenn die Tabellen einen Verzeichnis-Eintrag enthalten, wird dieser vorangestellt. \\
+Zum Beispiel für ICD-10-GM Version 2021: \\
+\texttt{icd10gm2021syst-ueberl-20201111/Klassifikationsdateien} \\
 \end{tabular}
 \endgroup \\
 
@@ -123,43 +119,41 @@ Der Pfad der Kode-Datei lautet:
 
 \begingroup
 \renewcommand{\arraystretch}{1.0}
-\begin{tabular}{p{\abstandLinksDataInt}p{4cm}l}
-& Verzeichnis & \ldots \\
-& \& für ICD-10-GM: & \texttt{icd10gm} \ldots \\
-& \& für OPS: & \texttt{ops} \ldots \\
-& \& die Version & \ldots\\
-& \& \texttt{syst.txt} \\
-& \multicolumn{2}{l}{Also zum Beispiel: \texttt{Klassifikationsdateien/icd10gm2024syst.txt}} \\
-& \multicolumn{2}{l}{Wenn die Tabellen einen Kodes-Eintrag enthalten, wird dieser stattdessen verwendet.} \\
+\begin{tabular}{p{4cm}l}
+Verzeichnis & \ldots \\
+\& für ICD-10-GM: & \texttt{icd10gm} \ldots \\
+\& für OPS: & \texttt{ops} \ldots \\
+\& die Version & \ldots\\
+\& \texttt{syst.txt} \\
+\multicolumn{2}{l}{Also zum Beispiel: \texttt{Klassifikationsdateien/icd10gm2024syst.txt}} \\
+\multicolumn{2}{l}{Wenn die Tabellen einen Kodes-Eintrag enthalten, gilt dieser stattdessen.} \\
 \end{tabular}
 \endgroup \\
 
-\newpage %§
-
-Das gleiche gilt für die Umsteiger-Datei, nur dass der Dateiname normalerweise so ist:
+Die Umsteiger-Datei funktioniert ähnlich, nur dass der Dateiname normalerweise so ist:
 
 \begingroup
 \renewcommand{\arraystretch}{1.0}
-\begin{tabular}{p{\abstandLinksDataInt}p{4cm}l}
-& für ICD-10-GM: & \texttt{icd10gm} \ldots\\
-& für OPS: & \texttt{ops} \ldots\\
-& \& Version & \ldots\\
-& \& \texttt{syst\_umsteiger\_} & \ldots\\
-& \& Vorgänger-Version & \ldots\\
-& \& \texttt{\_} & \ldots\\
-& \& Version & \ldots\\
-& \& \texttt{.txt} & Zum Beispiel: \texttt{ops2024syst\_umsteiger\_2023\_2024.txt}\\
+\begin{tabular}{p{4cm}l}
+für ICD-10-GM: & \texttt{icd10gm} \ldots\\
+für OPS: & \texttt{ops} \ldots\\
+\& Version & \ldots\\
+\& \texttt{syst\_umsteiger\_} & \ldots\\
+\& Vorgänger-Version & \ldots\\
+\& \texttt{\_} & \ldots\\
+\& Version & \ldots\\
+\& \texttt{.txt} & Zum Beispiel: \texttt{ops2024syst\_umsteiger\_2023\_2024.txt}\\
 \end{tabular}
 \endgroup \\
 
-\subsubsection{Sonstige Abweichungen}
+\newpara{Sonstige Abweichungen}
 \label{abweichungen}
 
 \begin{itemize}
 \item Vorab-Version\newline Diese Version hat noch keine Seite für die Kode-Suche. {\color{blue} §TODO: Verweis auf Kode-Suche (Frontend)}
 \item Zip-Unterdatei\newline Die Zip-Datei der 2022 Versionen enthielt weitere Zip-Dateien. Vorher wurden alle Dateien zu einer Versionen nach Verwendungszweck nur in Unterverzeichnisse gegliedert, weswegen die gebündelte Zip-Datei insgesamt relativ groß wurde. Ab 2023 werden die Zip-Unterdateien separat zum Download angeboten.
 \item ISO-8859-1\newline Vor 2009 waren Dateien in ISO-8859-1 kodiert, auch Latin-1 genannt, statt UTF-8. Mehr dazu unter Abschnitt \ref{latin1-encoding}.
-\item Punkt-Strich-Notation, Kreuz-Stern-System \newline Die Kodes älterer ICD-10-GM Versionen hatten Sonderzeichen gemäß \citep{bfarmicdkk}.
+\item Punkt-Strich-Notation, Kreuz-Stern-System \newline Die Kodes älterer ICD-10-GM Versionen hatten Sonderzeichen gemäß \cite{bfarmicdkk}.
 \item 6-Spalten-Umsteiger \newline Umsteiger älterer ICD-10-GM Versionen enthielten Informationen zur Mehrfachkodierung. 
 \item Nicht endständige Umsteiger\newline Im Gegensatz zu allen anderen Überleitungen sind die Umsteiger-Einträge für ICD-10-GM 2.0 auf 1.3. auch für nicht-endständige Kodes enthalten. 
 \item None statt UNDEF\newline Von OPS Version 2009 bis 2004 wurde statt UNDEF der Bezeichner "`None"' verwendet. 
@@ -172,7 +166,7 @@ Das gleiche gilt für die Umsteiger-Datei, nur dass der Dateiname normalerweise 
 
 \section{Datenintegrationsprozess}
 
-Wie erwähnt durchlaufen alle Daten unabhängig von Version und Kodiersystem den gleichen Integrationsprozess. Dieser orientiert sich an dem klassischen "`Extract-Transform-Load"' Modell, siehe \citep[Seite 247ff]{bonnefoy2024definitive}.
+Wie erwähnt durchlaufen alle Daten unabhängig von Version und Kodiersystem den gleichen Integrationsprozess. Dieser orientiert sich an dem klassischen "`Extract-Transform-Load"' Modell, siehe \cite[Seite 247ff]{bonnefoy2024definitive}.
 
 \begin{enumerate}
 \item \emph{Extract:} Die Daten werden in einem bestimmten Format aus einem Quell-System extrahiert. 
@@ -187,31 +181,29 @@ Wie erwähnt durchlaufen alle Daten unabhängig von Version und Kodiersystem den
     \setlength{\fboxsep}{.02\linewidth}\color{black!20}\fbox{
     \includegraphics[width=.96\linewidth]{../img/etl.jpg}}
     \vspace{-10pt}
-    \normalcolor\caption{ETL-Modell nach \citep[Seite 63]{bonnefoy2024definitive}}
+    \normalcolor\caption{ETL-Modell nach \cite[Seite 63]{bonnefoy2024definitive}}
 \end{figure}
-
-\newpage %§
 
 Für die BfArM-Daten sieht der Integrationsprozess konkret so aus:
-
-\begin{figure}[H]
-    \centering
-    \resizebox{.9\textwidth}{!}{\input{../dia/data-integration.tex}}
-    \caption{BfArM-Datenintegrationsprozess}
-\end{figure}
 
 \begin{enumerate}
 \item \emph{Download:} Die Zip-Dateien werden heruntergeladen. Alternativ kann geprüft werden, ob die Dateien schon lokal vorhanden sind mit einem bestimmten Pfad, der sich nach Kodiersystem und Versionsnummer immer gleich zusammensetzt, zum Beispiel: \texttt{files/icd10gm2024.zip}. Die Download-Funktion sollte die Zip-Dateien ebenfalls unter diesem Pfad abspeichern, falls so gewünscht.
 \item \emph{Unzip:} Die Kodes- und Umsteiger-Dateien werden aus der Zip-Datei extrahiert. Normalerweise muss dafür nicht das ganze Archiv in temporäre Dateien entpackt werden -- außer eventuell bei den Versionen 2022, weil das Extrahieren verschachtelter Zip-Dateien eher ein Nischenfall ist und nicht unbedingt standardmäßig von Programmiersprachen oder Bibliotheken unterstützt wird. 
-\item \emph{Convert Encoding:}\label{latin1-encoding} Die in ISO-8859-1 kodierten Kodes-Dateien müssen in UTF-8 umgewandelt werden. In \citep{charencoding} werden die beiden Zeichenkodierungen genauer erklärt, aber für die BfArM-Daten ist eigentlich nur relevant, dass Umlaute mit unterschiedlichen Werten kodiert sind. Also würde das Einlesen eines in ISO-8859-1 kodierten Umlauts als UTF-8 ein anderes Zeichen als Resultat ergeben. Die Umsteiger-Dateien sind davon nicht betroffen, weil in diesen keine Umlaute enthalten sind. 
+\item \emph{Convert Encoding:}\label{latin1-encoding} Die in ISO-8859-1 kodierten Kodes-Dateien müssen in UTF-8 umgewandelt werden. In \cite{charencoding} werden die beiden Zeichenkodierungen genauer erklärt, aber für die BfArM-Daten ist eigentlich nur relevant, dass Umlaute mit unterschiedlichen Werten kodiert sind. Also würde das Einlesen eines in ISO-8859-1 kodierten Umlauts als UTF-8 ein anderes Zeichen als Resultat ergeben. Die Umsteiger-Dateien sind davon nicht betroffen, weil in diesen keine Umlaute enthalten sind. 
 \item \emph{Parse CSV:} Ein Parser wandelt eine Datei in eine Datenstruktur um; für CSV sollte jede Programmiersprache so eine Funktion standardmäßig zur Verfügung stellen. Für die BfArM-Dateien ist das Ergebnis ein zweidimensionales Array mit zwei Spalten für die Kodes, beziehungsweise drei bis sechs Spalten für die Umsteiger je nach Kodiersystem und Version. 
 \item \emph{Process Data:} Aufgrund der oben erwähnten Abweichungen ist die Vorverarbeitung der Daten der komplexeste Schritt und wird im nächsten Abschnitt genauer erklärt. Außerdem müssen nicht alle Daten gespeichert werden. Vor allem in Bezug auf die Zip-Dateien ergibt das eine Reduktion der Datenmenge um etwa einen Faktor von zehn. 
 \item \emph{Insert:} Die bearbeiteten Daten werden für die Verwendung durch Applikationen gespeichert. Zum Beispiel für eine relationale Datenbank werden pro Dateityp, Kodiersystem und Version eine Tabelle angelegt und die Daten in diese geschrieben. Konkret für SQL müssen außerdem die Hochkommata in den Codes-Dateien beachtet werden. 
 \end{enumerate}
 
+\begin{figure}[H]
+    \centering\large
+    \resizebox{.9\textwidth}{!}{\input{../dia/data-integration.tex}}
+    \normalsize\caption{BfArM-Datenintegrationsprozess}
+\end{figure}
+
 \section{Datenvorverarbeitung}
 
-"`Data Preprocessing"' ist ein wichtiger Schritt in Feldern der Informatik wie \emph{Machine Learning} und \emph{Big Data}. In \citep{garcia2016big} werden mehrere Methoden vorgestellt, wovon folgende in der Verarbeitung der BfArM-Daten zur Verwendung kommen:
+"`Data Preprocessing"' ist ein wichtiger Schritt in Feldern der Informatik wie \emph{Machine Learning} und \emph{Big Data}. In \cite{garcia2016big} werden mehrere Methoden vorgestellt, wovon folgende in der Verarbeitung der BfArM-Daten zur Verwendung kommen:
 
 \begin{enumerate}
 \item \emph{Data Cleaning:} Daten werden bereinigt, was sowohl das Korrigieren einzelner Werte, als auch das Entfernen überflüssiger Datensätze beinhaltet. Letzteres wird \emph{Instance Reduction} genannt. 
@@ -224,14 +216,14 @@ Für die BfArM-Daten sieht der Integrationsprozess konkret so aus:
     \centering
     \setlength{\fboxsep}{.02\linewidth}\color{black!20}\fbox{
     \includegraphics[width=.7\linewidth]{../img/data_preproc.png}}
-    \normalcolor\caption{"`Preprocessing Tasks"' aus \citep[Seite 4]{garcia2016big}}
+    \normalcolor\caption{"`Preprocessing Tasks"' aus \cite[Seite 4]{garcia2016big}}
 \end{figure}
 
 Die folgenden Unterabschnitte erklären die Vorverarbeitungsschritte für die BfArM-Daten und beziehen sich damit auf die in \ref{abweichungen} genannten Abweichungen. Die Schritte erfolgen in der gelisteten Reihenfolge. Obwohl die Daten nach dem CSV-Parsing schon in einer von der Programmiersprache abhängigen Struktur vorliegen, wird zur Erklärung trotzdem noch die Datei-Struktur verwendet.
 
 \subsection{Datennormalisierung}
 
-\subsubsection{6-Spalten-Umsteiger}
+\newpara{6-Spalten-Umsteiger}
 
 Sowohl die ICD-10-GM Versionen 2004 und 2.0, als auch die OPS Version 2.1 beinhalteten Umsteiger in folgendem Format:
 
@@ -239,7 +231,7 @@ Sowohl die ICD-10-GM Versionen 2004 und 2.0, als auch die OPS Version 2.1 beinha
 
 Um diese an das ICD-10-GM Format von 2024 anzupassen, werden die letzten beiden Spalten entfernt. 
 
-\subsubsection{OPS Umsteiger}
+\newpara{OPS Umsteiger}
 
 Für OPS Versionen ab 2010 sehen die Umsteiger-Einträge so aus:
 
@@ -247,7 +239,7 @@ Für OPS Versionen ab 2010 sehen die Umsteiger-Einträge so aus:
 
 Durch Entfernung der zweiten und vierten Spalte stimmen diese mit den ICD-10-GM Umsteiger Format von 2024 überein. 
 
-\subsubsection{OPS 6-Spalten-Umsteiger, altes Format}
+\newpara{OPS 6-Spalten-Umsteiger, altes Format}
 
 Die OPS Versionen 2009 bis 2006 hatten ebenfalls sechs Spalten für die Umsteiger, aber in einer anderen Reihenfolge:
 
@@ -255,7 +247,7 @@ Die OPS Versionen 2009 bis 2006 hatten ebenfalls sechs Spalten für die Umsteige
 
 Hier müssen also die dritte und vierte Spalte entfernt werden. 
 
-\subsubsection{OPS 5-Spalten-Umsteiger}
+\newpara{OPS 5-Spalten-Umsteiger}
 
 Die Umsteiger von OPS Version 2005 waren in einem ganz eigenen Format geschrieben:
 
@@ -278,25 +270,23 @@ Die zweite Spalte zeigt allein die Überleitbarkeit an. Für die Angleichung an 
 
 \subsection{Datenbereinigung}
 
-\subsubsection{KOMBI-Kode} Aus OPS Versionen 2.1 und 2.0 wird die erste Zeile der Kode-Datei entfernt, welche den KOMBI-Eintrag enthält. 
+\newpara{KOMBI-Kode} Aus OPS Versionen 2.1 und 2.0 wird die erste Zeile der Kode-Datei entfernt, welche den KOMBI-Eintrag enthält. 
 
- \subsubsection{None statt UNDEF} Für OPS Versionen 2009 bis 2004 wird der Kode-Wert \texttt{None} durch \texttt{UNDEF} ersetzt, sowohl in den Kodes-, als auch in den Umsteiger-Dateien. 
+\newpara{None statt UNDEF} Für OPS Versionen 2009 bis 2004 wird der Kode-Wert \texttt{None} durch \texttt{UNDEF} ersetzt, sowohl in den Kodes-, als auch in den Umsteiger-Dateien. 
 
-\subsubsection{Kreuz-Stern-System} Für die ICD-10-GM Versionen 2.0 und 1.3 werden die Zeichen \texttt{+}, \texttt{*} und \texttt{!} aus den Kode-Werten entfernt -- sowohl in der Kodes-, als auch der Umsteiger-Datei.
+\newpara{Kreuz-Stern-System} Für die ICD-10-GM Versionen 2.0 und 1.3 werden die Zeichen \texttt{+}, \texttt{*} und \texttt{!} aus den Kode-Werten entfernt -- sowohl in der Kodes-, als auch der Umsteiger-Datei.
 
-\subsubsection{Punkt-Strich-Notation} Für die ICD-10-GM Versionen 2004, 2.0 und 1.3 wird zuerst die Zeichenfolge \texttt{.-} aus den Kode-Werten in beiden Dateitypen entfernt. Danach wird nochmals \texttt{-} entfernt. Die Reihenfolge ist wichtig, weil in Version 2004 zum Beispiel Kodes \texttt{A00.-} und \texttt{G82.1-} vorkommen. 
+\newpara{Punkt-Strich-Notation} Für die ICD-10-GM Versionen 2004, 2.0 und 1.3 wird zuerst die Zeichenfolge \texttt{.-} aus den Kode-Werten in beiden Dateitypen entfernt. Danach wird nochmals \texttt{-} entfernt. Die Reihenfolge ist wichtig, weil in Version 2004 zum Beispiel Kodes \texttt{A00.-} und \texttt{G82.1-} vorkommen. 
 
 \subsection{Instanzreduktion}
  
-\subsubsection{Umsteiger}
+\newpara{Umsteiger}
 
 Für viele Versionen sind über 90\% der Umsteiger-Einträge automatische Überleitungen in den gleichen Kode. Diese müssen also gar nicht in eine Applikation aufgenommen werden, unter der Annahme, dass nicht vorhandene Umsteiger gleich automatische Überleitungen sind. In dem Fall können alle Umsteiger ausgeschlossen werden, bei denen der neue Kode gleich dem alten Kode ist und die automatische Überleitbarkeit in beide Richtungen gegeben ist. 
 
-\newpage
+\newpara{Nicht-endständige Umsteiger}
 
-\subsubsection{Nicht-endständige Umsteiger}
-
-Die Überleitung von ICD-10-GM Version 2.0 auf 1.3 ist der einzige Fall, in dem die Umsteiger-Datei nicht-endständige Kodes enthält. Durch das Entfernen der Sonderzeichen von Punkt-Strich-Notation und Kreuz-Stern-System gibt es außerdem doppelte Einträge in der ersten Spalte, das heißt bei den Kodes der Vorgänger-Version. Folgende Funktion\footnote{Der Pseudocode ist beschrieben in Struktogrammen nach \citep{nassishneid}. Die später vorkommenden Algorithmen zur Umsteiger-Suche enthalten viele Variablenzuweisungen, die abhängig von einer Bedingung sind und deren parallele Darstellung in Nassi-Shneidermann-Diagrammen übersichtlicher ist. Sie werden also im Sinne der Einheitlichkeit ebenfalls für den Algorithmus in diesem Abschnitt verwendet.}
+Die Überleitung von ICD-10-GM Version 2.0 auf 1.3 ist der einzige Fall, in dem die Umsteiger-Datei nicht-endständige Kodes enthält. Durch das Entfernen der Sonderzeichen von Punkt-Strich-Notation und Kreuz-Stern-System gibt es außerdem doppelte Einträge in der ersten Spalte, das heißt bei den Kodes der Vorgänger-Version. Folgende Funktion\footnote{Der Pseudocode ist beschrieben in Struktogrammen nach \cite{nassishneid}. Die später vorkommenden Algorithmen zur Umsteiger-Suche enthalten viele Variablenzuweisungen, die abhängig von einer Bedingung sind und deren parallele Darstellung in Nassi-Shneidermann-Diagrammen übersichtlicher ist. Sie werden also im Sinne der Einheitlichkeit ebenfalls für den Algorithmus in diesem Abschnitt verwendet.}
 entfernt die überflüssigen Einträge.
 
 Angenommen die Kodes befinden sich in einem Array mit Index von 0 bis (n-1), zum Beispiel für die ersten sechs Zeilen der Umsteiger-Datei aus ICD-10-GM, Überleitung 2.0 nach 1.3: 
@@ -316,7 +306,7 @@ Index & old (Alter Kode) & new (Neuer Kode) \\
 \end{tabular}
 \endgroup
 
-\paragraph*{RemoveNonTerminal} \
+\newpara{RemoveNonTerminal}
 
 Funktionsparameter:
 
@@ -338,6 +328,13 @@ Lokale Variablen:
   \newline Die Variable wird auf \$current gesetzt, wenn der Eintrag \emph{nicht} entfernt wird.
 \end{itemize}
 
+Anmerkungen:
+
+\begin{itemize}
+\item Die IF-Bedingung bezieht sich auf String-basierte Operationen; also contains: "`enthält"' als Sub-String und length: Anzahl der Zeichen im String.
+\item remove: Entfernt eine ganze Zeile. 
+\end{itemize}
+
 \begin{centernss}
 \small
 \begin{struktogramm}(120,84)
@@ -356,13 +353,6 @@ Lokale Variablen:
 \end{struktogramm}
 \end{centernss}
 
-Anmerkungen:
-
-\begin{itemize}
-\item Die IF-Bedingung bezieht sich auf String-basierte Operationen; also contains: "`enthält"' als Sub-String und length: Anzahl der Zeichen im String.
-\item remove: Entfernt eine ganze Zeile. 
-\end{itemize}
-
 Beispiel-Array nach Durchlaufen des Algorithmus:
 
 \begingroup
@@ -377,7 +367,7 @@ Index & old (Alter Kode) & new (Neuer Kode) \\
 \end{tabular}
 \endgroup
 
-\subsubsection{Nicht-endständige Kodes}
+\newpara{Nicht-endständige Kodes}
 
 Für die meisten Anwendungen sind eigentlich nur die endständigen Kodes relevant. Statt diese bei jeder Operation herauszufiltern, können beim einmaligen Einlesen der Daten auch einfach die nicht-endständigen Kodes ausgeschlossen werden. Zu diesem Zweck funktioniert der oben erklärte Algorithmus ebenfalls. 
 

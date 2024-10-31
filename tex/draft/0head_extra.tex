@@ -23,6 +23,10 @@
 
 \pgfplotsset{compat=1.18}
 
+\makeatletter
+\def\verbatim@font{\linespread{0.9}\normalfont\ttfamily}
+\makeatother
+
 % % % % % % % %
 % Environments
 % % % % % % % %
@@ -37,8 +41,8 @@
 
 \newenvironment{customIndentRight2}{
 
-\setlength{\leftskip}{1.0cm}
-\setlength{\rightskip}{1.0cm}}{
+\setlength{\leftskip}{0.5cm}
+\setlength{\rightskip}{0.5cm}}{
 
 \setlength{\leftskip}{0cm}
 \setlength{\rightskip}{0cm}}
@@ -54,26 +58,26 @@
 \newcommand{\heightNS}{8}
 
 \newcommand{\struktogrammA}[3]{
-\begin{centernss}
+\begin{center}
 \small
-\begin{struktogramm}(170,#1)[#2]
+\begin{struktogramm}(149,#1)[#2]
 #3
 \end{struktogramm}
-\end{centernss}
+\end{center}
 }
 
 \newcommand{\struktogrammAO}[2]{
-\begin{centernss}
+\begin{center}
 \small
-\begin{struktogramm}(170,#1)
+\begin{struktogramm}(149,#1)
 #2
 \end{struktogramm}
-\end{centernss}
+\end{center}
 }
 
 \newcommand{\struktkommentar}[1]{
 \begin{customIndentRight2}
-\small
+%\small
 #1
 \end{customIndentRight2}
 %\begin{centernss}
@@ -82,12 +86,15 @@
 %\end{centernss}
 }
 
-\newcommand{\abstandLinksDataInt}{
-16pt
-}
-
 \newcommand{\umsteigerTabelleInnenWeite}{
 .57\textwidth
+}
+
+\newcommand{\drawHookArrow}{
+\begin{tikzpicture}
+   \draw[->] (0,0) |- (16pt,-8pt);
+   \path[draw=white] (0,-8pt) -- (-16pt,-11pt);
+\end{tikzpicture}
 }
 
 \newcommand{\umsteigerTabelleCodeBreak}{
@@ -98,7 +105,9 @@
 }
 \newcommand{\umsteigerTabelleSonstiges}[1]{
 \begin{minipage}[t]{\umsteigerTabelleInnenWeite}%\vspace{-7pt}
-\begin{itemize}[leftmargin=*] #1 \end{itemize}
+%\begin{itemize}[leftmargin=*]
+#1
+%\end{itemize}
 \end{minipage}
 }
 
@@ -158,34 +167,27 @@
 & Sonstiges & \umsteigerTabelleSonstiges{#3}  \\ \cline{2-3}
 }
 
-\newcommand{\jsonBox}[2]{
-\begin{tcolorbox}[center,width=#1\textwidth,
-    colback=white,colframe=black,boxrule=.5pt]
-\texttt{#2}
-\end{tcolorbox}
-}
-
 \newcommand{\codeBox}[2]{
-\begin{tcolorbox}[center,width=#1\textwidth,
+\begin{tcolorbox}[center,width=#1\linewidth,
     colback=white,colframe=black,boxrule=.5pt]
-\texttt{#2}
+\texttt{\small #2}
 \end{tcolorbox}
 }
 
 \newcommand{\codeBoxL}[1]{
-\begin{tcolorbox}[width=.34\textwidth,
+\begin{tcolorbox}[width=.365\linewidth,
     colback=white,colframe=black,boxrule=.5pt]
-\texttt{#1}
+\texttt{\small #1}
 \end{tcolorbox}
 \vspace{-4pt}
 }
 
 \newcommand{\codeBoxLD}[2]{
-\begin{tcolorbox}[width=.34\textwidth,
+\begin{tcolorbox}[width=.365\linewidth,
     colback=white,colframe=black,boxrule=.5pt]
-\texttt{#1}
+\texttt{\small #1}
 \tcblower
-\texttt{#2}
+\texttt{\small #2}
 \end{tcolorbox}
 \vspace{-4pt}
 }
@@ -193,9 +195,9 @@
 \newcommand{\codeBoxDouble}[3]{
 \begin{tcolorbox}[center,width=#1\textwidth,
     colback=white,colframe=black,boxrule=.5pt]
-\texttt{#2}
+\texttt{\small #2}
 \tcblower
-\texttt{#3}
+\texttt{\small #3}
 \end{tcolorbox}
 }
 
