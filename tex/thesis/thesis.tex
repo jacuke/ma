@@ -26,7 +26,7 @@
 \UzLThesisSetup{
   Logo-Dateiname        = {uzl-thesis-logo-itcs.pdf},
   Verfasst              = {am}{Institut für Medizinische Informatik},
-  Titel auf Deutsch     = {Abbilden und Nutzen von versionsübergreifenden medizinischen Klassifikationen mittels FHIR ConceptMaps},
+  Titel auf Deutsch     = {Abbilden und Nutzen von Versionsübergreifenden Medizinischen Klassifikationen mittels FHIR ConceptMaps},
   Titel auf Englisch    = {Visualization and Mapping of Medical Classifications across Multiple Versions with FHIR ConceptMaps},
   Autor                 = {Simon Müller},
   Betreuer              = {Prof. Dr. Josef Ingenerf},
@@ -50,6 +50,8 @@
 \addbibresource{../draft/intro.bib}
 \addbibresource{../draft/data1.bib}
 \addbibresource{../draft/data2.bib}
+\addbibresource{../draft/tech.bib}
+\addbibresource{../draft/fin.bib}
 
 \begin{document}
 
@@ -59,14 +61,14 @@
 
 \chapter{BfArM-Daten} \input{../draft/data1_sub.tex}
 
-\chapter{Versionsübergreifende Umsteiger-Suche} \input{../draft/data2_sub.tex}
+\chapter{Umsteiger-Suche} \input{../draft/data2_sub.tex}
 
-\chapter{Web-Applikation}
+\chapter{Web-Applikation} \input{../draft/tech_sub.tex}
 
-\chapter{Zusammenfassung}
-\section{Ergebnisse}
-\section{Diskussion}
-\section{Ausblick}
+\chapter{Zusammenfassung} \input{../draft/fin_sub.tex}
+
+\newpage
+\input{../draft/uzl_hapi.tex}
 
 \appendix
 \chapter{Appendix}

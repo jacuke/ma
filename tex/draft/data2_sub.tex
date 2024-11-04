@@ -1,6 +1,11 @@
-Dieser Abschnitt behandelt die versionsübergreifende Suche nach Umsteigern. Es geht also zum einen darum zu bestimmen, ob ein bestimmter Kode einer bestimmten Version sich überhaupt verändert hat, sowie zum anderen darum, abhängig von einer Start- und Zielversion zu ermitteln, welche Überleitungen von Kodes möglich sind. Die hier aufgeführten Algorithmen sind unabhängig von einer konkreten Implementation verfasst. 
+Dieser Abschnitt behandelt die versionsübergreifende Suche nach Umsteigern.
+%Es geht also zum einen darum zu bestimmen, ob ein bestimmter Kode einer bestimmten Version sich überhaupt verändert hat, sowie zum anderen darum, abhängig von einer Start- und Zielversion zu ermitteln, welche Überleitungen von Kodes möglich sind.
+Es geht darum zu bestimmen, ob und wie ein bestimmter Kode in Betrachtung auf alle Versionen des Kodiersystems übergeleitet wurde. 
+Die hier aufgeführten Algorithmen sind unabhängig von einer konkreten Implementation verfasst. 
 
-§ Wichtig: 1 Umsteiger nur Veränderungen 2 Datenstrukturen
+{\color{blue} §TODO 1: Umsteiger nur Veränderungen}
+
+{\color{blue} §TODO 2: Datenstrukturen}
 
 \section{Allgemeine Funktionen}
 
@@ -155,7 +160,7 @@ M21.87 & M21.8 &  & A \\
 \end{tabular}
 \end{centernss}
 
-Anmerkung: Von Kode M21.8, Version 1.3. ausgehend gibt es noch wesentlich mehr Umsteiger, aber diese werden hier nicht gelistet, weil sind von M21.6, Version 2014 aus nicht erreichbar sind. 
+Anmerkung: Von Kode M21.8, Version 1.3. ausgehend gibt es noch wesentlich mehr Umsteiger, aber diese werden hier nicht gelistet, weil sie sind von M21.6, Version 2014 aus nicht erreichbar sind. 
 
 \begin{comment}
 
@@ -274,7 +279,7 @@ Die transitive Hülle wird in \cite[Seite 172]{gross2013handbook} wie folgt defi
 \begin{figure}[H]
     \centering
     \setlength{\fboxsep}{10pt}\color{black!20}\fbox{
-    \includegraphics[width=.85\linewidth]{../img/grapht1.png}}
+    \includegraphics[width=.95\linewidth]{../img/grapht1.png}}
     \normalcolor%\caption{aus \cite[Seite 172]{gross2013handbook}}
 \end{figure}
 
@@ -285,7 +290,7 @@ In \cite[Seite 172]{gross2013handbook} ist hierzu folgendes Beispiel dargestellt
 \begin{figure}[H]
     \centering
     \setlength{\fboxsep}{10pt}\color{black!20}\fbox{
-    \includegraphics[width=.85\linewidth]{../img/grapht2.png}}
+    \includegraphics[width=.95\linewidth]{../img/grapht2.png}}
     \normalcolor%\caption{aus \cite[Seite 172]{gross2013handbook}}
 \end{figure}
 
@@ -298,7 +303,7 @@ Ein intuitives Verfahren die transitive Hülle zu bestimmen wird in \cite[Seite 
 \begin{figure}[H]
     \centering
     \setlength{\fboxsep}{10pt}\color{black!20}\fbox{
-    \includegraphics[width=.55\linewidth]{../img/search.png}}
+    \includegraphics[width=.6\linewidth]{../img/search.png}}
     \normalcolor%\caption{aus \cite[Seite 200]{jakobsson1991mixed}}
     \vspace{-1em}
 \end{figure}
@@ -431,13 +436,13 @@ Lokale Variablen:
     \ifend
 }
 
-\struktkommentar{Die Umsteiger zwischen den Versionen im aktuellen Rekursionsschritt werden ermittelt. Falls es keine gibt --also keine, die eine Veränderung ausdrücken-- dann wird die Rekursion mit der nächsten Version fortgesetzt.}
+\struktkommentar{Die Umsteiger zwischen den Versionen im aktuellen Rekursionsschritt werden ermittelt. Falls es keine gibt --also keine, die eine Veränderung ausdrücken -- dann wird die Rekursion mit der nächsten Version fortgesetzt.}
 
 %\texttt{readData ('icd10gm', '2014', 'M21.4', 'kodes')} 
 
 \struktogrammAO{54}{
     \while[\heightNS]{FOREACH \$entry IN \$umsteiger}
-        \ifthenelse[10]{5}{1}{IF \$entry[ \$otherCode ] NOT 'UNDEF'}{Y}{}
+        \ifthenelse[10]{5}{1}{IF \$entry[ \$otherCode ] IS NOT 'UNDEF'}{Y}{}
             \assign[\heightNS]{\$recursion = searchHorizontalRecursion \newline (\$system, \$version, \$entry[ \$otherCode ], \$chronological)}
             \ifthenelse[10]{4}{1}{IF NOT empty(\$recursion)}{Y}{}
                 \assign[\heightNS]{\$entry[ 'recursion' ] = \$recursion}
@@ -559,6 +564,7 @@ entsprechend der Abbildung \ref{img-m21-6}.
 % Bei UNDEF: array_unshift($umsteiger_out, $find);
 
 \subsection{Vertikale Suche}
+\label{vert-search}
 
 Wie bereits erwähnt startet der Algorithmus der horizontalen Suche für jeden Kode bei Null. Gerade wenn die Umsteiger für alle Kodes einer Version -- beziehungsweise eines Kodiersystems-- gefunden werden sollen, ist diese Vorgehensweise nicht effizient. 
 
@@ -589,12 +595,14 @@ Die hier vorgestellte vertikale Suche nach Umsteigern entspricht nicht ganz Purd
 
 Zum Beispiel ist die topologische Sortierung aus Schritt zwei in der Anwendung der Suche nach Umsteigern nicht notwendig, weil die Versionen immer in einer bestimmte Richtung verglichen werden und die Kodes sich nur zwischen zwei Versionen ändern können. Die Daten sind also schon implizit topologisch sortiert. 
 
+§ Gleiche Kodes möglich
+
 Aber die vertikale Suche verwendet wesentlich zwei Besonderheiten von Purdoms Algorithmus, die in \cite[Seite 76f]{dar1993augmenting} hervorgehoben werden:
 
 \begin{figure}[H]
     \centering
     \setlength{\fboxsep}{10pt}\color{black!20}\fbox{
-    \includegraphics[width=.95\linewidth]{../img/purdom_r.png}}
+    \includegraphics[width=.99\linewidth]{../img/purdom_r.png}}
     \normalcolor%\caption{aus \cite[Seite 76f]{dar1993augmenting}}
 \end{figure}
 
@@ -615,6 +623,7 @@ Falls es Verzweigungen gibt, also es mehrere Umsteiger für einen Kode gibt, dan
     \centering\Huge%\sffamily
     \resizebox{.75\linewidth}{!}{\input{../dia/merge.tex}}
     \normalsize\caption{Graphische Veranschaulichung der zwei Besonderheiten von Purdoms Algorithmus, die in der vertikalen Suche zur Anwendung kommen.}
+    \label{merge-illustrated}
 \end{figure}
 
 Die gesamte Algorithmus für die vertikale Suche als Pseudocode:
@@ -646,7 +655,7 @@ Lokale Variable:
 
 \texttt{\$data +=} bedeutet, dass die assoziativen Datenstrukturen zusammengefasst werden. Wenn ein Key auf beiden Seiten der Addition existiert, wird der von der linken Seite für die Summe übernommen. Das kann allerdings hier bei den Versionen als Keys nicht passieren, weil jede Version nur einmal bearbeitet wird. 
 
-\newpara{searchVerticalSub}
+\newpara{searchVerticalSubroutine}
 
 Funktionsparameter:
 
@@ -660,13 +669,12 @@ Lokale Variablen:
 
 \begin{itemize}
 \item \texttt{\$data \hspace{3em}} Rückgabewert, initial: leer.
-\newline Eine zweidimensionale, assoziative Datenstruktur -- wird nur befüllt wenn \texttt{\$function} nicht gesetzt ist! Die erste Dimension hat als Keys alle Versionen außer der Zielversion. Die zweite Dimension hat als Keys die Kodes aller bisher verarbeiteten Umsteiger und als Values die Listen der Kodes, in die übergeleitet wird, inklusive Vereinigungen wie oben beschrieben. Das heißt im Gegensatz zur horizontalen Suche werden die Umsteiger als Key-Value Paare gespeichert: Kode der aktuellen Version $\Rightarrow$ Kode/s in die Vergleichsversion. Kodes ohne Umsteiger werden nicht aufgenommen.
-\item \texttt{\$merge}  \newline bla
-\item \texttt{\$version} \newline bla
-\item \texttt{\$otherVersion} \newline bla
+\newline Eine zweidimensionale, assoziative Datenstruktur -- wird nur befüllt wenn \texttt{\$function} nicht gesetzt ist! Die erste Dimension hat als Keys alle Versionen außer der Zielversion. {\color{blue} §TODO: Rest streichen?} Die zweite Dimension hat als Keys die Kodes aller bisher verarbeiteten Umsteiger und als Values die Listen der Kodes, in die übergeleitet wird, inklusive Vereinigungen wie oben beschrieben. Das heißt im Gegensatz zur horizontalen Suche werden die Umsteiger als Key-Value Paare gespeichert: Kode der aktuellen Version $\Rightarrow$ Kode/s in die Vergleichsversion. Kodes ohne Umsteiger werden nicht aufgenommen.
+\item \texttt{\$merge}  \newline Wie Abbildung \ref{merge-illustrated} {\color{blue} §TODO: Bei klarem Kopf data und merge neu schreiben.}
+\item \texttt{\$version}, \texttt{\$otherVersion} \newline Die aktuell zu verarbeitende Version und die nächstältere beziehungsweise -neuere Version. 
 \end{itemize}
 
-\struktogrammAO{100}{
+\struktogrammAO{105}{
     \assign[\heightNS]{\$version = \$targetVersion}
     \while[\heightNS]{WHILE TRUE}
         \assign[\heightNS]{\$otherVersion = \$version}
@@ -680,9 +688,9 @@ Lokale Variablen:
         \change
         \ifend
         \ifthenelse[10]{1}{1}{IF \$chronological}{Y}{N}
-            \assign[\heightNS]{\$merge = mergeUmsteiger \newline (\$system, \$chronological, \newline \$otherVersion, \$version, \$merge)}
+            \assign[\heightNS]{\$merge = mergeUmsteiger \newline (\$system, \$otherVersion, \newline \$chronological, \$merge)}
         \change
-            \assign[\heightNS]{\$merge = mergeUmsteiger \newline (\$system, \$chronological, \newline \$version, \$otherVersion, \$merge)}
+            \assign[\heightNS]{\$merge = mergeUmsteiger \newline (\$system, \$version, \newline \$chronological, \$merge)}
         \ifend
         \ifthenelse[10]{1}{1}{IF \$function}{Y}{N}
             \assign[\heightNS]{\$function \newline (\$merge, \$version, \$targetVersion)}
@@ -692,16 +700,16 @@ Lokale Variablen:
     \whileend
 }
 
-Q
+\struktkommentar{Die Schleife wird solange durchlaufen bis es keine weitere Version in der vorgegebenen Suchrichtung gibt. Pro Durchlauf wird die Variable \texttt{\$merge} wie oben beschrieben befüllt. Abhängig davon, ob die anonyme Funktion \texttt{\$function} definiert ist, wird diese entweder ausgeführt {\color{blue} §TODO: Verweis auf ConceptMap-Schreiben?} oder die Variable \texttt{\$data} für die Rückgabe befüllt.}
 
 \newpara{mergeUmsteiger}
 
 Funktionsparameter:
 
 \begin{itemize}
-\item \texttt{\$system}, \texttt{\$target}, \texttt{\$function}  \newline Wie searchVertical. 
-\item \texttt{\$chronological}
-\newline Bestimmt die Richtung, in der die Versionen abgearbeitet werden. TRUE: chronologisch vorwärts und FALSE: rückwärts. Die Reihenfolge ist wie erwähnt topologisch rückwärts, das heißt ausgehend von der Zielversion. 
+%\item \texttt{\$system}, \texttt{\$target}, \texttt{\$function}, \texttt{\$chronological} \newline Wie searchVerticalSubroutine.
+\item \texttt{\$system}, \texttt{\$version}, \texttt{\$chronological} \newline Wie ?  
+\item \texttt{\$merge} \newline Die vereinigten Umsteiger der bisher durchlaufenen Versionen. 
 \end{itemize}
 
 {\color{blue} §TODO: ab hier weitermachen}
@@ -711,41 +719,37 @@ Lokale Variable:
 \begin{itemize}
 \item \texttt{\$data} \hspace{2em} Rückgabewert, initial: leer.
 \newline Eine zweidimensionale, assoziative Datenstruktur -- wird nur befüllt wenn \texttt{\$function} nicht gesetzt ist. Die erste Dimension hat als Keys alle Versionen außer der Zielversion. Die zweite Dimension hat als Keys die Kodes der Version und als Value die Liste der zugehörigen Umsteiger, inklusive Vereinigung. Kodes ohne Umsteiger werden nicht aufgenommen.
-\item \texttt{\$merge} \newline bla, initial: leer.
 \item \texttt{\$version} \newline bla, initial = target.
 \end{itemize}
 
-
-
-\struktogrammAO{140}{
-    \assign[\heightNS]{umsteiger = [ ]}
-    \ifthenelse[10]{1}{1}{IF chronological}{TRUE}{FALSE}
-        \assign[\heightNS]{current = 'old'}
-        \assign[\heightNS]{other = 'new'}
+\struktogrammAO{90}{
+    \ifthenelse[10]{1}{1}{IF \$chronological}{Y}{N}
+        \assign[\heightNS]{\$current = 'old'}
+        \assign[\heightNS]{\$other = 'new'}
     \change
-        \assign[\heightNS]{current = 'new'}
-        \assign[\heightNS]{other = 'old'}
+        \assign[\heightNS]{\$current = 'new'}
+        \assign[\heightNS]{\$other = 'old'}
     \ifend
-    \assign[\heightNS]{data = readData(type, 'umsteiger', version, prev)}
-    \while[\heightNS]{FOREACH umst IN data}
-        \assign[\heightNS]{current\_code = umst[current]}
-        \assign[\heightNS]{other\_code = umst[other]}
-        \ifthenelse[16]{1}{1}{IF current\_code==='UNDEF' OR other\_code==='UNDEF'}{TRUE}{FALSE}
-            \assign[\heightNS]{undef = true}
+    \while[\heightNS]{FOREACH \$entry IN readData(\$system, \$version, '', 'umsteiger')}
+        \assign[\heightNS]{\$currentCode = \$entry[ \$current ]}
+        \assign[\heightNS]{\$otherCode = \$entry[ \$other ]}
+        \ifthenelse[18]{1}{1}{IF exists(\$merge[ \$otherCode]) AND NOT (\$currentCode IS 'UNDEF' OR \$otherCode IS 'UNDEF')}{Y}{N}
+            \assign[\heightNS]{\$umsteiger[ \$currentCode ] = \newline
+            concatenate(\$merge[ \$otherCode ], \newline \$umsteiger[ \$currentCode ] ?? [ ])}
         \change
-            \assign[\heightNS]{undef = false}
-        \ifend
-        \ifthenelse[16]{1}{1}{IF NOT undef AND isset(merge\_into[other\_code])}{TRUE}{FALSE}
-            \assign[\heightNS]{umsteiger[current\_code] =
-            array\_merge(merge\_into[other\_code], umsteiger[current\_code] ?? [])}
-        \change
-            \assign[\heightNS]{umsteiger[current\_code] = other\_code}
+            \assign[15]{\$umsteiger[ \$currentCode ] = \newline \$otherCode}
         \ifend
     \whileend
-    \return[\heightNS]{RETURN umsteiger + merge\_into}
+    \return[\heightNS]{RETURN \$umsteiger + \$merge}
 }
 
+Q
 
+\newpara{Konkretes Beispiel}
+
+Angenommen es soll ermittelt werden, wie der ICD-10-GM Kode G83.8 der Version 1.3. in die neueren Versionen übergeleitet wurde. 
+
+Der folgende Graph zeigt nur die hierfür relevanten Kodes der anderen Versionen. Bei der vertikalen Suche werden immer alle Kodes pro Version abgefragt. 
 
 \begin{figure}[H]
     \centering\Large%\sffamily
@@ -754,6 +758,26 @@ Lokale Variable:
     \label{vertical-example}
 \end{figure}
 
+Die Suche erfolgt topologisch rückwärts, dass heißt wenn die Suchrichtung chronologisch ist wie im aktuellen Beispiel, dann ist die Bearbeitungsreihenfolge chronologisch rückwärts. 
+
+Die Datenstruktur, welche die vereinigten Umsteiger enthält, wird schrittweise so aufgebaut:
+
+\texttt{'2018' $\Rightarrow$ [ 'G83.8' $\Rightarrow$ [ 'G83.6', 'G83.8' ] ]}
+
+\texttt{'2015' $\Rightarrow$ [ 'G83.8' $\Rightarrow$ [ 'G83.6', 'G83.8' ],} \newline
+\texttt{\hphantom{'2015' $\Rightarrow$ [} 'G83.80' $\Rightarrow$ [ 'G83.5' ],} \newline
+\texttt{\hphantom{'2015' $\Rightarrow$ [} 'G83.88' $\Rightarrow$ [ 'G83.6', 'G83.8' ] ]}
+
+Der erste Eintrag wird übernommen, der zweite kommt neu hinzu und für den dritten Eintrag wird G83.88 $\Rightarrow$ G83.8 entsprechend umgewandelt, weil es G83.8 schon gibt.
+
+\texttt{'2004' $\Rightarrow$ [ 'G83.8' $\Rightarrow$ [ 'G83.5', 'G83.6', 'G83.8' ],} \newline
+\texttt{\hphantom{'2015' $\Rightarrow$ [} 'G83.80' $\Rightarrow$ [ 'G83.5' ],} \newline
+\texttt{\hphantom{'2015' $\Rightarrow$ [} 'G83.88' $\Rightarrow$ [ 'G83.6', 'G83.8' ] ]}
+
+Ähnlich wie oben wird hier G83.8 $\Rightarrow$ [G83.80, G83.88] umgewandelt und dann aber der vorhandene Eintrag für G83.8 ersetzt. Das Übernehmen der unveränderten Einträge wird noch bis zur Version 1.3 fortgesetzt, so dass auf der fertigen Datenstruktur gilt:
+
+\texttt{\$data['1.3']['G83.8'] = [ 'G83.5', 'G83.6', 'G83.8' ]}
+
 \begin{comment}
 \begin{figure}[H]
     \centering
@@ -761,7 +785,6 @@ Lokale Variable:
     \includegraphics[width=.49\linewidth]{../img/purdom_g2b.png}
     \caption{aus \cite[Seite 78]{purdom1970transitive}}
 \end{figure}
-\end{comment}
 
 \begin{minipage}[t]{.5\textwidth}
 test1
@@ -797,7 +820,29 @@ Verwendung für ConceptMap
 Verwendung für Bestimmen ob ein Kodes Umsteiger haben für alle Kodes und Versionen
 
 
-\section{Schreiben der ConceptMap}
+\section{Schreiben der FHIR ConceptMap}
 
-Appendix XML \ref{conceptmap-example}
+When to stream? \cite{braaksma2014streaming}
+
+Verweis auf Intro.
+
+Die anonyme Funktion, die in der vertikalen Suche übergeben werden kann, dient zum Schreiben der FHIR ConceptMap. Jeder Aufruf der Funktion innerhalb des Algorithmus verfügt über die Daten, die zum Schreiben einer \texttt{group} an Umsteigern mit Start- und Zielversion benötigt werden. Konkret erhält die Funktion (wie in §Verweis) .  Zusätzlich wird allerdings noch die Information benötigt, welche Kodes insgesamt in der Startversion vorhanden sind, weil wie in (§Verweis) beschrieben die Liste der vereinigten Umsteiger immer auch Einträge aus vorher verarbeiteten Versionen enthalten durch die rückwärts topologische Vorgehensweise bedingt. Also zum Beispiel Kodes die in neueren Versionen erst hinzukommen. Außerdem wird über die beiden Informationen Umsteiger über die Versionen zwischen Start und Ziel sowie Kodes der Startversion die relationship bestimmt.
+
+Kode in Startversion;  Kode in Vereinigte Umsteiger; relationship
+vorhanden; Liste an Umsteigern; wider
+vorhanden; ein Umsteiger; related-to
+vorhanden; => UNDEF; unmapped
+vorhanden; nicht vorhanden; equivalent
+
+Ablauf
+
+\begin{enumerate}
+\item Anfang der ConceptMap schreiben (Parent Element, id, url)
+\item Vertikale Suche mit Funktion starten; Funktion schreibt jeweils eine Gruppe
+\item Ende der ConceptMap schreiben
+\end{enumerate}
+
+Außerdem erlaubt die Vorgehensweise mit der anonymen Funktion ein Streaming der Datei. Das heißt muss nicht erst komplett im Arbeitsspeicher erstellt werden. Selbst wenn Umsteiger von allen Versionen als Start auf alle Versionen als Ziel geschrieben werden soll, werden als Daten im Arbeitsspeicher nur maximal die Sammlung der vereinigten Umsteiger von Start zu Ziel (oder andersherum) 
+
+Appendix \ref{conceptmap-example} in XML.
 

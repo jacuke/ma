@@ -1,18 +1,177 @@
-Medizininformatik-Initiative
-\texttt{https://www.medizininformatik-initiative.de/de/start}
+\begin{comment}
+\bibitem{medinf-init}
+Medizininformatik-Initiative \newline
+\url{https://www.medizininformatik-initiative.de/de/start}
+% Der Druck andererseits ist groß, mit vorhandenen Versorgungsdaten (insb. in der Medizininformatik-Initiative (LINK), in der auch wir aktiv sind) für die Forschung zu arbeiten.
 
-Deutsches Forschungsdatenportal für Gesundheit
-\texttt{https://forschen-fuer-gesundheit.de}
+\bibitem{fdpg}
+Deutsches Forschungsdatenportal für Gesundheit \newline
+\url{https://forschen-fuer-gesundheit.de}
+% Hierzu gibt es eine Forschungsdaten für Gesundheits-Plattform (LINK), wo im großen Stil Daten aus sogenannten Datenintegrationszentren (DIZ) aus etwa 30 Universitätskliniken in Deutschland föderiert abgefragt werden. 
+\end{comment}
+
+Das Bundesinstitut für Arzneimittel und Medizinprodukte, kurz: BfArM, veröffentlicht jedes Jahr aktualisierte Versionen medizinischer Klassifikationen, wie zum Beispiel der Kodiersysteme ICD-10-GM und OPS. Diese Änderungen in den Kodes erschweren die versionsübergreifende Analyse klinischer Daten, wie sie beispielsweise vom Deutsches Forschungsdatenportal für Gesundheit \cite{medinf-init} zur Verfügung gestellt werden. Ein technischer Ansatz dieses Code-Mapping-Problem zu lösen wäre die Verwendung von \emph{ConceptMaps} aus dem FIHR Standards für den Austausch elektronischer Gesundheitsdaten.
 
 \section{Grundbegriffe}
 \subsection{Klassifikationen ICD-10-GM und OPS}
+
+\cite{gaus2005dokumentation}
+
+
 \subsection{FHIR ConceptMap}
 
 «HL7\textsuperscript{\textregistered} FHIR\textsuperscript{\textregistered} (im Folgenden "`FHIR"' genannt) ist der modernste Interoperabilitäts-Stan-\newline dard aus der Produktfamilie von Health Level 7 International (kurz: "`HL7"'), einer internationalen Standardisierungsorganisation für das Gesundheitswesen, die in der Vergangenheit schon viele erfolgreiche und weit verbreitet genutzte Standards, wie zum Beispiel HL7 Version 2 oder HL7 CDA (Clinical Document Architecture) hervorgebracht hat. [...] HL7 wurde 1987 gegründet, um Standards für klinische Informationssysteme zu erarbeiten. [...] FHIR ist die dritte Generation von Interoperabilitätsstandards aus der Feder von HL7. Die Entwicklung begann im Jahre 2011 als Reaktion auf die Forderungen aus der Industrie nach einer standardisierten Lösung für die Entwicklung webbasierter Applikationen für das Gesundheitswesen.» \cite{fhir-heckmann}
 
 "`Health Level 7 wurde 1987 gegründet, um Standards für klinische Informationssysteme zu erarbeiten. [...] FHIR ist die dritte Generation von Interoperabilitätsstandards aus der Feder von HLR7. Die Entwicklung begann im Jahre 2011 als Reaktion auf die Forderungen aus der Industrie nach einer standardistieren Lösung für die Entwicklung webbasierter Applikationen für das Gesundheitswesen."' \cite[Seite 309]{fhir-heckmann}
 
-FHIR \cite{braunstein2022health}
+FHIR \cite{braunstein2022health} HAPI, Ontoserver
+
+\begin{comment}
+2 Einfiihrung in HL7* FHIR®
+
+«Health Level 7* wurde 1987 gegriindet, um Standards fir klinische Informationssysteme
+zu erarbeiten, Der Name der Organisation nimmt Bezug auf die siebte Schicht (Applica-
+tion Layer) des ISO/OSI-Modells, und bringt damit zum Ausdruck, dass hier die Fest-
+legung von anwendungsbezogenen Inhalten und Prozessen im Vordergrund steht, nicht die
+Spezifikation von z. B. Ubertragungsprotokollen (HLT International, 2021).
+
+HL7 ist vom nationalen amerikanischen Normeninstitut (ANSI) seit 1994 akkreditiert.
+HLT verbundene, Organisationen, existieren inzwischen in tiber 40 Laindern. Die erste
+nationale Partnergesellschaft wurde 1993 in Deutschland gegriindet. Die Aufgabe dieser
+sogenannten ,,Affiliates* ist es, die Verbreitung und Implementierung der internationalen
+HL7-Standards in dem jeweiligen Land zu férdern und gegebenenfalls erforderliche An-
+passungen und Erweiterungen fiir deren Nutzung zu entwickeln, FHIR ist die dritte Gene-
+ration von Interoperabilititsstandards aus der Feder von HLT.
+
+Die Entwicklung began im Jahre 2011 als Reaktion auf die Forderungen aus der Indus-
+trie nach einer isierten Losung fiir die Entwi ikationen fiir
+das Gesundheitswesen. Der erste Entwurf der FHIR-Spezifikation stammt aus der Feder
+von Grahame Grieve (AUS), Ewout Kramer (NL) und Lloyd McKenzie (CAD). Erste sta-
+bile Versionen von FHIR wurden 2014 und 2015 mit dem Zusatz ,,DSTU* (Draft Standard
+for Trial Use) publiziert und bereits von der Industrie zur Implementierung genutzt. Ins-
+besondere die Version DSTU 2 wurde in den USA schnell aufgegriffen, obgleich der
+«»DSTU*-Zusatz. den nicht-normativen Status dieser Publikationen hervorhebt. 2017 wurde
+die dritte Version unter der Bezeichnung ,STU3" publiziert. Die vierte, 2018 veréffent-
+lichte Version ,,R4* enthiilt erstmals normative Inhalte, Die Entwicklung des Standards ist
+damit jedoch noch nicht abgeschlossen. Mit Hilfe eines ausgekliigelten Reifegradmodelles
+wird der Entwicklungsstand einzelner Teile der Spezifikation regelmiibig bewertet. Norma-
+tiven Status erhiilt ein Artefakt dann, wenn es geméi8 der Abstimmungsregein bei HL7
+ballotiert, umfassend getestet und von mindestens fiinf unabhiingigen Hersteller in mehr
+als einem Land unter produktiven Bedingungen implementiert wurde. Damit wird sicher-
+gestellt, dass nichts normativ (und damit als weitgehend unvertinderlich) deklariert wird,
+was nicht ausfiihrlich auf seine Nutzbarkeit unter Echtbedingungen hin getestet wurde.
+
+ 
+
+ 
+
+ 
+
+2.1 FHIR als webbasierter Standard
+
+> — Eine webbasierte Anwendung (kurz: Web App") funktioniert nach dem Client-
+Server-Modell. Im Gegensatz zu klassischen Desktopanwendungen werden Web
+Apps meist nicht lokal installiert, sondern tiber einen Browser ausgefiihrt und sind
+damit unabhiingig vom Betriebssystem (Thin Client). Die Datenverarbeitung fin-
+
+
+
+
+
+
+
+310 . Heckmann
+
+ 
+
+~ abgeschen von Datenvalidierungen zur Uberpriifung von Benutzereingaben ~
+vorzugsweise auf einem entfernten Webserver statt. Die Kommunikation zwischen
+Client und Server erfolgt tiber das HTTP-Protokoll
+
+Im Gegensatz zu ilteren HL7-Standards wie HL7 Version 2, einem ereignis-orientierten,
+nachrichtenbasierten Austauschformat, oder HL7 Version 3, einer abstrakten, modell-
+orientierten Spezifikation, bedient sich FHIR erstmals moderner webbasierter Techno-
+logien, die auch jenseits des Gesundheitswesens weit verbreitet und bei Entwicklern be-
+kannt und beliebt sind, FHIR legt den Fokus auf die query-getriebene Art der
+Kommunikation, die dazu dient, Anwendungen und Anwendern die bendtigten Daten zum
+bendtigten Zeitpunkt in adiquatem Umfang und Format zur Verfigung zu stellen, Daz
+bedient sich FHIR dem Representational State Transfer (kurz: ,REST“), einem Paradigma,
+das die Struktur und das Verhalten des Word Wide Webs abstrahiert und basierend auf den-
+selben Technologien und Grundlagen eine einheitliche Form der Kommunikation von ver-
+teilten Systemen und Webservices definiert. Die auszutauschenden Datenobjekte werden
+als ,Ressourcen bezeichnet, auf denen jeweils sogenannte CRUD“Interaktionen
+(create, read, update, delete) iiber die HTTP-Methoden GET, PUT, POST und DELETE
+ausgefithrt werden kénnen
+
+FHIR definiert auf dieser Grundlage etwa 150 verschiedene, im Gesundheitswesen re-
+evante, Objekttypen (im REST-Kontext als ,.Ressourcentypen" bezeichnet) und deren Be-
+zichungen untereinander (im REST-Kontext als ,.Links* bezeichnet) (Tab. 1),
+
+‘Zur Serialisierung der Ressourcen fir die Speicherung und Ubertragung erlaubt FHIR
+sowohl das JSON- als auch das XML-Format. Server-Applikationen sind angehalten,
+
+ 
+
+ 
+
+   
+
+ 
+
+ 
+
+Tab. 1 Beispicle fiir in FHIR definierte Ressourcentypen Quelle: HL7 International: FHIR Spezi-
+fikation Version 4.0.1.: Ressourcentypen. http:/hI7.org/fhir/resourcelist. html
+‘Name des
+
+ 
+
+ 
+
+ 
+
+ 
+
+Bereich
+Patient ‘Name, Geburisdatum, Adresse, Gesel ‘Administration
+Encounter Datum und Dauer des Aufenthaltes, aang it ‘Administration
+(stationiir/ambulant), verantwortliche Organisation, Ort
+(Station, Zimmer, Bettplatz)
+Condition Diagnose-Code (z. B. ICD-10), Diagnosedatum, Klinik
+
+  
+
+Schweregrad, Klinischer Status (gesichert/Verdacht)
+
+Observation Durchgefihrte Messung (zB. Klinisehe Chemie, Fieber, Diagnostik
+Puls, Blutdruck), Messergebnis, verwendetes Geri,
+Zeitpunkt der Messung, Normbereich
+
+ 
+
+Chargtiem erbrache Leising, Unfan, ZipunkVZsivaum, Anahi, | Abrechoung
+s, Zu-/Abschkig
+‘AuditEvent zion = Duco, ‘Art und Umfang des Zugriffes, | Sicherheit
+
+ 
+
+ire-Komponenten bzw. Benutzer
+ResearchSubject Nevtnupfong ces die,
+Zaire ee etinchos,zugewicocerStudicaaen, ets
+
+Einwilligungen
+
+    
+
+Forschung
+
+
+\end{comment}
+
+\begin{itemize}
+\item FHIR als Baukasten
+\item FHIR als Community-Standard
+\end{itemize}
 
 \newpara{REST}
 
@@ -60,6 +219,28 @@ ConceptMap & & & & \\
 \end{itemize}
 
 \section{Verwandte Arbeiten}
+
+Mappingqualität
+
+Medicats (ICD-10-GM Versionen)
+
+Beispiele für FHIR-Mappings
+
+UMLS
+
+Oncology -> SNOMED CT
+
+SNOMED als Interlingua
+
+
+
+% ??? https://medinform.jmir.org/2019/4/e14325
+% Vor Medicats?
+
+
+% !!! https://link.springer.com/article/10.1186/1472-6947-7-9
+
+
 \subsection{Normen für Mappings}
 
 Health Informatics, Terminology resource map quality measures (MapQual) \cite{ISO21564}
@@ -68,23 +249,36 @@ Health Informatics, Terminology resource map quality measures (MapQual) \cite{IS
 
 Health informatics -- Principles of mapping between terminological resources \cite{ISO12300}
 
+\begin{comment}
+\bibitem{WHO-FIC-Class}
+``WHO-FIC Classifications and Terminology Mapping -- Principles and Best Practice'' \newline
+\url{https://cdn.who.int/media/docs/default-source/classification/who-fic-network/whofic_terminology_mapping_guide.pdf?sfvrsn=2cae387c_7&download=true}
+
+^ Qualität
+\end{comment}
+
+
 \subsection{Medicats}
 
-\begin{comment}
-\bibitem{Medicats}
-Medicats Library \newline
-\url{https://github.com/hhund/medicats}
+Medical Classification and Terminology Systems in a Secondary Use Context: Challenges and Perils \cite{hund}
 
-\bibitem{Medicats Thesis}
-``Medical Classification and Terminology Systems in a Secondary Use Context: Challenges and Perils'' \newline
-\url{https://www.researchgate.net/publication/320962066_Medical_Classification_and_Terminology_Systems_in_a_Secondary_Use_Context_Challenges_and_Perils}
-\end{comment}
+Medicats \cite{medicats}
 
 \subsection{ConceptMap für UMLS}
 
+Building Interoperable FHIR-based Vocabulary Mapping Services:
+A Case Study of OHDSI Vocabularies and Mappings
+
 using multiple groups \cite{saripalle2019representing}
 
+instead? -- An Interoperable UMLS Terminology Service Using FHIR 
+
 \begin{comment}
+
+--------------
+
+UMLS
+
 \bibitem{UMLS FHIR}
 ``An Interoperable UMLS Terminology Service Using FHIR'' \newline
 \url{https://www.mdpi.com/1999-5903/12/11/199}
@@ -94,29 +288,84 @@ using multiple groups \cite{saripalle2019representing}
 ``Representing UMLS knowledge using FHIR Terminological Resources'' \newline
 \url{https://ieeexplore.ieee.org/abstract/document/8983305}
 % (wie vorher zu UMLS; siehe auch Anhang)
+
+--------------
+
+
+\bibitem{MENDS-on-FHIR}
+``MENDS-on-FHIR: Leveraging the OMOP common data model and FHIR standards for national chronic disease surveillance'' \newline
+\url{https://www.medrxiv.org/content/10.1101/2023.08.09.23293900v2}
+% (wie vorher zum Kontext OHDSI; siehe auch Anhang)
+
+
 \end{comment}
 
 \subsection{Interlingua SNOMED CT}
 
 SNOMED \cite{icd10-to-snomed}
 
+Probleme: 
+
+- Uneindeutig, med. Fachpersonal benötigt
+
+- Deutsche Version SNOMED CT
+
+- OPS
+
+- Wenn Mapping von ICD-10-GM auf SNOMED CT existiert, kann versionsübergreifendens Mapping für ICD-10-GM immer noch hilfreich sein. 
+
+
+
+%\begin{centernss}
+{
+\renewcommand{\arraystretch}{1.2}
+%\setlength{\tabcolsep}{12pt}
+\begin{tabular}{ll}
+%\uzlemph{Kode} & \uzlemph{Titel} \\
+Kode & Titel \\
+\hline
+203533003 & Peroneal spastic flat foot \\
+90374001 & Acquired spastic flat foot \\
+53226007 & Talipes planus \\
+44480001 & Acquired flexible flat foot \\
+203531001 & Hypermobile flat foot \\
+203534009 & Acquired pes planus \\
+203532008 & Rigid flat foot \\
+\end{tabular}
+}
+%\end{centernss}
+
+\begin{comment}
+M21.4
+Flat foot [pes planus] (acquired)
+
+Jaro-Winkler: Acquired pes planus 
+Smith Waterman Gotoh: Talipes planus
+\end{comment}
+
+
+
+
 \section{Aufbau \& Beiträge dieser Arbeit}
 
 
 
-
-
-
-
 %\subsection{SNOMED}
-%
-%WHO-FIC Classifications and Terminology Mapping -- Principles and Best Practice 
 
 
 \begin{comment}
-\bibitem{WHO-FIC-Class}
-``WHO-FIC Classifications and Terminology Mapping -- Principles and Best Practice'' \newline
-\url{https://cdn.who.int/media/docs/default-source/classification/who-fic-network/whofic_terminology_mapping_guide.pdf?sfvrsn=2cae387c_7&download=true}
+
+\bibitem{ICD-O SNOMED}
+``Mapping of ICD-O Tuples to OncoTree Codes Using SNOMED CT Post-Coordination'' \newline
+\url{https://pubmed.ncbi.nlm.nih.gov/35612082/}
+% (eigene Vorgehensweise im Kontext „ICD-O vs. SNOMED CT vs OncoTree“: realisiert u.a. über ConceptMaps)
+
+^ Ohlsen/Ingenerf
+
+
+
+
+
 
 \bibitem{SNOMED Browser}
 SNOMED CT Browser \newline
@@ -125,42 +374,58 @@ SNOMED CT Browser \newline
 % z.B. mit der Anfrage: ^ [referencedComponentId, mapTarget] 447562003 |ICD-10 complex map refset| {{M mapGroup=#1, mapTarget="J45.9"}}
 % => diese kann man interaktiv eingeben unter https://browser.ihtsdotools.org/ (oben rechts)
 
-\bibitem{CrowdHEALTH}
-``Interoperability Techniques in CrowdHEALTH project: The Terminology Service'' \newline
-\url{https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7085336/}
-% (eine weitere Anwendung)
+^ Mapping ICD-10 -> SNOMED CT
 
-\bibitem{ICD-10 to SNOMED CT}
-``Evaluation of an Automated Mapping from ICD-10 to SNOMED CT'' \newline
-\url{https://american-cse.org/csci2022-ieee/pdfs/CSCI2022-2lPzsUSRQukMlxf8K2x89I/202800b612/202800b612.pdf}
-% ODER: Man mappt die Klassen (unterhalb der Klassenebene) auf präzisere SNOMED CT-Codes (das sind mehrere, d.h. welchen nimmt man?) und garantiert so jahres- bzw. versionsübergreifende Auswertungen?
-
-\bibitem{OHDSI FHIR}
-``Building Interoperable FHIR-Based Vocabulary Mapping Services: A Case Study of OHDSI Vocabularies and Mappings'' \newline
-\url{https://ebooks.iospress.nl/doi/10.3233/978-1-61499-830-3-1327}
-% (Vorgehensweise im Kontext OHDSI, einem langjährigen Real-World-Evidence-Projekt, wo heterogene Daten auf ein Standard-Datenmodell (OMOP) inkl. Standard-Terminologie (Athena-Tool) gemappt wird.) 
-
-\bibitem{OHDSI Athena}
-OHDSI Athena \newline
-\url{https://cdn.who.int/media/docs/default-source/classification/who-fic-network/whofic_terminology_mapping_guide.pdf?sfvrsn=2cae387c_7&download=true}
-% Ein ganz anderer Ansatz wäre, die Klassifikations-Codes auf Terminologie-Codes (insb. SNOMED CT) zu mappen, um nochmal ganz anders vorzugehen. Ein ähnliches Vorgehen gibt es im OHDSI-Projekt, wo ein interessantes Terminologie-Tool „Athena“ (LINK) verwendet wird.
-
-\bibitem{SNOMED-FHIR}
-``SNOMED CT -- FHIR ConceptMap Translate'' \newline
-\url{https://github.com/IHTSDO/snowstorm/blob/master/docs/fhir-resources/concept-map.md}
-% (SNOMED CT verwendet natürlich selber ConceptMaps)
-
-=> IHTSDO / Snowstorm
 
 \bibitem{I-MAGIC}
 ``I-MAGIC: SNOMED CT to ICD-10-CM Map'' \newline
 \url{https://www.nlm.nih.gov/research/umls/mapping_projects/snomedct_to_icd10cm.html}
 % (I-MAGIC-Tool für ein differenziertes Mapping von Problems/SNOMED CT nach ICD-10)
 
-\bibitem{MAGPIE}
-``MAGPIE: Map Assisted Generation of Procedure and Intervention Encoding'' \newline
-\url{https://magpie.nlm.nih.gov/demo}
-% (MAGPIE-Tool für ein Mapping von Prozeduren zum amerikanischen ICD-9-CM bzw. ICD-10-PCS)
+^ Mapping SNOMED CT -> ICD-10
+
+
+
+
+\bibitem{ICD-10 to SNOMED CT}
+``Evaluation of an Automated Mapping from ICD-10 to SNOMED CT'' \newline
+\url{https://american-cse.org/csci2022-ieee/pdfs/CSCI2022-2lPzsUSRQukMlxf8K2x89I/202800b612/202800b612.pdf}
+% ODER: Man mappt die Klassen (unterhalb der Klassenebene) auf präzisere SNOMED CT-Codes (das sind mehrere, d.h. welchen nimmt man?) und garantiert so jahres- bzw. versionsübergreifende Auswertungen?
+
+^ Problem beim automatisierten Mapping
+
+
+
+\bibitem{SNOMED-FHIR}
+``SNOMED CT -- FHIR ConceptMap Translate'' \newline
+\url{https://github.com/IHTSDO/snowstorm/blob/master/docs/fhir-resources/concept-map.md}
+% (SNOMED CT verwendet natürlich selber ConceptMaps)
+=> IHTSDO / Snowstorm
+
+??????????????? 
+
+
+
+
+
+
+\bibitem{OHDSI FHIR}
+``Building Interoperable FHIR-Based Vocabulary Mapping Services: A Case Study of OHDSI Vocabularies and Mappings'' \newline
+\url{https://ebooks.iospress.nl/doi/10.3233/978-1-61499-830-3-1327}
+% (Vorgehensweise im Kontext OHDSI, einem langjährigen Real-World-Evidence-Projekt, wo heterogene Daten auf ein Standard-Datenmodell (OMOP) inkl. Standard-Terminologie (Athena-Tool) gemappt wird.) 
+
+=> Referenz
+
+\bibitem{OHDSI Athena}
+OHDSI Athena \newline
+\url{https://cdn.who.int/media/docs/default-source/classification/who-fic-network/whofic_terminology_mapping_guide.pdf?sfvrsn=2cae387c_7&download=true}
+% Ein ganz anderer Ansatz wäre, die Klassifikations-Codes auf Terminologie-Codes (insb. SNOMED CT) zu mappen, um nochmal ganz anders vorzugehen. Ein ähnliches Vorgehen gibt es im OHDSI-Projekt, wo ein interessantes Terminologie-Tool „Athena“ (LINK) verwendet wird.
+
+
+
+
+
+
 
 % Das Problem mit den obigen Beispielen (die technisch durchaus die FHIR ConceptMap-Ressource benutzen) ist, dass es um Mappings zwischen Codes von verschiedenen CodeSystemen geht, insb. unter Beteiligung von SNOMED CT. Es gibt wenig Publikationen und Informationen zum Mapping zwischen Versionen von Klassifikationen, d.h. von ICD-10-GM-2024 ó ICD-10-GM-2023 ó ICD-10-GM-2022 ó usw. (und das Ganze auch für OPS und ATC).
 
@@ -175,10 +440,38 @@ OHDSI Athena \newline
 \renewcommand{\section}[2]{}
 \begin{thebibliography}{99}
 
-\bibitem{fhir-term}
-FHIR Terminology Module \newline
-\url{https://build.fhir.org/terminology-module.html}
-%https://www.youtube.com/watch?v=Hd8A_gBnpzk
+-------------
+
++-----+
+| IGN |
++-----+
+
+\bibitem{ICD-10-GM}
+ICD-10-GM Kodiersystem \newline
+\url{https://www.bfarm.de/DE/Kodiersysteme/Klassifikationen/ICD/ICD-10-GM/_node.html}
+
+\bibitem{CrowdHEALTH}
+``Interoperability Techniques in CrowdHEALTH project: The Terminology Service'' \newline
+\url{https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7085336/}
+% (eine weitere Anwendung)
+
+\bibitem{i2b2}
+``i2b2 implemented over SMART-on-FHIR'' \newline
+\url{https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5961782/}
+% (eine weitere Anwendung)
+
++----+
+| NO |
++----+
+
+\bibitem{8-Steps}
+``8 Steps to Success in ICD-10-CM/PCS Mapping: Best Practices to Establish Precise Mapping Between Old and New ICD Code Sets'' \newline
+\url{https://library.ahima.org/doc?oid=106975} \newline
+\url{https://pubmed.ncbi.nlm.nih.gov/22741510/}
+
+\bibitem{ICD-8-9-10}
+``Mapping three versions of the international classification of diseases to categories of chronic conditions '' \newline
+\url{https://pubmed.ncbi.nlm.nih.gov/34007901/}
 
 \bibitem{fhir-concept}
 FHIR ConceptMap2 \newline
@@ -188,48 +481,15 @@ FHIR ConceptMap2 \newline
 Mulesoft FHIR R4 ConceptMap Library \newline
 \url{https://anypoint.mulesoft.com/exchange/org.mule.examples/fhir-r4-conceptmap-library/}
 
-\bibitem{medinf-init}
-Medizininformatik-Initiative \newline
-\url{https://www.medizininformatik-initiative.de/de/start}
-% Der Druck andererseits ist groß, mit vorhandenen Versorgungsdaten (insb. in der Medizininformatik-Initiative (LINK), in der auch wir aktiv sind) für die Forschung zu arbeiten.
+\bibitem{fhir-term}
+FHIR Terminology Module \newline
+\url{https://build.fhir.org/terminology-module.html}
+%https://www.youtube.com/watch?v=Hd8A_gBnpzk
 
-\bibitem{fdpg}
-Deutsches Forschungsdatenportal für Gesundheit \newline
-\url{https://forschen-fuer-gesundheit.de}
-% Hierzu gibt es eine Forschungsdaten für Gesundheits-Plattform (LINK), wo im großen Stil Daten aus sogenannten Datenintegrationszentren (DIZ) aus etwa 30 Universitätskliniken in Deutschland föderiert abgefragt werden. 
-
-\bibitem{ICD-10-GM}
-ICD-10-GM Kodiersystem \newline
-\url{https://www.bfarm.de/DE/Kodiersysteme/Klassifikationen/ICD/ICD-10-GM/_node.html}
-
--------------
-
-\bibitem{MENDS-on-FHIR}
-``MENDS-on-FHIR: Leveraging the OMOP common data model and FHIR standards for national chronic disease surveillance'' \newline
-\url{https://www.medrxiv.org/content/10.1101/2023.08.09.23293900v2}
-% (wie vorher zum Kontext OHDSI; siehe auch Anhang)
-
-\bibitem{ICD-O SNOMED}
-``Mapping of ICD-O Tuples to OncoTree Codes Using SNOMED CT Post-Coordination'' \newline
-\url{https://pubmed.ncbi.nlm.nih.gov/35612082/}
-% (eigene Vorgehensweise im Kontext „ICD-O vs. SNOMED CT vs OncoTree“: realisiert u.a. über ConceptMaps)
-
-\bibitem{i2b2}
-``i2b2 implemented over SMART-on-FHIR'' \newline
-\url{https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5961782/}
-% (eine weitere Anwendung)
-
-\bibitem{8-Steps}
-``8 Steps to Success in ICD-10-CM/PCS Mapping: Best Practices to Establish Precise Mapping Between Old and New ICD Code Sets'' \newline
-\url{https://library.ahima.org/doc?oid=106975} \newline
-\url{https://pubmed.ncbi.nlm.nih.gov/22741510/}
-
-
-\bibitem{ICD-8-9-10}
-``Mapping three versions of the international classification of diseases to categories of chronic conditions '' \newline
-\url{https://pubmed.ncbi.nlm.nih.gov/34007901/}
-
-
+\bibitem{MAGPIE}
+``MAGPIE: Map Assisted Generation of Procedure and Intervention Encoding'' \newline
+\url{https://magpie.nlm.nih.gov/demo}
+% (MAGPIE-Tool für ein Mapping von Prozeduren zum amerikanischen ICD-9-CM bzw. ICD-10-PCS)
 
 \end{thebibliography}
 \endgroup
@@ -307,5 +567,166 @@ Klasse zugeteilt. Eine Klassifikation ist einfach und praktisch. Sie ist sozusag
 liche Ordnungsprinzip“.
 \end{customIndentRight}
 \end{comment}
+
+
+\section{Quali}
+
+WHO-FIC Classifications and Terminology Mapping
+
+Principles
+
+\begin{enumerate}
+\item Establish use case(s) before developing the map
+\item Clearly define the purpose, scope, and directionality of the map.
+\item Maps should be unidirectional and single purposed. Separate maps should be
+maintained for bidirectional maps (to support both a forward and a backward
+map table). Such unidirectional maps can be handy to support data continuity for
+epidemiological and longitudinal studies. Maps should not be reversed.
+\item Develop clear and transparent documentation that is freely available to all and
+describes the purpose, scope, limitations, and methodology of the map.
+\item Ideally, the producers of both terminologies in any map participate in the
+mapping effort to ensure that the result accurately reflects their terminologies'
+meaning and usage. At a minimum, both terminology producers should define
+the primary purpose and parameters of the mapping task, review and verify the
+map, develop the plan for testing and validation, and devise a cost-effective
+strategy for building, maintaining, and enhancing the map over time.
+\item Map developers should agree on team members' competencies, knowledge, and
+skills at the project's onset. Ideally, users of the map also participate in its design
+and testing to ensure that it fits its intended purpose.
+\item Quality Assurance (QA) and Usage Validation: QA and usage validation is
+ensuring the reproducibility, traceability, usability and comparability of the maps.
+Establish the QA and usage validation protocols at the beginning of the project
+and apply them throughout the mapping process. Factors that may be involved
+in quality assurance include quality-assurance rules, testing (test protocols, pilot
+testing), and quality metrics (such as computational metrics or precisely defined
+cardinality, equivalence, and conditionality). Usage validation of maps is an
+independent process involving users of the maps (not developer of the maps) in
+order to determine whether the maps are fit for purpose (e.g. do the end users
+reach to the correct code in the target terminology when using manual and
+automated maps etc.). Usage validation is essential to ensure the integrity of the
+information from source data to the final coding. Key principles for usage
+validation of maps include:
+\begin{enumerate}
+\item use of the ground truth of the original source data1 (e.g. diagnosis as
+written in the medical record) as the reference point;
+\item compare the original source data with the end results of the following two
+processes
+\newline i. Coding of original source data with a source terminology – map
+code(s) of source terminology to code(s) of target terminology
+\newline ii. Coding of original source data with target terminology
+\item statistically significant sample size that is representative of the target
+terminology and its prototypical use case settings.
+\item Usage validation of automated maps should always include human (i.e.
+manual) validation
+\end{enumerate}
+Clear documentation of the QA process and validation procedures is essential
+in this step in the mapping process.
+If conducting a pilot test is feasible, it will improve the QA/validation process.
+Mapping is an iterative process that will improve overtime as it is used in real
+settings.
+
+\item Dissemination: Upon publication and release, include information about release
+mechanisms, release cycle, versioning, source/target information, licence
+agreement requirements, and a feedback mechanism for users. Dissemination of
+maps should also include documentation, as stated above, describing the
+purpose, scope, limitations, and methodology used to create the maps.
+\item Maintenance: establish an ongoing maintenance mechanism, release cycle, types
+and drivers of changes, and versioning of maps. The maintenance phase should
+include an outline of the overall lifecycle plan for the map, open transparent
+resolution mechanism for mapping problems, continuous improvement process,
+and decision process around when an update is required. Whenever maps are
+updated, the cycle of QA and validation must be repeated.
+\item When conducting mapping manually, it is recommended to provide map
+specialists with the necessary tools and documentation to drive consistency when
+building the map. These include such items as the tooling environment (workflow
+details and resources related to both source and target schemes); source and
+target browsers, if available; technical specifications (use case, scope, definitions);
+editorial mapping principles or rules to ensure consistency of the maps,
+particularly where human judgement is required; and implementation guidance.
+Additionally, it is best practice to provide an environment that supports dual
+independent authoring of maps as this is thought to reduce bias between human
+map specialists. Developing a consensus management process to aid in resolving
+discrepancies and complex issues is also beneficial.
+\item In computational mapping, it is advisable to include resources to ensure
+consistency when building a map using a computational approach, including a
+description of the tooling environment, when human intervention would occur,
+documentation (e.g. the rules used in computerized algorithms), and
+implementation guidance. It is also advisable to always compute the accuracy
+and error rate of the maps. It is also essential to manually verify and validate the
+computer-generated mapping lists. Such manual checking is necessary for the
+quality assurance process, as maps generated automatically will almost always
+contain errors. Such manually verified maps can also help train the machine-
+learning model when maps for different sections of terminologies are being
+generated sequentially.
+\item Cardinality is a metric in mapping that must be clearly defined regarding what is
+being linked between source and target and how the cardinalities are counted.
+For example, SNOMED CT codes for functional impairments are semantically
+different from ICF codes. A 1:1 map between the two does not mean semantic
+equivalence. In terms of counting, what SNOMED International considers to be a
+1:1 map includes what others may consider being a 1:many map.
+\item Level of equivalence, such as broader, narrower, or overlap, should be specified.
+\item Maps must be machine-readable to optimize their utility2.
+\item ICD-11: When creating maps using ICD-11 and other WHO systems, mapping
+into the Foundation Component comes first, then maps to MMS could created
+through linearization aggregation2
+\end{enumerate}
+
+ISO/TR 12300
+
+Prinzipien:
+
+\begin{enumerate}
+\item Each map should have a (preferably single) declared purpose
+\item Scenarios are developed and articulated to define the requirements for the map table
+\item The map table should be in a machine processable format
+\item Identify each version of each terminological resource as a version of the Map Table
+\item Members of the project team should have knowledge of both of the terminological
+resource and experience in their practical application
+\item Establish the extent to which the conventions and rules of each terminological resource
+will be followed
+\item Custodians of terminological resources should be involved in mapping projects
+\item The automated and manual methods applied should be transparent and documented
+\item Every map should describe the direction of the map
+\item Cardinality of each individual map should be clearly specified
+\item Any loss or gain of meaning should be made explicit and risk assessed \newline
+All maps should demonstrate the degree of equivalence
+\item All mapping projects should make explicit the guidelines and heuristics applied in
+developing and interpreting the maps when implemented
+\item Documentation supporting the map should describe the map data structures, distribution
+format and licensing arrangements
+\item Every mapping project should have a quality assurance plan which includes testing and
+validation
+\item Every mapping project should have a consensus management process
+\item Maps should be maintained and routinely updated during their lifespan
+\item Every map should have a maintenance and evaluation plan, which includes the
+mechanisms for version control
+\item Maps should have continuing improvement processes
+\item Every map should have supporting documentation to assist implementation and use
+\item Map development and maintenance is best managed through a team
+\end{enumerate}
+
+ISO 21564
+
+Determinants of map quality
+
+\begin{enumerate}
+\item Common categorical structure (ja)
+\item Shared semantic domain (ja)
+\item Language and Translation (keine Übersetzung)
+\item Equivalence Identification / Publication (ja)
+\item Equivalence Assessment (abweichungen zw. source und target)
+\item Map Set Outliers
+\item Clear documentation of the purpose of the map
+\item Currency of the map (zeitliche Nähe)
+\item Business Arrangements
+\item Methodology Documentation
+\item Percentage of map validated
+\item Method of validation
+\item Decision making (klare Prozesse)
+\item Tools used to develop or maintain the map (ja)
+\item Workforce
+\item Governance (Entscheidungen)
+\item Map Maintenance
+\end{enumerate}
 
 
