@@ -51,6 +51,17 @@
 % Commands
 % % % % % % % %
 
+\newcommand{\quoteBox}[1]{
+\begin{centernss}
+\setlength{\fboxsep}{.017\linewidth}\color{black!20}\fbox{
+\normalcolor\begin{minipage}[t]{.9\linewidth}
+\small #1
+\end{minipage}
+}
+\normalcolor
+\end{centernss}
+}
+
 \newcommand{\bfarmer}{
 \textbf{\texttt{bfarmer}}
 }

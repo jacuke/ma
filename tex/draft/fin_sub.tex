@@ -6,6 +6,8 @@
 
 \subsection{Patienten-DB}
 
+FHIR ConceptMap curl \cite{curl}
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=.8\linewidth]{../img/patients_screenshot.png}
@@ -29,11 +31,39 @@ Integration:
 
 \subsection{Mapping Quality}
 
+Beurteilung der generierten ConceptMaps anhand der Qualitätsstandards aus Abschnitt \ref{quali-map}:
+
+
+
 \section{Zusammenfassung}
 
 \section{Ausblick}
 
-\subsection{RESTful (nach außen und innen / mehr AJAX)}
+Folgende Weiterentwicklungen sind sinnvoll.
+
+\subsection{RESTful}
+
+Die Web-Applikation sollte nicht nur teilweise, sondern komplett dem REST-Paradigma entsprechen, wie in Abschnitt \ref{rest-paradigm} aufgeführt. 
+
+Das bedeutet alle Informationen des Servers durch Schnittstellen bereitzustellen: 
+
+\begin{itemize}
+\item Kodes als FHIR Code System
+\item Umsteiger pro Version im JSON-Format, AJAX für Übersichtseite
+\item Ergebnis der horizontalen Suche im JSON-Format
+\item ConceptMap ohne Formular
+\end{itemize}
+
+Außerdem sollten die Schnittstellen dokumentiert sein über Swagger UI \cite{swagger}.
+
+Bei einem wirklich produktiv eingesetzten System wäre es zudem sinnvoll folgende Dinge zu cachen:
+
+\begin{itemize}
+\item Umsteiger-Ergebnisse
+\item ConceptMaps
+\end{itemize}
+
+Das würde allerdings sehr viel mehr an Speicherplatz benötigen. 
 
 \subsection{ATC}
 
@@ -42,6 +72,4 @@ ATC \cite[ATC-Klassifikation]{bfarmatc}
 PDF \cite{poppler}
 
 \subsection{Sessions}
-
-\subsection{Caching}
 
