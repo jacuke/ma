@@ -10,12 +10,12 @@ Deutsches Forschungsdatenportal für Gesundheit \newline
 % Hierzu gibt es eine Forschungsdaten für Gesundheits-Plattform (LINK), wo im großen Stil Daten aus sogenannten Datenintegrationszentren (DIZ) aus etwa 30 Universitätskliniken in Deutschland föderiert abgefragt werden. 
 \end{comment}
 
-Das Bundesinstitut für Arzneimittel und Medizinprodukte, kurz: BfArM, veröffentlicht jedes Jahr aktualisierte Versionen medizinischer Klassifikationen, wie zum Beispiel der Kodiersysteme ICD-10-GM und OPS. Diese Änderungen in den Kodes erschweren die versionsübergreifende Analyse klinischer Daten, wie sie beispielsweise vom Deutsches Forschungsdatenportal für Gesundheit \cite{medinf-init} zur Verfügung gestellt werden. Ein technischer Ansatz dieses Code-Mapping-Problem zu lösen wäre die Verwendung von \emph{ConceptMaps} aus dem FIHR Standards für den Austausch elektronischer Gesundheitsdaten.
+Das Bundesinstitut für Arzneimittel und Medizinprodukte, kurz: BfArM, veröffentlicht jedes Jahr aktualisierte Versionen medizinischer Klassifikationen, wie zum Beispiel der Kodiersysteme ICD-10-GM und OPS. Die jährlichen Veröffentlichungen enthalten Überleitungstabellen von der neuen Version auf die jeweilige Vorgängerversion. Diese Änderungen in den Kodes erschweren die versionsübergreifende Analyse klinischer Daten, wie sie beispielsweise vom Deutsches Forschungsdatenportal für Gesundheit \cite{medinf-init} zur Verfügung gestellt werden. Ein technischer Ansatz das Code-Mapping-Problem zu lösen wäre die Verwendung von \emph{ConceptMaps} aus dem FIHR Standards für den Austausch elektronischer Gesundheitsdaten.
 
 \section{Grundbegriffe}
 \subsection{Klassifikationen ICD-10-GM und OPS}
 
-Diese Arbeit bezieht sich auf die Systematischen Verzeichnisse von ICD-10-GM und OPS, das heißt der nach dem Kode strukturierten Veröffentlichungen dieser Kodiersysteme. 
+Diese Arbeit bezieht sich auf die Systematischen Verzeichnisse von ICD-10-GM und OPS, das heißt der nach dem Kode strukturierten Veröffentlichungen der Kodiersysteme. 
 
 \newpara{ICD-10-GM}
 
@@ -142,10 +142,11 @@ Die Autorin hebt außerdem folgende Eigenschaften hervor:
 
 \begin{itemize}
 \item "`FHIR als Baukasten"': Standards und Leitfäden in FHIR sind selbst Ressourcen. Sie können erweitert und für verschiedene Zwecke eingesetzt werden. 
-\item "`FHIR als Community-Standard"': Die FHIR-Spezifikation ist frei verfügbar und wird von einer Community entwickelt, statt von einem geschlossenen Gremium. 
+\item "`FHIR als Community-Standard"': Die FHIR-Spezifikation ist frei verfügbar und wird gemeinschaftlich entwickelt, statt von einem geschlossenen Gremium. 
 \end{itemize}
 
-Die am meisten verbreitetsten Implementationen von FHIR sind die als freie Software lizenzierte API-Server \emph{HAPI}, sowie der proprietäre Terminologie-Server \emph{Ontoserver}, welcher unter anderem im australischen Gesundheitssystem eingesetzt wird. Für mehr dazu siehe \cite{braunstein2022health}. 
+Die am meisten verbreitetsten Implementationen von FHIR sind der als freie Software lizenzierte API-Server \emph{HAPI}, sowie der proprietäre Terminologie-Server \emph{Ontoserver}, welcher unter anderem im australischen Gesundheitssystem eingesetzt wird. %Für mehr dazu siehe 
+\cite{braunstein2022health}
 
 \begin{comment}
 «HL7\textsuperscript{\textregistered} FHIR\textsuperscript{\textregistered} (im Folgenden "`FHIR"' genannt) ist der modernste Interoperabilitäts-Stan-\newline dard aus der Produktfamilie von Health Level 7 International (kurz: "`HL7"'), einer internationalen Standardisierungsorganisation für das Gesundheitswesen, die in der Vergangenheit schon viele erfolgreiche und weit verbreitet genutzte Standards, wie zum Beispiel HL7 Version 2 oder HL7 CDA (Clinical Document Architecture) hervorgebracht hat. [...] HL7 wurde 1987 gegründet, um Standards für klinische Informationssysteme zu erarbeiten. [...] FHIR ist die dritte Generation von Interoperabilitätsstandards aus der Feder von HL7. Die Entwicklung begann im Jahre 2011 als Reaktion auf die Forderungen aus der Industrie nach einer standardisierten Lösung für die Entwicklung webbasierter Applikationen für das Gesundheitswesen.» \cite{fhir-heckmann}
@@ -299,29 +300,29 @@ Forschung
 \newpara{REST}
 \label{rest-paradigm}
 
-Representational State Transfer ist --wie oben erwähnt-- ein Paradigma für die Softwarearchitektur von verteilten System, welches erstmals in \cite{rest-fielding} dargelegt wurde. Es besteht aus sechs Einschränkungen: 
+Representational State Transfer ist --wie oben erwähnt-- ein Paradigma für die Softwarearchitektur von verteilten System, welches erstmals in \cite{rest-fielding} dargelegt wurde. Es besteht aus sechs Bedingungen: 
 
 \begin{enumerate}
-\item Kommunikation per Client-Server-Modell
-\item Zustandslosigkeit: Jede Nachricht zwischen Client und Server muss alle Informationen enthalten, die zum Verständnis der Nachricht benötigt werden. 
-\item Erhöhung der Effizient durch Einsatz von Caching
+\item Kommunikation per Client-Server-Modell.
+\item Zustandslosigkeit: Jede Nachricht zwischen Client und Server muss alle Information enthalten, die zum Verständnis der Nachricht benötigt wird. 
+\item Erhöhung der Effizienz durch Einsatz von Caching.
 \item Einheitliche Schnittstellen: 
 \begin{enumerate}
-\item Jede Ressource wird durch eine URL identifiziert
-\item Ressourcen werden verändert durch Repräsentationen, zum Beispiel strukturierte Dateiformate
-\item Die Inhalte der Nachrichten sind selbstbeschreibend
-\item Informationen werden vom Anwendungsserver dynamisch bereitgestellt über Hypermedien wie HTTP
+\item Jede Ressource wird durch eine URL identifiziert.
+\item Ressourcen werden verändert durch Repräsentationen, zum Beispiel strukturierte Dateiformate.
+\item Die Inhalte der Nachrichten sind selbstbeschreibend.
+\item Informationen werden vom Anwendungsserver dynamisch bereitgestellt über Hypermedien wie HTTP.
 \end{enumerate}
-\item Mehrschichtigkeit: Komplexität wird hinter den offenen Endpunkten verborgen 
-\item "`Code on Demand"': Es soll die Möglichkeit für Clients bestehen, neue Medientypen verstehen zu lernen
+\item Mehrschichtigkeit: Komplexität wird hinter den offenen Endpunkten verborgen. 
+\item "`Code on Demand"': Es soll die Möglichkeit für Clients bestehen, Verfahren zur Verwendung neuer Medientypen vom Server abfragen zu können.
 \end{enumerate}
+
+\vspace{-0.4em}
 
 \newpara{ConceptMap}
 \label{conceptmap-structure}
 
-Die ConceptMap ist eine FHIR Ressource, die zum Mapping zwischen Kodiersystemen vorgesehen ist. Die Definition ist frei verfügbar, zum Beispiel für FHIR Release 4: \cite[FHIR R4]{conceptmap-r4}.
-
-Die Komponenten, die für ein Mapping zwischen Versionen der ICD-10-GM und des OPS mindestens benötigt werden, sind folgende:
+Die ConceptMap ist eine FHIR Ressource, die zum Mapping zwischen Kodiersystemen vorgesehen ist. Die Definition ist frei verfügbar, zum Beispiel für FHIR Release 4 unter \cite[FHIR R4]{conceptmap-r4}. Die Komponenten, die für ein Mapping zwischen Versionen der ICD-10-GM und des OPS mindestens benötigt werden, sind folgende:
 
 \begin{comment}
 \begin{customIndentRight2}
@@ -372,9 +373,11 @@ ConceptMap & & & & \\
 \caption{Hierarchischer Aufbau der FHIR Ressource "`ConceptMap"'.}
 \end{figure} 
 
+\vspace{-1em}
+
 \begin{itemize}
 %\item ConceptMap: A statement of relationships from one set of concepts to one or more other concepts - either concepts in code systems, or data element/data element concepts, or classes in class models. \newline A map from one set of concepts to one or more other concepts
-\item \emph{url}: Eine absolute URI (Uniform Resource Identifier), welche einmal pro ConceptMap enthalten ist und diese global eindeutig identifiziert. Idealerweise handelt es sich um eine existierende URL. Laut Spezifikation ist die Angabe eigentlich optional, aber sie wird von HAPI vorausgesetzt. %An absolute URI that is used to identify this concept map when it is referenced in a specification, model, design or an instance; also called its canonical identifier. This SHOULD be globally unique and SHOULD be a literal address at which at which an authoritative instance of this concept map is (or will be) published. This URL can be the target of a canonical reference. It SHALL remain the same when the concept map is stored on different servers. \newline Canonical identifier for this concept map, represented as a URI (globally unique) \newline § wird von HAPI benötigt
+\item \emph{url}: Eine absolute URI, \emph{Uniform Resource Identifier}, welche einmal pro ConceptMap enthalten ist und diese global eindeutig identifiziert. Idealerweise handelt es sich um eine existierende URL. Laut Spezifikation ist die Angabe eigentlich optional, aber sie wird von HAPI vorausgesetzt. %An absolute URI that is used to identify this concept map when it is referenced in a specification, model, design or an instance; also called its canonical identifier. This SHOULD be globally unique and SHOULD be a literal address at which at which an authoritative instance of this concept map is (or will be) published. This URL can be the target of a canonical reference. It SHALL remain the same when the concept map is stored on different servers. \newline Canonical identifier for this concept map, represented as a URI (globally unique) \newline § wird von HAPI benötigt
 \item \emph{id}: Die logische ID der Ressource; das heißt sie ist innerhalb eines Servers eindeutig. Sie kann nicht verändert werden und ist wie die URL pro ConceptMap einmalig eingetragen, sowie optional. Aber es ist natürlich sinnvoll die ID dafür zu verwenden, Zweck und Umfang der ConceptMap zu kennzeichnen. % The logical id of the resource, as used in the URL for the resource. Once assigned, this value never changes. \newline Logical id of this artifact § kann nicht verändert werden
 \item \emph{group}: Eine Gruppe an Mappings, die alle das selbe Start- und Zielsystem haben. Eine ConceptMap kann mehrere Gruppen enthalten. %A group of mappings that all have the same source and target system. \newline Same source and target systems
 \item \emph{source}: Eine absolute URI, die das Start- beziehungsweise Ursprungssystem der Konzepte für das Mapping identifiziert. Sie kann einmal pro \emph{group} angegeben werden. Bei einer in sich geschlossenen ConceptMap, das heißt ohne Referenz auf eine FHIR "`Code System"' Ressource, kann dieser Eintrag auch frei gewählt sein. %An absolute URI that identifies the source system where the concepts to be mapped are defined. \newline 	Source system where concepts to be mapped are defined
@@ -383,7 +386,7 @@ ConceptMap & & & & \\
 \item \emph{code}: Ein Eintrag pro \emph{element}, der dieses identifiziert. %Identity (code or path) or the element/item being mapped. \newline Identifies element being mapped
 \item \emph{target}: Konzept(e) der Zielversion, für das Mapping von \emph{element}. %A concept from the target value set that this concept maps to.\newline Concept in target system for element
 \item \emph{code}: Kode, der das Zielkonzept identifiziert. %Identity (code or path) or the element/item that the map refers to.\newline Code that identifies the target element
-\item \emph{equivalence}: Die Relation zwischen Konzepten der Ursprungs- und Zielversion. In FHIR R5 heißt diese Komponente \emph{relationship}. %The equivalence between the source and target concepts (counting for the dependencies and products). The equivalence is read from target to source (e.g. the target is 'wider' than the source). \newline § Auflisten, alle Versionen
+\item \emph{equivalence}: Die Relation zwischen Konzepten der Ursprungs- und Zielversion. \newline In FHIR R5 heißt diese Komponente \emph{relationship}. %The equivalence between the source and target concepts (counting for the dependencies and products). The equivalence is read from target to source (e.g. the target is 'wider' than the source). \newline § Auflisten, alle Versionen
 %\item \emph{unmapped}: What to do when there is no mapping for the source concept. "Unmapped" does not include codes that are unmatched, and the unmapped element is ignored in a code is specified to have equivalence = unmatched. \newline What to do when there is no mapping for the source concept \newline § provided
 \end{itemize}
 
@@ -400,58 +403,16 @@ Zusätzlich gibt es noch die Komponente \emph{unmapped} pro \emph{group}. Hier k
 
 \section{Verwandte Arbeiten}
 
-Mappingqualität
+In \cite{hund} wird die Verwendung der ICD-10-GM und des OPS im deutschen Gesundheitssystem diskutiert, sowie der Nutzung die daraus resultierenden Daten in der Forschung. Als eine der Herausforderungen wurde dabei der Vergleich über die verschiedenen, jährlich veröffentlichten Versionen identifiziert. Um diese zu lösen wurde eine Software-Library entwickelt: \cite{medicats}. Darin ist das Ermitteln von Überleitungen ausgehend von jeweils einem Kode in rückwärts chronologischer Reihenfolge implementiert. Allerdings war das letzte Update von 2020 und das Hinzufügen neuer Versionen erfordert die Programmierung mehrerer Klassen pro Version. Außerdem setzt das Kompilieren der Library das Vorhandensein von Dateien in einer Größe von circa 1 GB voraus und das Laden der Daten pro Applikationsstart ist ein relativ langer Prozess. 
 
-Medicats (ICD-10-GM Versionen)
+\newpage
 
-Beispiele für FHIR-Mappings
+Im US-amerikanisches Gesundheitssystem erhält die ICD-10-CM, Clinical Modification, ebenfalls jedes Jahr eine neue Version. Zum Beispiel in \cite{manchikanti2015tragedy} werden die jährlichen Mehrkosten des Einsatzes im Vergleich zu ICD-9-CM betont. Programmatische Ansätze zur Überleitung zwischen den Versionen innerhalb der ICD-10-CM sind allerdings nicht bekannt. Es gibt jedoch Mappings zwischen ICD-9-CM und ICD-10-CM, wie zum Beispiel in \cite{info:doi/10.2196/14325}.
 
-UMLS
+%\subsection{Mappings mit Verwendung von FHIR}
+\subsection{FHIR Mappings}
 
-Oncology -> SNOMED CT
-
-SNOMED als Interlingua
-
-
-
-% ??? https://medinform.jmir.org/2019/4/e14325
-% Vor Medicats?
-
-
-% !!! https://link.springer.com/article/10.1186/1472-6947-7-9
-
-
-\begin{comment}
-\subsection{Normen für Mappings}
-
-Health Informatics, Terminology resource map quality measures (MapQual) \cite{ISO21564}
-
-%Terminoloy vs Classification (terminology easier to re-use; but class. map to current version)
-
-Health informatics -- Principles of mapping between terminological resources \cite{ISO12300}
-
-\bibitem{WHO-FIC-Class}
-``WHO-FIC Classifications and Terminology Mapping -- Principles and Best Practice'' \newline
-\url{https://cdn.who.int/media/docs/default-source/classification/who-fic-network/whofic_terminology_mapping_guide.pdf?sfvrsn=2cae387c_7&download=true}
-
-^ Qualität
-\end{comment}
-
-
-\subsection{Medicats}
-
-Medical Classification and Terminology Systems in a Secondary Use Context: Challenges and Perils \cite{hund}
-
-Medicats \cite{medicats}
-
-\subsection{ConceptMap für UMLS}
-
-Building Interoperable FHIR-based Vocabulary Mapping Services:
-A Case Study of OHDSI Vocabularies and Mappings
-
-using multiple groups \cite{saripalle2019representing}
-
-instead? -- An Interoperable UMLS Terminology Service Using FHIR 
+Seit Veröffentlichung der FHIR Release 4 in 2019 werden bevorzugt ConceptMap Ressourcen für Mappings im klinischen Kontext verwendet. Interessant ist beispielsweise die Verwendung mehrerer \emph{group}-Einträge in \cite{saripalle2019representing}, um UMLS in FHIR ConceptMaps abzubilden. Das \emph{Unified Medical Language System} ist ein Ansatz, mittels eines Kompendiums kontrollierter Vokabulare zwischen medizinischen Terminologien zu übersetzen. Einen ähnlichen Zweck verfolgt das \emph{Observational Medical Outcomes Partnership} (OMOP) \emph{Common Data Model} (CDM) der \emph{Observational Health Data Sciences and Informatics} (OHDSI) Initiative. Ein Beispiel für die Verwendung dessen in einer ConceptMap ist \cite{10.1093/jamiaopen/ooae045}. Eine weitere Vorgehensweise wie in \cite{fhir-snomed} ist wiederum ein Mapping über SNOMED CT, wobei \emph{Systematized Nomenclature of Medicine Clinical Terms} die umfassendste medizinische Terminologie ist.
 
 \begin{comment}
 
@@ -471,30 +432,19 @@ UMLS
 
 --------------
 
-
 \bibitem{MENDS-on-FHIR}
 ``MENDS-on-FHIR: Leveraging the OMOP common data model and FHIR standards for national chronic disease surveillance'' \newline
 \url{https://www.medrxiv.org/content/10.1101/2023.08.09.23293900v2}
 % (wie vorher zum Kontext OHDSI; siehe auch Anhang)
 
-
 \end{comment}
 
-\subsection{Interlingua SNOMED CT}
 
-SNOMED \cite{icd10-to-snomed}
+\subsection{SNOMED CT als Interlingua}
 
-Probleme: 
+Basierend auf dem letzten Ansatz wäre also eine Möglichkeit das Mapping zwischen Versionen der ICD-10-GM und des OPS über SNOMED CT als Interlingua zu gestalten. Es wurden für ICD-10-GM $\leftrightarrow$ SNOMED CT Mappings in beide Richtungen bereits elektronische Ressourcen entwickelt. Zum Beispiel gibt es I-MAGIC  von der \emph{National Library of Medicine} \cite{i-magic} um differenzierte Mappings von SNOMED CT nach ICD-10-CM interaktiv zu erstellen. SNOMED International stellt einen Browser \cite{snomed-browser} zur Verfügung, der mit Expression Contraint Lanugage Queries für ICD-10 Kodes die Abfrage der mehreren zutreffenden SNOMED CT Konzepte ermöglicht. Das Mapping Tool \cite{snomed-map} funktioniert je nach Eingabe in beide Richtungen. 
 
-- Uneindeutig, med. Fachpersonal benötigt
-
-- Deutsche Version SNOMED CT
-
-- OPS
-
-- Wenn Mapping von ICD-10-GM auf SNOMED CT existiert, kann versionsübergreifendens Mapping für ICD-10-GM immer noch hilfreich sein. 
-
-
+Beispielsweise werden für den ICD-10-CM M21.4, "`Flat foot [pes planus] (acquired)"' folgende SNOMED CT IDs zurückgegeben:
 
 %\begin{centernss}
 {
@@ -502,7 +452,7 @@ Probleme:
 %\setlength{\tabcolsep}{12pt}
 \begin{tabular}{ll}
 %\uzlemph{Kode} & \uzlemph{Titel} \\
-Kode & Titel \\
+SCTID & Begriff \\
 \hline
 203533003 & Peroneal spastic flat foot \\
 90374001 & Acquired spastic flat foot \\
@@ -515,6 +465,19 @@ Kode & Titel \\
 }
 %\end{centernss}
 
+Für die andere Richtung existiert eine 1:1 Kardinalität. \cite{WHO-FIC}
+
+Ein Ansatz die für ein Mapping am besten geeignetste SCTID zu ermitteln wird in \cite{icd10-to-snomed} vorgestellt. SNOMED CT Konzepte sind hierarchisch in |is-a|-Relationen angeordnet und so wird hier das "`passendste"' Konzept dem  ranghöchsten gleichgesetzt. Im Beispiel oben ist 90374001--"`Acquired spastic flat foot"' ein Kind von 53226007--"`Talipes planus"'. Letztere und 203534009--"`Acquired pes planus"' sind allerdings gleich ranghoch. 
+
+Eine andere Idee wäre das Mapping anhand der Ähnlichkeit von Begriff in SNOMED CT und Titel in ICD-10 zu berechnen. Dazu gibt es Algorithmen wie \cite{jaro-winkler}, welcher für das M21.4--"`Flat foot [pes planus] (acquired)"'--Beispiel "`Acquired pes planus"' als beste Übereinstimmung ermittelt und \cite{smith-waterman-gotoh} "`Talipes planus"'.
+
+Es wäre also möglich geeignete Konzepte für ein Mapping vorzuschlagen, aber die endgültige Auswahl müsste medizinisches Fachpersonal treffen. In \cite{manual-map} wurde ein Mapping der schwedischen ICD-10 Version auf SNOMED CT manuell durchgeführt. Die Urteilerübereinstimmung der beiden Kodierer betrug 89\%, was als moderates Ergebnis bewertet wird.
+
+Ein weiteres Problem ist, dass der Vergleich der deutschen Titel dadurch erschwert wird, dass die Übersetzung der deutschen SNOMED CT Version noch nicht weit fortgeschritten ist; siehe \cite{gmds}. Ähnlich ernüchternd sind Ergebnisse von Mappings zwischen OPS und SNOMED CT wie in \cite{schulz2019aligning}.
+
+In dieser Arbeit wird also ein Mapping zwischen den verschiedenen Versionen innerhalb der ICD-10-GM und dem OPS  auf Basis der vom BfArM veröffentlichten Überleitungstabellen vorgenommen. Sobald ein operativer Reifegrad der Mappings zwischen diesen Kodiersystemen und SNOMED CT erreicht ist, wäre es wahrscheinlich immer noch hilfreich die Versionen innerhalb von ICD-10-GM und OPS auf zum Beispiel die aktuellste Version anzugleichen. 
+
+
 \begin{comment}
 M21.4
 Flat foot [pes planus] (acquired)
@@ -522,11 +485,6 @@ Flat foot [pes planus] (acquired)
 Jaro-Winkler: Acquired pes planus 
 Smith Waterman Gotoh: Talipes planus
 \end{comment}
-
-
-
-
-
 
 
 %\subsection{SNOMED}
@@ -540,9 +498,6 @@ Smith Waterman Gotoh: Talipes planus
 % (eigene Vorgehensweise im Kontext „ICD-O vs. SNOMED CT vs OncoTree“: realisiert u.a. über ConceptMaps)
 
 ^ Ohlsen/Ingenerf
-
-
-
 
 
 
@@ -568,6 +523,7 @@ SNOMED CT Browser \newline
 
 \bibitem{ICD-10 to SNOMED CT}
 ``Evaluation of an Automated Mapping from ICD-10 to SNOMED CT'' \newline
+icd10-to-snomed
 \url{https://american-cse.org/csci2022-ieee/pdfs/CSCI2022-2lPzsUSRQukMlxf8K2x89I/202800b612/202800b612.pdf}
 % ODER: Man mappt die Klassen (unterhalb der Klassenebene) auf präzisere SNOMED CT-Codes (das sind mehrere, d.h. welchen nimmt man?) und garantiert so jahres- bzw. versionsübergreifende Auswertungen?
 
@@ -599,8 +555,6 @@ SNOMED CT Browser \newline
 OHDSI Athena \newline
 \url{https://cdn.who.int/media/docs/default-source/classification/who-fic-network/whofic_terminology_mapping_guide.pdf?sfvrsn=2cae387c_7&download=true}
 % Ein ganz anderer Ansatz wäre, die Klassifikations-Codes auf Terminologie-Codes (insb. SNOMED CT) zu mappen, um nochmal ganz anders vorzugehen. Ein ähnliches Vorgehen gibt es im OHDSI-Projekt, wo ein interessantes Terminologie-Tool „Athena“ (LINK) verwendet wird.
-
-
 
 
 
@@ -675,85 +629,6 @@ FHIR Terminology Module \newline
 \end{comment}
 
 
-
-
-\begin{comment}
-
-\section{Grundlagen}
-
-Zitiert
-
-\begin{centernss}
-\setlength{\fboxsep}{.03\linewidth}\color{black!20}\fbox{
-\normalcolor\begin{minipage}[t]{.8\linewidth}
-\end{minipage}
-
-}
-\normalcolor
-\end{centernss}
-
-7.2
-Grundsätzliches zum Ordnungsprinzip Klassifikation
-Von allen Ordnungsprinzipien ist die Klassifikation das einfachste. Es beruht auf dem
-Grundsatz: „Jedes Ding (jeder Sachverhalt) an seinen Platz“. Das zu dokumentierende Sach-
-gebiet wird in einzelne getrennte Sachverhalte eingeteilt, die man als Klassen bezeichnet.
-Bildlich gesprochen werden also die einzelnen Sachverhalte eines Sachgebiets in die Fächer
-oder Schubladen eines Schrankes eingeordnet. Die einzelnen Fächer oder Klassen sind dis-
-junkt, d.h. sie schließen sich gegenseitig aus und überlappen sich nicht. Jede Klasse wird
-durch einen Deskriptor repräsentiert. Die Klassen einer Klassifikation sind gleichzeitig
-Äquivalenzklassen von Begriffen. Im strengen Fall ist die Zuordnung einer Dokumentati-
-onseinheit zu einer Klasse eindeutig, d.h. eine Dokumentationseinheit wird genau einer
-Klasse zugeteilt. Eine Klassifikation ist einfach und praktisch. Sie ist sozusagen das „natür-
-liche Ordnungsprinzip“.
-Beispiele für Klassifikationen sind:
-xMutters Wäscheschrank,
-xdie meisten Magazinordnungen und Ersatzteillager (falls sie nicht als reine Lager nach
-Signatur, Ersatzteilnummer oder dergleichen geordnet sind),
-xdas Aufstellungsprinzip in einer Freihandbibliothek.Ordnungsprinzip Klassifikation
-
-Aufteilung des Sachgebiets
-
-Ein Klassifikationssystem -- ein Ordnungssystem, das nach dem Ordnungsprinzip Klassifi-
-kation aufgebaut ist -- muss vollständig sein. Vollständig sein bedeutet, dass die Klassen alle
-Sachverhalte des dokumentarisch zu bearbeitenden Sachgebiets umfassen. Ein Klassifika-
-tionssystem kann auch mit einem Mosaik verglichen werden. Dabei entsprechen die Klassen
-den Mosaiksteinchen, das komplette Ordnungssystem dem vollständigen Mosaikbild und das
-Ordnungsprinzip Klassifikation der Kunsttechnik des Mosaiks. Wichtig ist, dass in dem Mo-
-saikbild keine Steinchen fehlen bzw. dass alle Sachverhalte im Ordnungssystem vorhanden
-sind und es keine Dokumentationseinheiten und keine Suchfragen gibt, die nicht in die Klas-
-sifikation eingeordnet werden können. Durch Schaffung einer Klasse „sonstiges“ oder besser
-durch die Schaffung mehrerer Klassen mit dem Zusatz „sonstiges“ (z.B. sonstige Knochen-
-erkrankungen, sonstige Blutkrankheiten, sonstige Krankheiten des Verdauungstraktes) wird
-die geforderte Vollständigkeit des Klassifikationssystems sozusagen durch ein Hintertürchen
-formal erreicht. Andererseits gehört es zum Prinzip der Mosaiktechnik, dass an jeder Stelle
-des Mosaiks nur ein Steinchen sein kann, d.h. dass die Klassen disjunkt sind.
-Die Klassen einer Klassifikation können unterschiedlich große Sachverhalte abdecken. Im
-Zentrum der bearbeiteten Thematik sind die Klassen meist sehr speziell und eng, am Rande
-der bearbeiteten Thematik dagegen allgemein und weit. Auch in dieser Hinsicht passt der
-Vergleich mit einem Mosaik: An wichtigen Stellen will der Künstler detailliert darstellen
-und verwendet kleine Steinchen, an anderen Stellen mit größeren Steinen nur grob
-skizzieren.
-\end{minipage}
-}
-\normalcolor
-\end{centernss}
-
-\begin{customIndentRight}
-Von allen Ordnungsprinzipien ist die Klassifikation das einfachste. Es beruht auf dem
-Grundsatz: „Jedes Ding (jeder Sachverhalt) an seinen Platz“. Das zu dokumentierende Sach-
-gebiet wird in einzelne getrennte Sachverhalte eingeteilt, die man als Klassen bezeichnet.
-Bildlich gesprochen werden also die einzelnen Sachverhalte eines Sachgebiets in die Fächer
-oder Schubladen eines Schrankes eingeordnet. Die einzelnen Fächer oder Klassen sind dis-
-junkt, d.h. sie schließen sich gegenseitig aus und überlappen sich nicht. Jede Klasse wird
-durch einen Deskriptor repräsentiert. Die Klassen einer Klassifikation sind gleichzeitig
-Äquivalenzklassen von Begriffen. Im strengen Fall ist die Zuordnung einer Dokumentati-
-onseinheit zu einer Klasse eindeutig, d.h. eine Dokumentationseinheit wird genau einer
-Klasse zugeteilt. Eine Klassifikation ist einfach und praktisch. Sie ist sozusagen das „natür-
-liche Ordnungsprinzip“.
-\end{customIndentRight}
-\end{comment}
-
-%---------------------------------------------------------------------------------------------------
 
 \begin{comment}
 \section{Quali}
@@ -926,7 +801,9 @@ Es folgt eine Zusammenfassung verschiedener Grundprinzipien und Maßstäbe für 
 
 \textbf{\emph{B}} "`Principles of Mapping between Terminological Systems"', International Organization for Standardization, \emph{Komitee:} Health Informatics. \cite{ISO12300}
 
-\textbf{\emph{C}} "`Terminology Resource Map Quality Measures"', International Organization for Standardization, \emph{Komitee:} Health Informatics. \cite{ISO21564} \\
+\textbf{\emph{C}} "`Terminology Resource Map Quality Measures"', International Organization for Standardization, \emph{Komitee:} Health Informatics. \cite{ISO21564}
+
+\vspace{1em}
 
 \begin{enumerate}
 \item Einsatzszenarien müssen vor Entwicklung des Mappings etabliert sein. Zweck, Umfang und die Richtung müssen klar definiert sein. Mappings sollten jeweils eine Richtung und einen Zweck haben. \emph{[A1, A2, A3, B1, B2, B9]}
@@ -939,8 +816,14 @@ Es folgt eine Zusammenfassung verschiedener Grundprinzipien und Maßstäbe für 
 \item Mappings sollten maschinenlesbar sein. \emph{[A14, B3]}
 \end{enumerate}
 
-Für diese Arbeit nicht relevant sind Punkte zu manuell erstellten Mappings \emph{[A10]}, spezifischen Kodiersystemen \emph{[A15]}, Eigenschaften von Ursprung- und Zielsystem, falls diese abweichen \emph{[C1, C2]}, Übersetzung natürlicher Sprachen \emph{[C3]}. 
+Für diese Arbeit nicht relevant sind Punkte zu manuell erstellten Mappings \emph{[A10]}, spezifischen Kodiersystemen wie ICD-11 \emph{[A15]}, Eigenschaften von Ursprung- und Zielsystem, falls diese abweichen \emph{[C1, C2]}, Übersetzung natürlicher Sprachen \emph{[C3]}. 
 
 \section{Aufbau \& Beiträge dieser Arbeit}
 
-abc
+Die Arbeit ist in drei Teile untergliedert:
+
+\begin{enumerate}
+\item Ein Integrationsprozess für die BfArM-Daten, der für ICD-10-GM und OPS möglichst gleich funktioniert und die Aufnahme einer neuen Version möglichst einfach macht.
+\item Zwei Suchalgorithmen, um Überleitungen der Kodes versionsübergreifend und chronologisch in beide Richtungen zu bestimmen. 
+\item Eine Web-Applikation, welche die Ergebnisse der vorherigen zwei Punkte anzeigt und FHIR ConceptMaps für das versionsübergreifende Mapping von ICD-10-GM und OPS generiert. 
+\end{enumerate}

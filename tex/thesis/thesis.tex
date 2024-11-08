@@ -24,7 +24,7 @@
 % English text, while 'Zusammenfassung' needs German text).
 
 \UzLThesisSetup{
-  Logo-Dateiname        = {uzl-thesis-logo-itcs.pdf},
+  Logo-Dateiname        = {uzl-thesis-logo-uzl.pdf},
   Verfasst              = {am}{Institut für Medizinische Informatik},
   Titel auf Deutsch     = {Abbilden und Nutzen von Versionsübergreifenden Medizinischen Klassifikationen mittels FHIR ConceptMaps},
   Titel auf Englisch    = {Visualization and Mapping of Medical Classifications across Multiple Versions with FHIR ConceptMaps},
@@ -33,14 +33,16 @@
   Mit Unterstützung von = {Tessa Ohlsen, M. Sc.},
   Masterarbeit,
   Studiengang           = {Medizinische Informatik},
-  Datum                 = {1. November 2024},
+  Datum                 = {7. November 2024},
   %
   % The English abstract. You must always provide abstracts in German
   % and in English. 
   %
   Abstract              = {
+\hspace{1.2em} The German Federal Institute for Drugs and Medical Devices (BfArM) publishes new versions for the code systems ICD-10-GM and OPS every year. These changes in the codes impede the analysis of clinical data across multiple versions. To remedy this issue, a software project was implemented, consisting of three components. First: A data integration process, which aims to process the ICD-10-GM and OPS files in an automated manner. Second: Search algorithms, which determine the transitions of codes across all versions. Third: A web application, which visualizes the data and generates FHIR ConceptMaps. As a result, this approach facilitates the interoperable usage of BfArM data across all ICD-10-GM and OPS versions.
   },
   Zusammenfassung       = {
+\hspace{1.2em} Das Bundesinstitut für Arzneimittel und Medizinprodukte veröffentlicht jedes Jahr neue Versionen der Kodiersysteme ICD-10-GM und OPS. Die Änderungen in den Kodes erschweren die versionsübergreifende Analyse klinischer Daten. Um diesem Problem entgegen zu wirken, wurde ein Software-Projekt entwickelt, welches aus drei Komponenten besteht. Erstens: Einem Datenintegrationsprozess, der möglichst automatisiert die Dateien der ICD-10-GM und OPS Versionen einliest. Zweitens: Suchalgorithmen, welche die Überleitungen von Kodes über alle Versionen ermitteln. Drittens: Eine Web-Applikation, die zur Visualisierung der Daten und dem Generieren von FHIR ConceptMaps dient. Als Ergebnis wird die interoperable und versionsübergreifende Weiterverwendung der ursprünglich in Tabellen --pro Überleitung zwischen je zwei Versionen-- veröffentlichten Daten ermöglicht.
   },
   Alphabetische Bibliographie,
 }
@@ -65,10 +67,9 @@
 
 \chapter{Web-Applikation} \input{../draft/tech_sub.tex}
 
-\chapter{Zusammenfassung} \input{../draft/fin_sub.tex}
+\chapter{Zusammenfassung} \input{../draft/fin_sub.tex} \input{../draft/fin_sub2.tex}
 
-\newpage
-\input{../draft/uzl_hapi.tex}
+%\newpage \input{../draft/uzl_hapi.tex}
 
 \appendix
 \chapter{Appendix}
