@@ -105,6 +105,9 @@ class UmsteigerSearchController extends AbstractController {
             }
         }
 
-        return $this->render('modal.html.twig', ['content'=> $content]);
+        $resp = $this->render('modal.html.twig', ['content'=> $content]);
+        $resp->headers->set('Access-Control-Allow-Origin', '*');
+
+        return $resp;
     }
 }
