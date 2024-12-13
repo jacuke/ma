@@ -16,6 +16,11 @@ tex/draft/*
 !tex/draft/*.tex
 !tex/draft/*.bib
 !tex/draft/*.pdf
+tex/beamer/*
+!tex/beamer/*.tex
+!tex/beamer/*.sty
+!tex/beamer/*.pdf
+!tex/beamer/*.png
 ###
 
 ###> symfony/framework-bundle ###

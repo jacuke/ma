@@ -1,0 +1,26 @@
+\ProvidesPackage{beamerouterthemeIMI}
+  [2011/01/10 v1.0 beamer 'IMI' outertheme]
+
+\defbeamertemplate*{headline}{IMI_outer}
+{
+  % Uni Lübeck Logo
+  \pgfdeclareimage[height=1.0cm]{university-logo}{uni_logo}
+  \logo{\pgfuseimage{university-logo}}
+
+  \begin{pgfpicture}{0cm}{0cm}{14cm}{1.0cm}
+    \color {IMIgreen}
+    \pgfrect[fill]{\pgfpoint{3cm}{0cm}}{\pgfpoint{14cm}{2cm}}
+    \pgfputat{\pgfpoint{0cm}{0cm}}{\pgfbox[left,bottom]{\pgfuseimage{university-logo}}}
+    \color {white}
+    \pgfputat{\pgfpoint{12.3cm}{0.4cm}}{\pgfbox[right,center]{  \insertshorttitle}}	
+  \end{pgfpicture}
+}
+
+\defbeamertemplate*{footline}{IMI_outer}
+{
+}
+
+\defbeamertemplate*{sidebar right}{IMI_outer}
+{
+}
+

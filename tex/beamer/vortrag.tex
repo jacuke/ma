@@ -1,0 +1,515 @@
+\documentclass{beamer}
+
+\mode<presentation>
+{
+  \usetheme{IMI} 
+  \setbeamercovered{transparent} 
+}
+
+\usepackage[german]{babel}
+\usepackage[latin1]{inputenc}
+\usepackage{times}
+\usepackage[T1]{fontenc}
+%
+\usepackage{verbatim}
+
+%\input{../draft/0head_extra.tex}
+
+\RequirePackage{tikz}
+\newcommand{\drawHookArrow}{
+\begin{tikzpicture}
+   \draw[->] (0,0) |- (16pt,-8pt);
+   \path[draw=white] (0,-8pt) -- (-16pt,-11pt);
+\end{tikzpicture}
+}
+
+\title{Präsentation}
+%\subtitle{Gruppenaufgabe: HL7 V2 Nachrichten in FHIR abbilden}
+\author{Simon Müller}
+\date{16. Dezember 2024}
+
+\begin{comment}
+\title[Medizinische Bild- und Signalverarbeitung] % (optional, nur bei langen Titeln nötig)
+{2. Übungen zur Vorlesung Medizinische Bild- und Signalverarbeitung\\ \small (MI: CS3303)\\ \Large Medizinische Bildverarbeitung\\ \small (MIW: CS0118)}
+
+\subtitle
+{für Bachelor mit Anewendungsfach Medizinische Informatik, 5. Fachsemester\\ Bachelor MIW, 5. Fachsemester}
+
+\date[BVM 2011] % (optional, sollte der abgekürzte Konferenzname sein)
+{WS 2010/2011}
+% - Vollee oder abgekürzter Name sind möglich.
+% - Dieser Eintrag ist nicht für das Publikum gedacht (das weiß
+%   nämlich, bei welcher Konferenz es ist), sondern für Leute, die die
+%   Folien später lesen.
+
+\author[Autor, Anders] % (optional, nur bei vielen Autoren)
+{
+  Dr. rer. nat. Jan Ehrhardt %\inst{1}
+  \\
+%  \and % Autoren nebeneinander schreiben
+  Dipl.-Inform. Alexander Schmidt-Richberg %\inst{1}
+}
+% - Namen müssen in derselben Reihenfolge wie im Papier erscheinen.
+% - Der \inst{?} Befehl sollte nur verwendet werden, wenn die Autoren
+%   unterschiedlichen Instituten angehören.
+
+\institute[Universitäten Lübeck und XXX] % (optional, aber oft nötig)
+{
+%  \inst{1}%
+  Institut für Medizinische Informatik\\
+  Universität zu Lübeck
+%  \and
+%  \inst{2}%
+%  Institut für theoretische Philosophie\\
+%  Universität Dort
+}
+% - Der \inst{?} Befehl sollte nur verwendet werden, wenn die Autoren
+%   unterschiedlichen Instituten angehören.
+
+% Dies wird lediglich in den PDF Informationskatalog einfügt. Kann gut
+% weggelassen werden.
+\subject{Medizinische Informatik}
+\end{comment}
+
+% Uni Lübeck Logo
+ \pgfdeclareimage[height=1.0cm]{university-logo}{uni_logo}
+ \logo{\pgfuseimage{university-logo}}
+
+\begin{comment}
+% Folgendes sollte gelöscht werden, wenn man nicht am Anfang jedes
+% Unterabschnitts die Gliederung nochmal sehen möchte.
+\AtBeginSubsection[]
+{
+  \begin{frame}<beamer>{Gliederung}
+    \tableofcontents[currentsection,currentsubsection]
+  \end{frame}
+}
+
+% Falls Aufzählungen immer schrittweise gezeigt werden sollen, kann
+% folgendes Kommando benutzt werden:
+
+%\beamerdefaultoverlayspecification{<+->}
+\end{comment}
+
+\begin{document}
+\begin{frame}
+  \titlepage
+\end{frame}
+
+%\begin{comment}
+\begin{frame}{Gliederung}
+  \tableofcontents
+  % Die Option [pausesections] könnte nützlich sein.
+\end{frame}
+%\end{comment}
+
+\section{Einleitung}
+
+\begin{frame}
+  \frametitle{Einleitung -- Grundproblematik}
+  \begin{itemize}
+  \item BfArM Versionen jährlich
+  \item Medizininformatik Initiative
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Einleitung -- Kodiersysteme}
+  \begin{itemize}
+  \item ICD-10-GM
+  \item OPS
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Einleitung -- FHIR}
+    Kurze Erklärung
+\end{frame}
+
+\begin{frame}
+  \frametitle{Einleitung -- REST}
+    Merkmale \\
+    (Bezug später in Implementation)
+\end{frame}
+
+\begin{frame}
+  \frametitle{Einleitung -- FHIR Terminologie-Server}
+    (Grafik von FHIR-Seite)
+\end{frame}
+
+\begin{frame}
+  \frametitle{Einleitung -- FHIR ConceptMap}
+
+\begin{figure}[H]
+\centering
+%\renewcommand{\arraystretch}{1.2}
+\footnotesize
+\setlength{\tabcolsep}{12pt}
+\begin{tabular}{ccccc}
+%\multicolumn{4}{c}{Bestandteil} \\
+%\hline
+ConceptMap & & & & \\
+\drawHookArrow & url & & & \\
+\drawHookArrow & id & & & \\
+\drawHookArrow & group & & & \\
+               & \drawHookArrow & source & & \\
+               & \drawHookArrow & target & & \\
+               & \drawHookArrow & element & & \\
+               &                & \drawHookArrow & code & \\
+               &                & \drawHookArrow & target & \\
+               &                &                & \drawHookArrow & code \\
+               &                &                & \drawHookArrow & equivalence \\
+%               & \drawHookArrow & unmapped & & \\
+%               &                & \drawHookArrow & mode & \\
+\end{tabular}
+%\caption{Hierarchischer Aufbau der FHIR Ressource "`ConceptMap"'.}
+\end{figure}
+
+\end{frame}
+
+\section{Datenintegration}
+
+\begin{frame}
+  \frametitle{Datenintegration}
+    (Folie wahrscheinlich entfernen)
+    Vorlage: ETL-Modell
+	\includegraphics[width=1.0\linewidth]{../img/etl.jpg}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Datenintegration -- Ziele}
+    \begin{itemize}
+        \item Möglichst einfaches Update auf neue Version \newline
+        (Konfiguration per XML-Datei)
+        \item Automatischer Download und Integration in DB
+        \item Alternativ: SQL-Dump
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Datenintegration -- Konkret}
+\begin{figure}[H]
+    \centering\large
+    \resizebox{.9\textwidth}{!}{\input{../dia/data-integration.tex}}
+    \normalsize\caption{BfArM-Datenintegrationsprozess}
+    \label{bfarm-data-int}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Datenintegration -- Abweichungen / Pre-Processing}
+  Beispiele
+    \begin{itemize}
+        \item \dots
+    \end{itemize}
+\end{frame}
+
+\section{Versionsübergreifende Suche}
+
+\begin{frame}
+  \frametitle{Suche -- Versionsübergreifend}
+    Problematik
+\end{frame}
+
+\begin{frame}
+  \frametitle{Suche -- Beispieldaten}
+  (M21.6)
+\end{frame}
+
+\begin{frame}
+  \frametitle{Suche -- Grafische Darstellung 1}
+  \begin{figure}[H]
+    \centering\Large%\sffamily
+    \resizebox{.8\linewidth}{!}{\input{../dia/nodes.tex}}
+    \normalsize%\caption{Graphische Repräsentation der Überleitungen ausgehend von den Kodes M21.4 und M21.6 der ICD-10-GM Version 2014.}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Suche -- Grafische Darstellung 2}
+\begin{figure}[H]
+    \centering\Large%\sffamily
+    \resizebox{.8\linewidth}{!}{\input{../dia/nodes2.tex}}
+    \normalsize%\caption{Von M21.6, Version 2014 über Umsteiger in chronologische und rückwärts chronologische Richtung erreichbare Kodes als zwei gerichtete Graphen.}
+    %\label{img-m21-6}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Suche -- Transitive Hülle}
+  Definition / Graphentheorie
+  
+  Ansätze
+\end{frame}
+
+\begin{frame}
+  \frametitle{Suche -- Horizonzal}
+  Vorgehensweise
+\end{frame}
+
+\begin{frame}
+  \frametitle{Suche -- Vertikal}
+  Purdom's Algorithm
+  
+  (nur die zwei Besonderheiten)
+      \begin{itemize}
+        \item Topologisch rückwärts
+        \item Merge
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Suche -- Vertikal, Beispiel}
+  (Schritte erklären + Ergebnisdaten)
+  
+  \begin{figure}[H]
+    \centering\Large%\sffamily
+    \resizebox{.8\linewidth}{!}{\input{../dia/nodes3.tex}}
+    \normalsize%\caption{Graphisches Beispiel für die vertikale Suche nach Umsteigern ausgehend von ICD-10-GM Kode G83.8, Version 1.3 in chronologischer Richtung.}
+    %\label{vertical-example}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Suche -- Vergleich der zwei Verfahren}
+      \begin{itemize}
+        \item Vorteile/Nachteile
+        \item Einsatz
+    \end{itemize}
+\end{frame}
+
+\section{Implementation}
+
+\begin{frame}
+    \frametitle{Implementation -- Tech Stack}
+    Frameworks, etc. (nur Übersicht)
+    \begin{itemize}
+        \item Backend \dots
+        \item Frontend \dots
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Implementation -- Fokus auf Orthogonalität}
+    (nur jeweils ein Satz)
+    \begin{itemize}
+        \item Model-View-Controller
+        \item Dependency Injection
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Implementation -- Features}
+    Beispiele
+    \begin{itemize}
+        \item Streaming der ConceptMap
+        \item AJAX für die Anzeige
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Implementation -- Demo}
+    (Screenshots im Anhang zur Sicherheit)
+\end{frame}
+
+\section{Fazit}
+
+\begin{frame}
+    \frametitle{Fazit -- Interoperabilität}
+    \begin{itemize}
+        \item Daten: Per FHIR ConcepMap über alle Versionen
+        \item Anzeige: Per API/Frameworks über andere Seiten
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Fazit -- Ausblick}
+    \begin{itemize}
+        \item RESTful
+        \item ATC
+    \end{itemize}
+\end{frame}
+
+% --------------------------------------------------------------
+
+\begin{comment}
+\section{FHIR}
+\subsection{Einführung}
+\begin{frame}
+  \frametitle{FHIR}
+  \textbf{F}ast \textbf{H}ealthcare \textbf{I}nteroperability \textbf{R}esources \\
+  \begin{itemize}
+  \item Web-basierter Ansatz zum Austausch von Ressourcen
+  \item Speziell für das Gesundheitswesen
+  \item Möglichst schnell, einfach, interoperabel
+  \item RESTful (\textbf{RE}presentational \textbf{S}tate \textbf{T}ransfer) \newline 
+  Struktur des World Wide Webs
+  \end{itemize}
+\end{frame}
+
+\subsection{Vorteile}
+\begin{frame}
+  \frametitle{FHIR -- Motivation}
+  \begin{itemize}
+  \item Basierend auf HL7 V2, V3, CDA
+  \item Vermeidung negativer Aspekten dieser Standards
+  \item Implementierung über FHIR HAPI für Java\\
+        (Kombinierbar mit HAPI HL7 V2 Parser)
+  \item Offener Standard
+  \end{itemize}
+\end{frame}
+
+\section{Projektaufgabe}
+\subsection{Vorgehensweise}
+\begin{frame}
+  \frametitle{Projektaufgabe: \\ FHIR Ressourcen aus HL7 V2 Nachrichten erstellen}
+  Vorgehensweise: \\
+  \begin{itemize}
+    \item HL7 V2 Nachricht parsen
+    \item FHIR Ressourcen generieren
+    \item \hspace{8em} hochladen
+    \item \hspace{8em} referenzieren
+  \end{itemize}
+\end{frame}
+
+\subsection{HL7 V2 $\rightarrow$ FHIR}
+\begin{frame}
+  \frametitle{HL7 V2 Inhalte in FHIR Ressourcen aufnehmen (1)}
+Patient \\
+\vspace{0.5ex}
+{\small
+\begin{tabular}{p{2.4cm}l}
+identifier & PID: Patient Identifier List \\
+name & PID: Patient Name \\
+gender & PID: Administrative Sex \\
+birthDate & PID: Date/Time of Birth \\
+address & PID: Patient Address \\
+telecom & PID: Phone Number \\
+contact & NK1: Name, Relationship, ... \\
+\emph{careProvider} & PD1: Patient Primary Care Provider \\
+\end{tabular}
+}
+\ \\
+\vspace{1ex}
+Condition \\
+\vspace{0.5ex}
+{\small
+\begin{tabular}{p{2.4cm}l}
+code & DG1: Diagnosis Code\\
+verificationStatus & DG1: Diagnosis Type \\
+dateRecorded & DG1: Diagnosis Date/Time \\
+\emph{asserter} & DG1: Diagnosing Clinician \\
+category & \emph{Kontext} \\
+\end{tabular}
+}
+\end{frame}
+
+\begin{frame}
+  \frametitle{HL7 V2 Inhalte in FHIR Ressourcen aufnehmen (2)}
+EpisodeOfCare \\
+%\vspace{0.5ex}
+{\small
+\begin{tabular}{p{2.4cm}l}
+status & \emph{Kontext} \\
+\end{tabular}
+}
+\ \\
+\vspace{1ex}
+Encounter \\
+\vspace{0.5ex}
+{\small
+\begin{tabular}{p{2.4cm}l}
+status & \emph{Kontext} \\
+class & DG1: Patient Class \\
+\emph{location} & PV1: Assigned Patient Location, oder \\
+                & PV1: Prior Patient Location (\emph{Kontext}) \\
+\end{tabular}
+}
+\ \\
+\vspace{1ex}
+Procedure \\
+\vspace{0.5ex}
+{\small
+\begin{tabular}{p{2.4cm}l}
+code & PR1: Procedure Code \\
+performed & PR1: Procedure Date/Time, Procedure Minutes \\
+\emph{performer} & PR1: Procedure Practitioner \\
+\end{tabular}
+}
+\ \\
+\vspace{1ex}
+AllergyInformation \\
+\vspace{0.5ex}
+{\small
+\begin{tabular}{p{2.4cm}l}
+substance & AL1: Allergen Code/Mnemonic/Description \\
+category & AL1: Allergen Type Code  \\
+\end{tabular}
+}
+\end{frame}
+
+\subsection{FHIR Ressourcen/Referenzen für ADT A01 Admit}
+\frame{
+ \frametitle{FHIR Ressourcen und Referenzen (ADT A01)}
+	\includegraphics[width=1.0\linewidth]{Diagram1}
+}
+
+\subsection{FHIR Ressourcen/Referenzen für ADT A02 Transfer}
+\frame{
+ \frametitle{FHIR Ressourcen und Referenzen (ADT A02)}
+	\includegraphics[width=1.0\linewidth]{Diagram2}
+}
+
+\subsection{Fazit}
+\frame{
+ \frametitle{Fazit}
+  \begin{itemize}
+  \item Konvertierung von HL7 V2 nach FHIR prinzipiell möglich
+  \item Aber unterschiedliche Bearbeitung jedes Nachrichtentyps
+  \item Manche Parameter der FHIR Ressourcen ergeben sich lediglich aus dem Kontext der V2 Nachrichten
+  \item Mapping der V2 Coding Tables auf FHIR Value Sets teilweise (noch) nicht vorhanden oder inkonsistent
+  \item Einige (redundante) Informationen in den V2 Segmenten benötigen nur eine Referenz auf schon bestehende FHIR Ressourcen (z.B. internes Personal/Locations)
+  \end{itemize}
+}
+
+\frame{
+ Vielen Dank für Ihre Aufmerksamkeit!
+}
+\end{comment}
+
+
+% --------------------------------------------------------------
+
+
+\begin{comment}
+% Alles nachfolgende ist optional und typischerweise nicht nötig.
+\appendix
+\section<presentation>*{\appendixname}
+\subsection<presentation>*{Weiterführende Literatur}
+
+\begin{frame}[allowframebreaks]
+  \frametitle<presentation>{Weiterführende Literatur}
+    
+  \begin{thebibliography}{10}
+    
+  \beamertemplatebookbibitems
+  % Anfangen sollte man mit Übersichtswerken.
+
+  \bibitem{Autor1990}
+    A.~Autor.
+    \newblock {\em Einführung in das Präsentationswesen}.
+    \newblock Klein-Verlag, 1990.
+
+    
+  \beamertemplatearticlebibitems
+  % Vertiefende Literatur kommt später. Die Liste sollte kurz sein.
+
+  \bibitem{Jemand2000}
+    S.~Jemand.
+    \newblock On this and that.
+    \newblock {\em Journal of This and That}, 2(1):50--100, 2000.
+  \end{thebibliography}
+\end{frame}
+\end{comment}
+
+\end{document}
