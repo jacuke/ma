@@ -23,7 +23,17 @@
 \end{tikzpicture}
 }
 
-\title{Präsentation}
+\usepackage[most]{tcolorbox}
+\newcommand{\codeBox}[2]{
+\begin{tcolorbox}[center,width=#1\linewidth,
+    colback=white,colframe=black,boxrule=.5pt]
+\texttt{\small #2}
+\end{tcolorbox}
+}
+
+\title{Master-Kolloquium}
+\subtitle{Abbilden und Nutzen von Versionsübergreifenden Medizinischen Klassifikationen mittels FHIR ConceptMaps}
+%sudo mysqldump bfarmer > bfarmer.sql
 %\subtitle{Gruppenaufgabe: HL7 V2 Nachrichten in FHIR abbilden}
 \author{Simon Müller}
 \date{16. Dezember 2024}
@@ -108,7 +118,7 @@
 \begin{frame}
   \frametitle{Einleitung -- Grundproblematik}
   \begin{itemize}
-  \item BfArM Versionen jährlich
+  \item BfArM veröffentlicht jährlich neue Versionen der Kodiersystem ICD-10-GM und OPS
   \item Medizininformatik Initiative
   \end{itemize}
 \end{frame}
@@ -123,14 +133,22 @@
 
 \begin{frame}
   \frametitle{Einleitung -- FHIR}
-    Kurze Erklärung
+  \textbf{F}ast \textbf{H}ealthcare \textbf{I}nteroperability \textbf{R}esources \\
+  \begin{itemize}
+  \item Web-basierter Ansatz zum Austausch von Ressourcen
+  \item Speziell für das Gesundheitswesen
+  \item Möglichst schnell, einfach, interoperabel
+  \item RESTful (\textbf{RE}presentational \textbf{S}tate \textbf{T}ransfer)
+  \end{itemize}
 \end{frame}
 
+\begin{comment}
 \begin{frame}
   \frametitle{Einleitung -- REST}
     Merkmale \\
     (Bezug später in Implementation)
 \end{frame}
+\end{comment}
 
 \begin{frame}
   \frametitle{Einleitung -- FHIR Terminologie-Server}
@@ -141,22 +159,23 @@
   \frametitle{Einleitung -- FHIR ConceptMap}
 
 \begin{figure}[H]
-\centering
+%\centering
 %\renewcommand{\arraystretch}{1.2}
+%\scriptsize
 \footnotesize
 \setlength{\tabcolsep}{12pt}
-\begin{tabular}{ccccc}
+\hspace{-3.5em}\begin{tabular}{ccccc}
 %\multicolumn{4}{c}{Bestandteil} \\
 %\hline
 ConceptMap & & & & \\
 \drawHookArrow & url & & & \\
 \drawHookArrow & id & & & \\
-\drawHookArrow & group & & & \\
+\drawHookArrow & group (n) & & & \\
                & \drawHookArrow & source & & \\
                & \drawHookArrow & target & & \\
-               & \drawHookArrow & element & & \\
+               & \drawHookArrow & element (n) & & \\
                &                & \drawHookArrow & code & \\
-               &                & \drawHookArrow & target & \\
+               &                & \drawHookArrow & target (n) & \\
                &                &                & \drawHookArrow & code \\
                &                &                & \drawHookArrow & equivalence \\
 %               & \drawHookArrow & unmapped & & \\
@@ -169,12 +188,14 @@ ConceptMap & & & & \\
 
 \section{Datenintegration}
 
+\begin{comment}
 \begin{frame}
   \frametitle{Datenintegration}
     (Folie wahrscheinlich entfernen)
     Vorlage: ETL-Modell
 	\includegraphics[width=1.0\linewidth]{../img/etl.jpg}
 \end{frame}
+\end{comment}
 
 \begin{frame}
   \frametitle{Datenintegration -- Ziele}
@@ -214,6 +235,19 @@ ConceptMap & & & & \\
 \begin{frame}
   \frametitle{Suche -- Beispieldaten}
   (M21.6)
+  \codeBox{.81}{M21.60 ; M21.6 ; ; A\newline
+M21.61 ; M21.6 ; ; A\newline
+M21.62 ; M21.6 ; ; A\newline
+M21.63 ; M21.6 ; ; A\newline
+M21.68 ; M21.6 ; ; A
+}
+  (M21.6)
+  \codeBox{.81}{M21.60 ; M21.6 ; ; A\newline
+M21.61 ; M21.6 ; ; A\newline
+M21.62 ; M21.6 ; ; A\newline
+M21.63 ; M21.6 ; ; A\newline
+M21.68 ; M21.6 ; ; A
+}
 \end{frame}
 
 \begin{frame}
@@ -309,7 +343,7 @@ ConceptMap & & & & \\
 
 \begin{frame}
     \frametitle{Implementation -- Demo}
-    (Screenshots im Anhang zur Sicherheit)
+    Test-Seite: \hspace{1em} \url{https://jacuke.uber.space}
 \end{frame}
 
 \section{Fazit}
@@ -317,17 +351,88 @@ ConceptMap & & & & \\
 \begin{frame}
     \frametitle{Fazit -- Interoperabilität}
     \begin{itemize}
-        \item Daten: Per FHIR ConcepMap über alle Versionen
-        \item Anzeige: Per API/Frameworks über andere Seiten
+        \item Daten: Versionsübergreifende Überleitungen durch einheitliche Datenintegration und Konvertierung in FHIR ConcepMaps
+        \item Anzeige: Auf anderen Seiten darstellbar über API-Schnittstelle, AJAX-Requests und standardisierte Frameworks
     \end{itemize}
 \end{frame}
 
 \begin{frame}
     \frametitle{Fazit -- Ausblick}
     \begin{itemize}
-        \item RESTful
-        \item ATC
+        \item RESTful \newline
+        Alle Informationen über maschinenlesbare API-Requests zur Verfügung stellen, z.B. Kodes als FHIR CodeSystem, Umsteiger-Suche in JSON
+        \item ATC \newline
+        Klassifikation für Arzneistoffe \newline
+        Daten als PDF-Dokumente veröffentlicht $\Rightarrow$ Parsing und Konvertierung notwendig
     \end{itemize}
+\end{frame}
+
+\begin{frame}
+    Vielen Dank für Ihre Aufmerksamkeit
+\end{frame}
+
+\begin{frame}
+    \frametitle{Screenshots}
+    \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\linewidth]{screenshots/ops_umsteiger.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Screenshots}
+    \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\linewidth]{screenshots/icons.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Screenshots}
+    \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\linewidth]{screenshots/icd_umsteiger_suche_popup.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Screenshots}
+    \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\linewidth]{screenshots/icd_codes.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Screenshots}
+    \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\linewidth]{screenshots/conceptmap.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Screenshots}
+    \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\linewidth]{screenshots/conceptmap_download.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Screenshots}
+    \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\linewidth]{screenshots/test_db.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Screenshots}
+    \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\linewidth]{screenshots/test_db_modal.png}
+\end{figure}
 \end{frame}
 
 % --------------------------------------------------------------
