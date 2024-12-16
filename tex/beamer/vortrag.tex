@@ -230,9 +230,9 @@ ConceptMap & & & & \\
   \frametitle{Datenintegration -- Pre-Processing / Abweichungen}
   Beispiele:
     \begin{itemize}
-        \item Umsteiger-Einträge ausnehmen, wenn die Kodes gleich und in beide Richtungen automatisch überleitbar sind
+		\item Dateinamen und -struktur angleichen
+        \item Umsteiger-Einträge ausschließen, wenn die Kodes gleich und in beide Richtungen automatisch überleitbar sind
 		\item Entfernen von nicht-entständigen Kodes
-		\item Konvertierung der Zeichenkodierung
 		\item Formatierung der Umsteiger-Spalten
 		\item Entfernen von Sonderzeichen (ältere Versionen)
 		\item \dots
@@ -308,7 +308,7 @@ M21.87 ; M21.8 ; ; A
 
 \begin{frame}
   \frametitle{Umsteiger-Suche -- Transitive Hülle}
-  Problem der Graphentheorie
+  Problem der Graphentheorie \newline
   
   Aus Gross, Yellen, Zhang (2013), \emph{Handbook of Graph Theory}:
   
@@ -388,12 +388,12 @@ schon gibt.
       \begin{itemize}
         \item Schneller für einen Kode
 		\item Einfacher zusätzliche Informationen auszulesen
-        \item Einsatz: Anzeige
+        \item Anwendung: Anzeige der Suchergebnisse
     \end{itemize}
 	Vertikal
 	\begin{itemize}
         \item Wesentlich schneller für alle Kodes einer Version
-        \item Einsatz: \begin{itemize}
+        \item Anwendung: \begin{itemize}
         \item Generierung der ConceptMaps
         \item Bestimmung Umsteiger ja/nein
     \end{itemize}
@@ -408,6 +408,7 @@ schon gibt.
 \begin{minipage}[t]{.4\linewidth}
 	Backend
 	\begin{itemize}
+		\item PHP
         \item Symfony
 		\begin{itemize}
         \item Serializer
@@ -450,7 +451,7 @@ schon gibt.
         \item Streaming der ConceptMap \newline
 		Anonyme Funktion innerhalb der vertikalen Suche
         \item AJAX für die Anzeige \newline
-		Füllen eines Modals mit dem Ergebnis der horizontalen Suche
+		Modal mit Ergebnis der horizontalen Suche
     \end{itemize}
 \end{frame}
 
