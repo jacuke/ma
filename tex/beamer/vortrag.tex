@@ -26,7 +26,7 @@
 \usepackage[most]{tcolorbox}
 \newcommand{\codeBox}[2]{
 \begin{tcolorbox}[center,width=#1\linewidth,
-    colback=white,colframe=black,boxrule=.5pt]
+    colback=white,colframe=black,boxrule=.35pt]
 \texttt{\small #2}
 \end{tcolorbox}
 }
@@ -118,16 +118,21 @@
 \begin{frame}
   \frametitle{Einleitung -- Grundproblematik}
   \begin{itemize}
-  \item BfArM veröffentlicht jährlich neue Versionen der Kodiersystem ICD-10-GM und OPS
-  \item Medizininformatik Initiative
+  \item Das BfArM veröffentlicht jährlich neue Versionen der Kodiersysteme ICD-10-GM und OPS
+  \item Forschungsdatenportal für Gesundheit der Medizininformatik Initiative \newline
+  Z.B. Diagnosen datiert
   \end{itemize}
 \end{frame}
 
 \begin{frame}
   \frametitle{Einleitung -- Kodiersysteme}
   \begin{itemize}
-  \item ICD-10-GM
-  \item OPS
+  \item ICD-10-GM\newline
+  Klassifikation für Krankheiten / Diagnosen\newline
+  \emph{Beispiel:} M21.4 -- Plattfuß
+  \item OPS\newline
+  Klassifikation für Operationen und Prozeduren\newline
+  \emph{Beispiel:} 1-207.y -- Elektroenzephalographie: N.n.bez.
   \end{itemize}
 \end{frame}
 
@@ -138,7 +143,8 @@
   \item Web-basierter Ansatz zum Austausch von Ressourcen
   \item Speziell für das Gesundheitswesen
   \item Möglichst schnell, einfach, interoperabel
-  \item RESTful (\textbf{RE}presentational \textbf{S}tate \textbf{T}ransfer)
+  \item RESTful (\textbf{RE}presentational \textbf{S}tate \textbf{T}ransfer): \newline
+  Client-Server, einheitliche Schnittstellen, zustandslos
   \end{itemize}
 \end{frame}
 
@@ -150,17 +156,19 @@
 \end{frame}
 \end{comment}
 
+\begin{comment}
 \begin{frame}
   \frametitle{Einleitung -- FHIR Terminologie-Server}
     (Grafik von FHIR-Seite)
 \end{frame}
+\end{comment}
 
 \begin{frame}
   \frametitle{Einleitung -- FHIR ConceptMap}
 
 \begin{figure}[H]
 %\centering
-%\renewcommand{\arraystretch}{1.2}
+%\renewcommand{\}arraystretch}{1.2}
 %\scriptsize
 \footnotesize
 \setlength{\tabcolsep}{12pt}
@@ -200,10 +208,11 @@ ConceptMap & & & & \\
 \begin{frame}
   \frametitle{Datenintegration -- Ziele}
     \begin{itemize}
-        \item Möglichst einfaches Update auf neue Version \newline
-        (Konfiguration per XML-Datei)
-        \item Automatischer Download und Integration in DB
-        \item Alternativ: SQL-Dump
+        \item Möglichst einfaches Update auf neue Version: \newline
+        Konfiguration per XML-Datei, welche nur Abweichungen zwischen Versionen definiert
+        \item Automatischer Download und Integration in Datenbank \newline
+		Alternativ: SQL-Dump
+        \item Konvertierungen der ICD-10-GM und OPS Daten in ein einheitliches Format
     \end{itemize}
 \end{frame}
 
@@ -211,47 +220,74 @@ ConceptMap & & & & \\
   \frametitle{Datenintegration -- Konkret}
 \begin{figure}[H]
     \centering\large
-    \resizebox{.9\textwidth}{!}{\input{../dia/data-integration.tex}}
+    \resizebox{.85\textwidth}{!}{\input{../dia/data-integration.tex}}
     \normalsize\caption{BfArM-Datenintegrationsprozess}
     \label{bfarm-data-int}
 \end{figure}
 \end{frame}
 
 \begin{frame}
-  \frametitle{Datenintegration -- Abweichungen / Pre-Processing}
-  Beispiele
+  \frametitle{Datenintegration -- Pre-Processing / Abweichungen}
+  Beispiele:
     \begin{itemize}
-        \item \dots
+        \item Umsteiger-Einträge ausnehmen, wenn die Kodes gleich und in beide Richtungen automatisch überleitbar sind
+		\item Entfernen von nicht-entständigen Kodes
+		\item Konvertierung der Zeichenkodierung
+		\item Formatierung der Umsteiger-Spalten
+		\item Entfernen von Sonderzeichen (ältere Versionen)
+		\item \dots
     \end{itemize}
 \end{frame}
 
-\section{Versionsübergreifende Suche}
+\section{Versionsübergreifende Umsteiger-Suche}
 
 \begin{frame}
-  \frametitle{Suche -- Versionsübergreifend}
-    Problematik
+  \frametitle{Umsteiger-Suche -- Versionsübergreifend}
+  Problematik:
+    \begin{itemize}
+        \item Die einzelnen Datensätze beziehen sich immer auf die neue Version und die Vorgängerversion
+		\item Wie können Umsteiger über alle Versionen ermittelt werden?
+		\item Ausgehend von einer beliebigen Version chronologisch vorwärts und rückwärts
+    \end{itemize}
 \end{frame}
 
 \begin{frame}
-  \frametitle{Suche -- Beispieldaten}
-  (M21.6)
-  \codeBox{.81}{M21.60 ; M21.6 ; ; A\newline
+  \frametitle{Umsteiger-Suche -- Beispieldaten}
+  
+  \textbf{M21.4}, ICD-10-GM, Version 2014 $\rightarrow$ 2013 
+  \codeBox{.65}{\footnotesize M21.4 ; M21.4 ; A ; A}
+  
+  \textbf{M21.6}, ICD-10-GM, Version 2014 $\rightarrow$ 2013 
+  \codeBox{.65}{\footnotesize M21.6 ; M21.6 ; A ; A}
+  
+  2015 $\leftarrow$ 2014, \textbf{M21.6}
+  \codeBox{.65}{\footnotesize M21.60 ; M21.6 ; ; A\newline
 M21.61 ; M21.6 ; ; A\newline
 M21.62 ; M21.6 ; ; A\newline
 M21.63 ; M21.6 ; ; A\newline
 M21.68 ; M21.6 ; ; A
 }
-  (M21.6)
-  \codeBox{.81}{M21.60 ; M21.6 ; ; A\newline
-M21.61 ; M21.6 ; ; A\newline
-M21.62 ; M21.6 ; ; A\newline
-M21.63 ; M21.6 ; ; A\newline
-M21.68 ; M21.6 ; ; A
-}
+
 \end{frame}
 
 \begin{frame}
-  \frametitle{Suche -- Grafische Darstellung 1}
+
+ \textbf{M21.6}, 2013 $\rightarrow$ 2012
+  \codeBox{.65}{\footnotesize M21.6 ; M21.60 ; A ;\newline
+M21.6 ; M21.67 ; A ;\newline
+M21.6 ; M21.87 ; A ; A
+}
+
+ \textbf{M21.60} \textbf{M21.67} \textbf{M21.87}, 2.0 $\rightarrow$ 1.3
+  \codeBox{.65}{\footnotesize M21.60 ; M21.6 ; ; A \newline
+M21.67 ; M21.6 ; ; A \newline
+M21.87 ; M21.8 ; ; A
+}  
+  
+\end{frame}
+
+\begin{frame}
+  \frametitle{Umsteiger-Suche -- Grafische Darstellung}
   \begin{figure}[H]
     \centering\Large%\sffamily
     \resizebox{.8\linewidth}{!}{\input{../dia/nodes.tex}}
@@ -260,7 +296,8 @@ M21.68 ; M21.6 ; ; A
 \end{frame}
 
 \begin{frame}
-  \frametitle{Suche -- Grafische Darstellung 2}
+  \frametitle{Umsteiger-Suche -- Gerichteter Graph}
+  Nur Umsteiger mit Veränderung, Pfeile chronologisch
 \begin{figure}[H]
     \centering\Large%\sffamily
     \resizebox{.8\linewidth}{!}{\input{../dia/nodes2.tex}}
@@ -270,45 +307,96 @@ M21.68 ; M21.6 ; ; A
 \end{frame}
 
 \begin{frame}
-  \frametitle{Suche -- Transitive Hülle}
-  Definition / Graphentheorie
+  \frametitle{Umsteiger-Suche -- Transitive Hülle}
+  Problem der Graphentheorie
   
-  Ansätze
+  Aus Gross, Yellen, Zhang (2013), \emph{Handbook of Graph Theory}:
+  
+  \begin{figure}[H]
+    \centering
+    \setlength{\fboxsep}{10pt}\color{black!20}\fbox{
+    \includegraphics[width=.95\linewidth]{../img/grapht2.png}}
+    \normalcolor%\caption{aus \cite[Seite 172]{gross2013handbook}}
+\end{figure}
 \end{frame}
 
 \begin{frame}
-  \frametitle{Suche -- Horizonzal}
-  Vorgehensweise
-\end{frame}
-
-\begin{frame}
-  \frametitle{Suche -- Vertikal}
-  Purdom's Algorithm
-  
-  (nur die zwei Besonderheiten)
-      \begin{itemize}
-        \item Topologisch rückwärts
-        \item Merge
+  \frametitle{Umsteiger-Suche -- Horizontal}
+  Vorgehensweise:
+	\begin{itemize}
+		\item Ausgehend von einem Kode einer Version, wird im Vergleich mit der jeweils zeitlich neueren und älteren Version gesucht, ob es Umsteiger gibt
+        \item Solange bis die neueste und älteste Version erreicht ist
+		\item Falls Umsteiger gefunden werden, wird die Suche mit diesen in die gleiche Richtung fortgesetzt, statt des ursprünglichen Kodes
+		\item Jedes Umsteiger-Ergebnis wird in eine sich rekursiv aufbauende Datenstruktur aufgenommen
     \end{itemize}
 \end{frame}
 
 \begin{frame}
-  \frametitle{Suche -- Vertikal, Beispiel}
-  (Schritte erklären + Ergebnisdaten)
+  \frametitle{Umsteiger-Suche -- Vertikal}
+  \emph{Purdom's Algorithm}: Effizient für die Bestimmung der transitiven Hülle eines gerichteten Graphen. \newline \\
   
+  Zwei Hauptmerkmale:
+      \begin{itemize}
+        \item Topologisch umgekehrte Vorgehensweise: Weil später ermittelte Nachbarn zu den vorher bearbeiteten Knoten einfach hinzugefügt werden können
+        \item Vereinigung von stark zusammenhängenden Komponenten in je einen Knoten als Zwischenschritt (ergibt einen zyklenfreien Graphen)
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Umsteiger-Suche -- Vertikal, Beispiel}
   \begin{figure}[H]
     \centering\Large%\sffamily
     \resizebox{.8\linewidth}{!}{\input{../dia/nodes3.tex}}
     \normalsize%\caption{Graphisches Beispiel für die vertikale Suche nach Umsteigern ausgehend von ICD-10-GM Kode G83.8, Version 1.3 in chronologischer Richtung.}
     %\label{vertical-example}
 \end{figure}
+
+\begin{minipage}[t]{.3\linewidth}\tiny
+	2018 \newline
+	G83.8 $\Rightarrow$ [G83.6, G83.8]
+\end{minipage}
+\begin{minipage}[t]{.3\linewidth}\tiny
+	2015 \newline
+	G83.8 $\Rightarrow$ [G83.6, G83.8]\newline
+	G83.80 $\Rightarrow$ [G83.5]\newline
+	G83.88 $\Rightarrow$ [G83.6, G83.8]
+\end{minipage}
+\begin{minipage}[t]{.36\linewidth}\tiny
+	2004 \newline
+	G83.8 $\Rightarrow$ [G83.5, 83.6, G83.8]\newline
+	G83.80 $\Rightarrow$ [G83.5]\newline
+	G83.88 $\Rightarrow$ [G83.6, G83.8]
+\end{minipage}
 \end{frame}
 
+\begin{comment}
+'2018' ? [ 'G83.8' ? [ 'G83.6', 'G83.8' ] ]
+'2015' ? [ 'G83.8' ? [ 'G83.6', 'G83.8' ],
+'G83.80' ? [ 'G83.5' ],
+'G83.88' ? [ 'G83.6', 'G83.8' ] ]
+Der erste Eintrag wird übernommen, der zweite kommt neu hinzu und für den dritten
+Eintrag wird G83.88 ? G83.8 entsprechend umgewandelt, weil es Umsteiger für G83.8
+schon gibt.
+'2004' ? [ 'G83.8' ? [ 'G83.5', 'G83.6', 'G83.8' ],
+'G83.80' ? [ 'G83.5' ],
+'G83.88' ? [ 'G83.6', 'G83.8' ] ]
+\end{comment}
+
 \begin{frame}
-  \frametitle{Suche -- Vergleich der zwei Verfahren}
+  \frametitle{Umsteiger-Suche -- Vergleich der zwei Verfahren}
+  Horizontal
       \begin{itemize}
-        \item Vorteile/Nachteile
-        \item Einsatz
+        \item Schneller für einen Kode
+		\item Einfacher zusätzliche Informationen auszulesen
+        \item Einsatz: Anzeige
+    \end{itemize}
+	Vertikal
+	\begin{itemize}
+        \item Wesentlich schneller für alle Kodes einer Version
+        \item Einsatz: \begin{itemize}
+        \item Generierung der ConceptMaps
+        \item Bestimmung Umsteiger ja/nein
+    \end{itemize}
     \end{itemize}
 \end{frame}
 
@@ -316,16 +404,39 @@ M21.68 ; M21.6 ; ; A
 
 \begin{frame}
     \frametitle{Implementation -- Tech Stack}
-    Frameworks, etc. (nur Übersicht)
-    \begin{itemize}
-        \item Backend \dots
-        \item Frontend \dots
+	
+\begin{minipage}[t]{.4\linewidth}
+	Backend
+	\begin{itemize}
+        \item Symfony
+		\begin{itemize}
+        \item Serializer
+		\item Command 
+		\item HTTP-Client
+		\item u.a.
+		\end{itemize}
+        \item MySQL/MariaDB
+		\item Doctrine DBAL
     \end{itemize}
+\end{minipage}
+\begin{minipage}[t]{.5\linewidth}
+	Frontend
+	\begin{itemize}
+		\item HTML/CSS
+		\item SASS/SCSS
+        \item Javascript
+		\item (jQuery)
+        \item Webpack / Node.js / npm
+		\item Bootstrap
+		\item Floating UI / Popper.js
+    \end{itemize}
+\end{minipage}
 \end{frame}
 
 \begin{frame}
     \frametitle{Implementation -- Fokus auf Orthogonalität}
-    (nur jeweils ein Satz)
+    
+	Symfony
     \begin{itemize}
         \item Model-View-Controller
         \item Dependency Injection
@@ -333,11 +444,13 @@ M21.68 ; M21.6 ; ; A
 \end{frame}
 
 \begin{frame}
-    \frametitle{Implementation -- Features}
-    Beispiele
+    \frametitle{Implementation -- Suchergebnisse}
+    
     \begin{itemize}
-        \item Streaming der ConceptMap
-        \item AJAX für die Anzeige
+        \item Streaming der ConceptMap \newline
+		Anonyme Funktion innerhalb der vertikalen Suche
+        \item AJAX für die Anzeige \newline
+		Füllen eines Modals mit dem Ergebnis der horizontalen Suche
     \end{itemize}
 \end{frame}
 
